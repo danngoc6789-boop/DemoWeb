@@ -1,0 +1,293 @@
+﻿@using PagedList.Mvc
+@using PagedList
+@model IPagedList<DemoWeb.Models.Product>
+
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Sản phẩm</span>
+    </div>
+}
+
+<!-- KHỐI TIÊU ĐỀ + LỌC -->
+<div class="row" style="margin-bottom:24px;">
+    <div class="col-md-8">
+        <div class="hero-eyebrow" style="margin-bottom:4px;">
+            Bộ sưu tập
+        </div>
+
+        <div class="hero-headline" style="margin-bottom:8px;">
+            Trang sức vàng cao cấp.
+            <span class="hl-gold">Đẹp & chuẩn tuổi.</span>
+        </div>
+
+        <div class="hero-subtitle" style="margin-bottom:12px;">
+            Lắc tay nam 24K, nhẫn cưới, dây chuyền nữ, vòng phong thủy...
+            Chọn mẫu bạn thích, hoặc ghé cửa hàng để thử form tay thật.
+        </div>
+    </div>
+
+    <!-- Bộ lọc nhỏ bên phải -->
+    <div class="col-md-4">
+        <div class="product-card" style="margin-bottom:0; text-align:left;">
+            <div style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--brand-gold); margin-bottom:12px;">
+                Lọc nhanh
+            </div>
+
+            <form method="get" action="@Url.Action("Index","Product")">
+                <div style="margin-bottom:12px;">
+                    <label style="display:block; font-size:.8rem; font-weight:500; color:#000; margin-bottom:4px;">
+                        Loại vàng
+                    </label>
+                    <select name="loai" style="width:100%; border:1px solid var(--border-soft); border-radius:8px; padding:.5rem .75rem; font-size:.85rem; line-height:1.2rem;">
+                        <option value="">Tất cả</option>
+                        <option value="24k" @(ViewBag.CurrentLoai == "24k" ? "selected" : "")>Vàng 24K</option>
+                        <option value="18k" @(ViewBag.CurrentLoai == "18k" ? "selected" : "")>Vàng 18K</option>
+                        <option value="16k" @(ViewBag.CurrentLoai == "16k" ? "selected" : "")>Vàng 16K</option>
+                        <option value="10k" @(ViewBag.CurrentLoai == "10k" ? "selected" : "")>Vàng 10K</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; font-size:.8rem; font-weight:500; color:#000; margin-bottom:4px;">
+                        Tìm tên sản phẩm
+                    </label>
+                    <input name="q" type="text" value="@ViewBag.CurrentQ"
+                           placeholder="Ví dụ: nhẫn cưới"
+                           style="width:100%; border:1px solid var(--border-soft); border-radius:8px; padding:.5rem .75rem; font-size:.85rem; line-height:1.2rem;" />
+                </div>
+
+                <button type="submit"
+                        class="btn-round-black"
+                        style="width:100%; text-align:center;">
+                    Áp dụng lọc
+                </button>
+
+                @if (!string.IsNullOrEmpty(ViewBag.CurrentLoai) || !string.IsNullOrEmpty(ViewBag.CurrentQ))
+                {
+                    <a href="@Url.Action("Index")" class="btn btn-secondary" style="width:100%; margin-top:8px; display:block; text-align:center;">
+                        Xóa bộ lọc
+                    </a>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
+<div class="d-flex justify-content-between align-items-center" style="margin-bottom:20px;">
+    <span class="section-heading">
+        Tất cả sản phẩm
+    </span>
+    <span style="font-size:0.9rem; color:#666;">
+        Hiển thị @Model.FirstItemOnPage - @Model.LastItemOnPage trong tổng số @Model.TotalItemCount sản phẩm
+    </span>
+</div>
+<!-- DANH SÁCH SẢN PHẨM -->
+
+
+<div class="row">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4" style="display:flex; flex-direction:column;">
+                <div class="product-card"
+                     onclick="window.location='@Url.Action("Details","Product", new { id = item.Id })';"
+                     style="display:flex; flex-direction:column; height:100%; min-height:450px;">
+
+                    <!-- PHẦN ẢNH SẢN PHẨM -->
+                    <div class="product-img" style="height:220px; min-height:220px; flex-shrink:0;">
+                        @if (!string.IsNullOrEmpty(item.Image))
+                        {
+                            <img src="@Url.Content(item.Image)"
+                                 alt="@item.Name"
+                                 onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
+                        }
+                        else if (item.ImageList != null && item.ImageList.Any())
+                        {
+                            <img src="@Url.Content(item.ImageList[0])"
+                                 alt="@item.Name"
+                                 onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
+                        }
+                        else
+                        {
+                            <img src="@Url.Content("~/Content/Images/no-image.jpg")"
+                                 alt="No Image" />
+                        }
+                    </div>
+
+                    <!-- TÊN SẢN PHẨM -->
+                    <div class="product-name" style="min-height:2.8rem; max-height:2.8rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; margin-bottom:8px;">
+                        @item.Name
+                    </div>
+
+                    <!-- MÔ TẢ -->
+                    <div class="product-desc" style="min-height:2.6rem; max-height:2.6rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; margin-bottom:8px;">
+                        @if (!string.IsNullOrEmpty(item.Description))
+                        {
+                            @(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)
+                        }
+                        else
+                        {
+                            <text>Sản phẩm cao cấp, chất lượng</text>
+                        }
+                    </div>
+
+                    <!-- GIÁ -->
+                    <div class="product-price" style="min-height:1.4rem; margin-bottom:12px;">
+                        @if (item.Price > 0)
+                        {
+                            @item.Price.ToString("N0")<text>₫</text>
+                        }
+                        else
+                        {
+                            <text>Liên hệ báo giá</text>
+                        }
+                    </div>
+
+                    <!-- BUTTON THÊM VÀO GIỎ -->
+                    <a href="@Url.Action("AddToCart","Cart", new { id = item.Id })"
+                       class="btn-add-cart"
+                       onclick="event.stopPropagation();"
+                       style="background-color:var(--brand-gold); color:#000; display:block; padding:.5rem .75rem; border-radius:8px; text-decoration:none; margin-top:auto; text-align:center;">
+                        Thêm vào giỏ
+                    </a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12 text-center" style="padding:60px 20px;">
+            <i class="fas fa-search" style="font-size:4rem; color:#ccc; margin-bottom:20px;"></i>
+            <p style="font-size:1.3rem; color:#666; margin-bottom:10px;">Không tìm thấy sản phẩm nào</p>
+            <p style="font-size:1rem; color:#999;">Vui lòng thử tìm kiếm với từ khóa khác</p>
+            <a href="@Url.Action("Index")" class="btn btn-primary" style="margin-top:20px;">Xem tất cả sản phẩm</a>
+        </div>
+    }
+</div>
+
+<hr style="border-top:1px solid var(--border-soft); margin:32px 0;" />
+
+<!-- PHÂN TRANG -->
+@if (Model != null && Model.PageCount > 1)
+{
+    <div class="pagination-container text-center">
+        @Html.PagedListPager(
+            Model,
+            page => Url.Action("Index", new
+                 {
+                page,
+                loai = ViewBag.CurrentLoai,
+                q = ViewBag.CurrentQ
+            }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = true,
+                MaximumPageNumbersToDisplay = 5,
+                UlElementClasses = new[] { "pagination justify-content-center" },
+                LiElementClasses = new[] { "page-item" },
+                FunctionToTransformEachPageLink = (liTag, aTag) =>
+                {
+                    aTag.AddCssClass("page-link");
+                    return liTag;
+                }
+            }
+        )
+    </div>
+}
+<div class="pagination-info">
+    Trang <strong>@Model.PageNumber</strong> / <strong>@Model.PageCount</strong>
+</div>
+    
+
+
+
+<!-- Thông báo thêm vào giỏ hàng -->
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="position:fixed; top:80px; right:20px; z-index:9999; min-width:300px;">
+        <strong>Thành công!</strong> @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<style>
+    /* Force flexbox cho cols */
+    .row > [class*="col-"] {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Force hover animation */
+    .product-card:hover {
+        transform: translateY(-8px) !important;
+        box-shadow: 0 24px 48px rgba(0,0,0,0.15) !important;
+    }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1) !important;
+        }
+
+        .product-card:hover .product-name {
+            color: var(--brand-gold) !important;
+        }
+    /* Custom Bootstrap Pagination */
+    .pagination {
+        margin-bottom: 0;
+    }
+
+        .pagination .page-link {
+            color: #333;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            margin: 0 4px;
+            padding: 10px 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .pagination .page-link:hover {
+                background-color: #d4af37;
+                border-color: #d4af37;
+                color: #000;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(212, 175, 55, 0.3);
+            }
+
+            .pagination .page-link:focus {
+                box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+            }
+
+        .pagination .page-item.active .page-link {
+            background-color: #d4af37;
+            border-color: #d4af37;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+            color: #6c757d;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+            .pagination .page-item.disabled .page-link:hover {
+                transform: none;
+                box-shadow: none;
+            }
+</style>

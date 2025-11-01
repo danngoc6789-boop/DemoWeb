@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "BangGia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Sản phẩm</span>
+    </div>
+}
+
+
+
+<div class="row" style="margin-bottom:24px;">
+    <div class="col-md-8">
+        <div class="hero-eyebrow" style="margin-bottom:4px;">
+            Cập nhật tham khảo
+        </div>
+
+        <div class="hero-headline" style="margin-bottom:8px;">
+            Bảng giá vàng hôm nay.
+            <span class="hl-gold">Mua vào / Bán ra.</span>
+        </div>
+
+        <div class="hero-subtitle" style="margin-bottom:12px;">
+            Giá mang tính chất tham khảo tại cửa hàng. Vui lòng liên hệ trực tiếp
+            để xác nhận giá cuối cùng theo trọng lượng, tuổi vàng và mẫu gia công.
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; column-gap:8px; row-gap:8px;">
+            <a href="tel:0522 945 087" class="btn-round-black">
+                Gọi cửa hàng
+            </a>
+
+            <a href="https://zalo.me/" class="btn-round-outline-gold">
+                Nhắn Zalo
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-4" style="margin-top:24px;">
+        <div class="product-card" style="margin-bottom:0;">
+            <div style="font-size:0.8rem;
+                        font-weight:600;
+                        text-transform:uppercase;
+                        letter-spacing:.08em;
+                        color:var(--brand-gold);
+                        margin-bottom:12px;
+                        text-align:center;">
+                Lưu ý
+            </div>
+
+            <div style="font-size:.8rem; line-height:1.3rem; color:var(--text-dim); text-align:left;">
+                • Giá có thể thay đổi theo từng giờ.<br />
+                • Giá thu mua lại trang sức đã qua sử dụng phụ thuộc tình trạng sản phẩm.<br />
+                • Trang sức có đá, kim cương, charm đặc biệt sẽ được báo giá riêng.
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
+
+<span class="section-heading">
+    Bảng giá vàng (VNĐ / 1 chỉ)
+</span>
+
+<div class="row" style="margin-bottom:24px;">
+    <div class="col-12">
+        <div class="product-card" style="text-align:left;">
+            <div style="overflow-x:auto;">
+                <table class="table" style="margin-bottom:0; font-size:0.9rem; line-height:1.4rem;">
+                    <thead>
+                        <tr style="border-bottom:1px solid var(--border-soft);">
+                            <th style="white-space:nowrap; font-weight:600; color:#000;">Loại vàng</th>
+                            <th style="white-space:nowrap; font-weight:600; color:#000;">Tuổi vàng</th>
+                            <th style="white-space:nowrap; font-weight:600; color:#000;">Mua vào</th>
+                            <th style="white-space:nowrap; font-weight:600; color:#000;">Bán ra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid var(--border-soft);">
+                            <td style="font-weight:600; color:#000;">Vàng 24K (9999)</td>
+                            <td style="color:var(--text-dim);">~99.99%</td>
+                            <td style="font-weight:600; color:#000;">7.500.000₫</td>
+                            <td style="font-weight:600; color:#000;">7.650.000₫</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border-soft);">
+                            <td style="font-weight:600; color:#000;">Vàng 18K</td>
+                            <td style="color:var(--text-dim);">~75%</td>
+                            <td style="font-weight:600; color:#000;">5.250.000₫</td>
+                            <td style="font-weight:600; color:#000;">5.450.000₫</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border-soft);">
+                            <td style="font-weight:600; color:#000;">Vàng 16K</td>
+                            <td style="color:var(--text-dim);">~68%</td>
+                            <td style="font-weight:600; color:#000;">4.600.000₫</td>
+                            <td style="font-weight:600; color:#000;">4.800.000₫</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border-soft);">
+                            <td style="font-weight:600; color:#000;">Nhãn cưới / vàng trơn</td>
+                            <td style="color:var(--text-dim);">24K / 18K tuỳ mẫu</td>
+                            <td style="font-weight:600; color:#000;">Liên hệ</td>
+                            <td style="font-weight:600; color:#000;">Liên hệ</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600; color:#000;">Trang sức phong thủy</td>
+                            <td style="color:var(--text-dim);">Charm / mix đá</td>
+                            <td style="font-weight:600; color:#000;">Liên hệ</td>
+                            <td style="font-weight:600; color:#000;">Liên hệ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="font-size:.75rem; line-height:1.2rem; color:var(--text-soft); margin-top:12px;">
+                Đơn vị: VNĐ / 1 chỉ. Giá hiển thị chỉ mang tính tham khảo và có thể chênh lệch
+                tùy mẫu gia công, độ phức tạp, trọng lượng thực tế.
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
+
+<span class="section-heading">
+    Thu mua & thu đổi
+</span>
+
+<div class="row">
+    <div class="col-md-4" style="margin-bottom:16px;">
+        <div class="service-block-title">
+            Thu mua vàng trang sức
+        </div>
+        <div class="service-block-desc">
+            Thu mua vàng 24K / 18K / nhẫn cưới / lắc tay cũ với giá cạnh tranh,
+            báo rõ tuổi vàng và trọng lượng.
+        </div>
+    </div>
+
+    <div class="col-md-4" style="margin-bottom:16px;">
+        <div class="service-block-title">
+            Thu đổi linh hoạt
+        </div>
+        <div class="service-block-desc">
+            Đổi mẫu cũ sang mẫu mới chỉ bù phần chênh lệch.
+            Giá trị sản phẩm được tính minh bạch, công khai.
+        </div>
+    </div>
+
+    <div class="col-md-4" style="margin-bottom:16px;">
+        <div class="service-block-title">
+            Tư vấn trực tiếp
+        </div>
+        <div class="service-block-desc">
+            Bạn có thể mang sản phẩm tới cửa hàng để cân, test tuổi vàng và nhận báo giá ngay.
+        </div>
+    </div>
+</div>
+

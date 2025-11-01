@@ -1,0 +1,49 @@
+﻿@model DemoWeb.Models.Product
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.EditorFor(m => m.Name)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Price)
+            @Html.EditorFor(m => m.Price)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Image)
+            @Html.EditorFor(m => m.Image)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Category)
+            @Html.EditorFor(m => m.Category)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Type)
+            @Html.EditorFor(m => m.Type)
+        </div>
+
+        <button type="submit" class="btn btn-primary">Thêm</button>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Quay lại danh sách", "Index")
+</div>
+

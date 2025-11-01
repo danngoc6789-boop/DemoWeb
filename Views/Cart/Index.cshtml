@@ -1,0 +1,185 @@
+﻿@model List<DemoWeb.Models.CartItem>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Giỏ hàng</span>
+    </div>
+}
+
+<div class="row" style="margin-bottom:24px;">
+    <div class="col-md-8">
+
+        <div class="hero-eyebrow" style="margin-bottom:4px;">
+            Giỏ hàng của bạn
+        </div>
+
+        <div class="hero-headline" style="margin-bottom:8px;">
+            @ViewBag.ItemCount sản phẩm trong giỏ
+        </div>
+
+        <div class="hero-subtitle" style="margin-bottom:12px;">
+            Kiểm tra lại số lượng, sau đó tiến hành thanh toán.
+        </div>
+    </div>
+
+    <div class="col-md-4" style="margin-top:24px;">
+        <div class="product-card" style="margin-bottom:0;">
+            <div style="
+                font-size:0.8rem;
+                font-weight:600;
+                text-transform:uppercase;
+                letter-spacing:.08em;
+                color:var(--brand-gold);
+                margin-bottom:12px;
+                text-align:center;">
+                Tổng cộng tạm tính
+            </div>
+
+            <div style="font-size:1rem; font-weight:600; color:#000; text-align:center; margin-bottom:4px;">
+                @String.Format("{0:N0}₫", ViewBag.TotalAmount)
+            </div>
+
+            <div style="font-size:.8rem; line-height:1.3rem; color:var(--text-dim); text-align:center; margin-bottom:16px;">
+                (Chưa bao gồm phí chế tác đặc biệt / đá / kim cương)
+            </div>
+
+            <div style="text-align:center;">
+                <a href="@Url.Action("Checkout","Cart")"
+                   class="btn-round-black"
+                   style="width:100%; max-width:220px; text-align:center;">
+                    Thanh toán
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
+
+@if (Model == null || !Model.Any())
+{
+    <div class="row">
+        <div class="col-12">
+            <div class="product-card" style="text-align:center;">
+                <div class="product-name" style="margin-bottom:8px;">
+                    Giỏ hàng đang trống
+                </div>
+                <div class="product-desc" style="margin-bottom:16px;">
+                    Hãy chọn sản phẩm bạn yêu thích và thêm vào giỏ ✨
+                </div>
+                <a href="@Url.Action("Index","Product")"
+                   class="btn-round-outline-gold">
+                    Xem sản phẩm
+                </a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <span class="section-heading">
+        Chi tiết giỏ hàng
+    </span>
+
+    <div class="row" style="margin-bottom:24px;">
+        <div class="col-12">
+            <div class="product-card" style="text-align:left;">
+                <div style="overflow-x:auto;">
+                    <table class="table" style="margin-bottom:0; font-size:0.9rem; line-height:1.4rem;">
+                        <thead>
+                            <tr style="border-bottom:1px solid var(--border-soft);">
+                                <th style="white-space:nowrap; font-weight:600; color:#000;">Sản phẩm</th>
+                                <th style="white-space:nowrap; font-weight:600; color:#000;">Đơn giá</th>
+                                <th style="white-space:nowrap; font-weight:600; color:#000;">Số lượng</th>
+                                <th style="white-space:nowrap; font-weight:600; color:#000;">Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr style="border-bottom:1px solid var(--border-soft); vertical-align:middle;">
+                                    <td style="min-width:200px;">
+                                        <div style="font-weight:600; color:#000; font-size:.9rem; line-height:1.3rem;">
+                                            @item.Name
+                                        </div>
+                                        <div style="font-size:.75rem; line-height:1.2rem; color:var(--text-dim);">
+                                            Mã sp: @item.ProductId
+                                        </div>
+
+                                        <!-- Nếu sau này có ảnh thật -->
+                                        <div class="product-img-fake"
+                                             style="max-width:140px; height:80px; font-size:.7rem; margin-top:8px;">
+                                            Ảnh sản phẩm
+                                        </div>
+                                    </td>
+
+                                    <td style="white-space:nowrap; font-weight:600; color:#000;">
+                                        @String.Format("{0:N0}₫", item.Price)
+                                    </td>
+
+                                    <td style="white-space:nowrap;">
+                                        <div style="display:flex; align-items:center; gap:6px;">
+                                            <a href="@Url.Action("Minus","Cart", new { id = item.ProductId })"
+                                               style="display:inline-block; background:#fff; border:1px solid var(--border-soft); border-radius:6px; padding:.3rem .6rem; font-size:.8rem; color:#000; text-decoration:none;">
+                                                -
+                                            </a>
+
+                                            <span style="min-width:32px; text-align:center; font-weight:600; color:#000;">
+                                                @item.Quantity
+                                            </span>
+
+                                            <a href="@Url.Action("Plus","Cart", new { id = item.ProductId })"
+                                               style="display:inline-block; background:#fff; border:1px solid var(--border-soft); border-radius:6px; padding:.3rem .6rem; font-size:.8rem; color:#000; text-decoration:none;">
+                                                +
+                                            </a>
+                                        </div>
+                                    </td>
+
+                                    <td style="white-space:nowrap; font-weight:600; color:#000;">
+                                        @String.Format("{0:N0}₫", item.ThanhTien)
+                                    </td>
+
+                                    <td style="white-space:nowrap;">
+                                        <a href="@Url.Action("Remove","Cart", new { id = item.ProductId })"
+                                           style="font-size:.75rem; color:#c00; font-weight:500; text-decoration:none;">
+                                            Xóa
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div style="text-align:right; margin-top:16px;">
+                    <div style="font-size:.9rem; line-height:1.4rem; font-weight:600; color:#000;">
+                        Tạm tính: @String.Format("{0:N0}₫", ViewBag.TotalAmount)
+                    </div>
+                    <div style="font-size:.75rem; line-height:1.2rem; color:var(--text-soft);">
+                        (Chưa bao gồm phí chế tác đặc biệt / đá / kim cương)
+                    </div>
+                    <div style="margin-top:12px;">
+                        <a href="@Url.Action("Checkout","Cart")"
+                           class="btn-round-black"
+                           style="min-width:180px; text-align:center;">
+                            Tiến hành thanh toán
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+

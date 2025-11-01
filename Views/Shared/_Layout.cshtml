@@ -1,0 +1,159 @@
+﻿@using System.Linq
+@using System.Collections.Generic
+@using DemoWeb.Models
+
+@{
+    Layout = null;
+
+    // Lấy số lượng sản phẩm trong giỏ
+    var cartCount = 0;
+    if (Session["Cart"] != null)
+    {
+        var cart = (List<CartItem>)Session["Cart"];
+        cartCount = cart.Sum(x => x.Quantity);
+    }
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - D&T JEWELRY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+
+    <!-- CSS riêng cho shop -->
+    <link rel="stylesheet" href="~/Content/site-shop.css" />
+
+    @RenderSection("Head", required: false)
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top nav-jewelry">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index","Trangchu")">
+                <span class="brand-main">D&amp;T <span class="brand-accent">JEWELRY</span></span>
+                <span class="since">SINCE 2025</span>
+            </a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#mainNav"
+                    aria-controls="mainNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Trang chủ", "Index", "Trangchu", null,
+                            new { @class = "nav-link" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Sản phẩm", "Index", "Product", null,
+                            new { @class = "nav-link" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Bảng giá vàng", "BangGia", "GoldPrice", null,
+                            new { @class = "nav-link" })
+                    </li>
+
+                    <li class="nav-item d-flex align-items-center">
+                        @Html.ActionLink("Giỏ hàng", "Index", "Cart", null,
+                            new { @class = "nav-link" })
+                        @if (cartCount > 0)
+                        {
+                            <span class="cart-badge">@cartCount</span>
+                        }
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Liên hệ", "Contact", "Trangchu", null,
+                            new { @class = "nav-link" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Quản trị", "Index", "Admin", null,
+                            new { @class = "nav-link" })
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-wrapper">
+        <div class="container">
+
+            @RenderSection("Breadcrumb", required: false)
+
+            <div class="content-card">
+                @RenderBody()
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="jewelry-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 col-md-3 mb-4">
+                    <div class="footer-brand">D&T JEWELRY</div>
+                    <div class="footer-desc">
+                        Vàng 24K - Trang sức cao cấp - Cam kết chuẩn tuổi vàng.
+                        Thu mua / thu đổi minh bạch, giá tốt.
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 mb-4">
+                    <div class="footer-title">Liên hệ</div>
+                    <div>Hotline: 0522 945 087</div>
+                    <div>Zalo: 0522 945 087</div>
+                    <div>Email: thongnguyenn2109@gmail.com</div>
+                    <div>161 ĐHT 02 Phường Đông Hưng Thuận Quận 12 TP Hồ Chí Minh</div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 mb-4">
+                    <div class="footer-title">Cam kết</div>
+                    <div>✔ Vàng đủ tuổi, chuẩn tuổi</div>
+                    <div>✔ Hóa đơn rõ ràng</div>
+                    <div>✔ Thu đổi linh hoạt</div>
+                    <div>✔ Bảo hành làm sáng trọn đời</div>
+                </div>
+
+                <div class="col-sm-6 col-md-3 mb-4">
+                    <div class="footer-title">Hỗ trợ</div>
+                    <div><a href="#">Chính sách thu đổi</a></div>
+                    <div><a href="#">Chính sách giao hàng</a></div>
+                    <div><a href="#">Cách đo ni tay</a></div>
+                    <div><a href="#">Câu hỏi thường gặp</a></div>
+                </div>
+
+            </div>
+
+            <div class="copyright-line">
+                © @DateTime.Now.Year D&T JEWELRY. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
