@@ -18,7 +18,7 @@ namespace DemoWeb.Controllers
         // GET: Product/Index
         public ActionResult Index(int? page, string loai, string q)
         {
-            int pageSize = 8; // mỗi trang 12 sản phẩm
+            int pageSize = 12; // mỗi trang 12 sản phẩm
             int pageNumber = (page ?? 1);
 
             var products = db.Products.AsQueryable();

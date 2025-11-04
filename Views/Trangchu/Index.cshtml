@@ -1,4 +1,6 @@
-﻿@{
+﻿
+@{
+
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -42,54 +44,67 @@
         </div>
     </div>
 
-    <!-- Khung "sản phẩm nổi bật" bên phải -->
-    <div class="col-md-4" style="margin-top:24px;">
-        <div class="product-card" style="margin-bottom:0;">
-            <div class="product-img-fake">
-                Hình sản phẩm nổi bật<br />
-                (ví dụ: nhẫn 24K)
+    <!-- khung bên phải -->
+    <div class="col-md-4">
+        <div class="slideshow-hover-card"
+             style="background:#fff; border:1px solid #ddd; border-radius:12px; padding:16px; box-shadow:0 4px 12px rgba(0,0,0,0.1); position:relative;">
+
+            <!-- Slideshow Container -->
+            <div class="jewelry-slideshow" style="background:#f5f5f5; height:240px; border-radius:10px; margin-bottom:12px; overflow:hidden; position:relative;">
+
+                <!-- Slide 1 -->
+                <div class="jewelry-slide active">
+                    <img src="~/Content/Images/AnhNoiBat/1.png"
+                         style="width:100%; height:100%; object-fit:contain;"
+                         alt="Bộ trang sức 1" />
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="jewelry-slide">
+                    <img src="~/Content/Images/AnhNoiBat/7.png"
+                         style="width:100%; height:100%; object-fit:contain;"
+                         alt="Bộ trang sức 2" />
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="jewelry-slide">
+                    <img src="~/Content/Images/AnhNoiBat/13.png"
+                         style="width:100%; height:100%; object-fit:contain;"
+                         alt="Bộ trang sức 3" />
+                </div>
             </div>
 
-            <div class="product-name">
-                Nhẫn trơn 24K
-            </div>
-            <div class="product-desc">
-                Tinh luyện, tuổi vàng chuẩn
-            </div>
+            <div style="font-weight:600; margin-bottom:8px;">Bộ Trang Sức</div>
+            <div style="color:#777; font-size:0.9rem;">Thiết kế tinh xảo, độc đáo</div>
         </div>
     </div>
-
 </div>
+<!-- KHUNG TRẮNG CHỨA SẢN PHẨM & DỊCH VỤ -->
+<div style="background:#fff; border-radius:12px; padding:40px; box-shadow:0 4px 16px rgba(0,0,0,0.05);">
 
-<hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
+    <!-- SẢN PHẨM NỔI BẬT -->
+    <!-- SẢN PHẨM NỔI BẬT -->
+    <span class="section-heading">
+        Sản phẩm nổi bật
+    </span>
 
-<!-- SẢN PHẨM NỔI BẬT -->
-<span class="section-heading">
-    Sản phẩm nổi bật
-</span>
+    <div class="row">
 
-<div class="row">
+        <!-- Sản phẩm 1 -->
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="product-card">
 
-    <!-- Sản phẩm 1 -->
-    <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="product-card">
-            <div class="product-img-fake">
-                <div class="product-img">
+                <div class="product-img-fake">
+                    <div class="product-img">
 
 
-                    <img src="~/Content/Images/Nhan/nu1/1.png" />
+                        <img src="~/Content/Images/Nhan/nu1/1.png" />
 
-                    <img src="~/Content/Images/Nhan/nu1/3.png" />
-                    <img src="~/Content/Images/Nhan/nu1/3.png" />
-                    <img src="~/Content/Images/Nhan/nu1/4.jpg" />
-                    <img src="~/Content/Images/Nhan/nu1/5.jpg" />
-                    <img src="~/Content/Images/Nhan/nu1/6.jpg" />
-                    <img src="~/Content/Images/Nhan/nu1/2.png" class="img-hover" />
 
+
+                    </div>
 
                 </div>
-                 
-            </div>
 
 
 
@@ -108,139 +123,147 @@
                    class="btn-product-detail">
                     Xem chi tiết
                 </a>
-            
+
+            </div>
+        </div>
+
+        <!-- Sản phẩm 2 -->
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="~/Content/Images/Lac/nu1/1.png" />
+
+                </div>
+
+                <div class="product-name">
+                    Lắc tay vàng trắng nữ 24K
+                </div>
+                <div class="product-desc">
+                    Dịu dàng, sang trọng
+                </div>
+
+                <div class="product-price">
+                    20.900.000₫
+                </div>
+
+                <a href="@Url.Action("Details","Product", new { id = 2 })"
+                   class="btn-product-detail">
+                    Xem chi tiết
+                </a>
+            </div>
+        </div>
+
+        <!-- Sản phẩm 3 -->
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="~/Content/Images/DayChuyen/N1/1.png" />
+                </div>
+                <div class="product-name">
+                    Dây chuyền vàng mắt xích 24K nam
+                </div>
+                <div class="product-desc">
+                    Thiết kế tối giản, thanh lịch
+                </div>
+
+                <div class="product-price">
+                    18.989.000₫
+                </div>
+
+                <a href="@Url.Action("Details","Product", new { id = 1042 })"
+                   class="btn-product-detail">
+                    Xem chi tiết
+                </a>
+            </div>
+        </div>
+
+        <!-- Bạn có thể thêm sản phẩm 4 nếu muốn lấp hàng đủ 4 cột -->
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="~/Content/Images/Kieng/5/1.png" />
+                </div>
+
+                <div class="product-name">
+                    Kiềng vàng 24K nữ
+                </div>
+                <div class="product-desc">
+                    Sang trọng, quý phái
+                </div>
+
+                <div class="product-price">
+                    187.000.000₫
+                </div>
+
+                <a href="@Url.Action("Details","Product", new { id = 1055 })"
+                   class="btn-product-detail">
+                    Xem chi tiết
+                </a>
+            </div>
+        </div>
+
+
+
+        <hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
+
+        <!-- DỊCH VỤ & CAM KẾT -->
+        <span class="section-heading">
+            Dịch vụ & cam kết
+        </span>
+
+        <div class="row">
+
+            <div class="col-md-4" style="margin-bottom:16px;">
+                <div class="service-block-title">
+                    Chuẩn tuổi vàng
+                </div>
+                <div class="service-block-desc">
+                    Mỗi sản phẩm đều có thông tin tuổi vàng rõ ràng và hóa đơn minh bạch.
+                </div>
+            </div>
+
+            <div class="col-md-4" style="margin-bottom:16px;">
+                <div class="service-block-title">
+                    Thu đổi linh hoạt
+                </div>
+                <div class="service-block-desc">
+                    Hỗ trợ thu đổi trang sức cũ với giá tốt, rõ ràng, dễ hiểu.
+                </div>
+            </div>
+
+            <div class="col-md-4" style="margin-bottom:16px;">
+                <div class="service-block-title">
+                    Bảo hành sáng bóng
+                </div>
+                <div class="service-block-desc">
+                    Lau sạch làm sáng trọn đời tại cửa hàng, miễn phí dịch vụ cơ bản.
+                </div>
+            </div>
+
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const slideshows = document.querySelectorAll('.slideshow-hover-card');
 
-    <!-- Sản phẩm 2 -->
-    <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="product-card">
-            <div class="product-img">
-                <img src="~/Content/Images/Lac/nu1/1.png" />
+            slideshows.forEach(card => {
+                const slides = card.querySelectorAll('.jewelry-slide');
+                let currentIndex = 0;
 
-                <img src="~/Content/Images/Lac/nu1/3.jpg" />
-                <img src="~/Content/Images/Lac/nu1/4.jpg" />
-                <img src="~/Content/Images/Lac/nu1/5.jpg" />
-                <img src="~/Content/Images/Lac/nu1/6.jpg" />
-                <img src="~/Content/Images/Lac/nu1/7.jpg" />
-                <img src="~/Content/Images/Lac/nu1/2.png" class="img-hover" />
-            </div>
+                // đảm bảo chỉ slide đầu hiển thị ban đầu
+                slides.forEach((s, i) => {
+                    s.style.display = i === 0 ? "block" : "none";
+                });
 
-            <div class="product-name">
-                Lắc tay vàng trắng nữ 24K
-            </div>
-            <div class="product-desc">
-                Dịu dàng, sang trọng
-            </div>
-
-            <div class="product-price">
-                20.900.000₫
-            </div>
-
-            <a href="@Url.Action("Details","Product", new { id = 2 })"
-               class="btn-product-detail">
-                Xem chi tiết
-            </a>
-        </div>
-    </div>
-
-    <!-- Sản phẩm 3 -->
-    <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="product-card">
-            <div class="product-img">
-                <img src="~/Content/Images/DayChuyen/N1/1.png" />
-
-                <img src="~/Content/Images/DayChuyen/N1/3.png" />
-                <img src="~/Content/Images/DayChuyen/N1/4.jpg" />
-                <img src="~/Content/Images/DayChuyen/N1/5.jpg" />
-                <img src="~/Content/Images/DayChuyen/N1/6.jpg" />
-                <img src="~/Content/Images/DayChuyen/N1/2.png" class="img-hover" />
-            </div>
-            <div class="product-name">
-                Dây chuyền vàng 18K nam
-            </div>
-            <div class="product-desc">
-                Thiết kế tối giản, thanh lịch
-            </div>
-
-            <div class="product-price">
-                Liên hệ báo giá
-            </div>
-
-            <a href="@Url.Action("Details","Product", new { id = 3 })"
-               class="btn-product-detail">
-                Xem chi tiết
-            </a>
-        </div>
-    </div>
-
-    <!-- Bạn có thể thêm sản phẩm 4 nếu muốn lấp hàng đủ 4 cột -->
-    <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="product-card">
-            <div class="product-img">
-                <img src="~/Content/Images/Kieng/5/1.png" />
-                <img src="~/Content/Images/Kieng/5/3.png"   />
-                <img src="~/Content/Images/Kieng/5/4.jpg" class="img-hover" />
-                <img src="~/Content/Images/Kieng/5/2.png" />
+                setInterval(() => {
+                    slides[currentIndex].style.display = "none";
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    slides[currentIndex].style.display = "block";
+                }, 700); // đổi ảnh mỗi 2 giây
+            });
+        });
+    </script>
+    //test
 
 
-            </div>
-
-            <div class="product-name">
-                Kiềng vàng 24K nữ
-            </div>
-            <div class="product-desc">
-                Sang trọng, quý phái
-            </div>
-
-            <div class="product-price">
-                187.000.000₫
-            </div>
-
-            <a href="@Url.Action("Details","Product", new { id = 4 })"
-               class="btn-product-detail">
-                Xem chi tiết
-            </a>
-        </div>
-    </div>
-
-
-
-    <hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
-
-    <!-- DỊCH VỤ & CAM KẾT -->
-    <span class="section-heading">
-        Dịch vụ & cam kết
-    </span>
-
-    <div class="row">
-
-    <div class="col-md-4" style="margin-bottom:16px;">
-        <div class="service-block-title">
-            Chuẩn tuổi vàng
-        </div>
-        <div class="service-block-desc">
-            Mỗi sản phẩm đều có thông tin tuổi vàng rõ ràng và hóa đơn minh bạch.
-        </div>
-    </div>
-
-    <div class="col-md-4" style="margin-bottom:16px;">
-        <div class="service-block-title">
-            Thu đổi linh hoạt
-        </div>
-        <div class="service-block-desc">
-            Hỗ trợ thu đổi trang sức cũ với giá tốt, rõ ràng, dễ hiểu.
-        </div>
-    </div>
-
-    <div class="col-md-4" style="margin-bottom:16px;">
-        <div class="service-block-title">
-            Bảo hành sáng bóng
-        </div>
-        <div class="service-block-desc">
-            Lau sạch làm sáng trọn đời tại cửa hàng, miễn phí dịch vụ cơ bản.
-        </div>
-    </div>
-
-    </div>
- </div>
+</div>

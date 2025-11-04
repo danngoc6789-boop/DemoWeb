@@ -6,150 +6,165 @@
 }
 
 
-    @section Breadcrumb {
-        <div class="breadcrumb-box">
-            <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
-            <span class="breadcrumb-sep">/</span>
-            <a href="@Url.Action("Index","Product")">Sản phẩm</a>
-            <span class="breadcrumb-sep">/</span>
-            <span>@Model.Name</span>
-        </div>
-    }
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="@Url.Action("Index","Product")">Sản phẩm</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>@Model.Name</span>
+    </div>
+}
 
-    <div class="row">
-        <!-- Cột trái: Gallery ảnh -->
-        <div class="col-md-5">
-            <div class="product-gallery">
-                <!-- Ảnh chính lớn -->
-                <div style="position:relative; margin-bottom:12px;">
-                    <img id="mainImage"
-                         src="@Url.Content(Model.MainImage)"
-                         alt="@Model.Name"
-                         style="width:100%; display:block;"
-                         onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
+<div class="row">
+    <!-- Cột trái: Gallery ảnh -->
+    <div class="col-md-5">
+        <div class="product-gallery">
+            <!-- Ảnh chính lớn -->
+            <div style="position:relative; margin-bottom:12px;">
+                <img id="mainImage"
+                     src="@Url.Content(Model.MainImage)"
+                     alt="@Model.Name"
+                     style="width:100%; display:block;"
+                     onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
 
-                    @if (Model.AllImages != null && Model.AllImages.Count > 1)
-                    {
-                        <div style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.7); color:#fff; padding:6px 14px; border-radius:20px; font-size:0.85rem;">
-                            @Model.AllImages.Count ảnh
-                        </div>
-                    }
-                </div>
-
-                <!-- Thumbnails - Dùng AllImages thay vì ImageList -->
                 @if (Model.AllImages != null && Model.AllImages.Count > 1)
                 {
-                    <div style="display:flex; gap:10px; overflow-x:auto;">
-                        @for (int i = 0; i < Model.AllImages.Count; i++)
-                        {
-                            var imgPath = Model.AllImages[i];
-                            var isFirst = (i == 0);
-                            <img src="@Url.Content(imgPath)"
-                                 alt="@Model.Name"
-                                 class="thumbnail-image"
-                                 onclick="changeMainImage('@Url.Content(imgPath)', this)"
-                                 style="width:80px; height:80px; object-fit:cover; cursor:pointer; border:2px solid @(isFirst ? "var(--brand-gold)" : "#ddd"); flex-shrink:0;"
-                                 onerror="this.style.display='none'" />
-                        }
+                    <div style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.7); color:#fff; padding:6px 14px; border-radius:20px; font-size:0.85rem;">
+                        @Model.AllImages.Count ảnh
                     </div>
                 }
             </div>
-        </div>
 
-        <!-- Cột phải: Thông tin sản phẩm -->
-        <div class="col-md-7">
-            <!-- Category -->
-            <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:var(--brand-gold); margin-bottom:12px;">
-                @(Model.Category ?? "BÔNG TAI")
-            </div>
-
-            <!-- Tên sản phẩm -->
-            <h1 style="font-size:2.2rem; font-weight:700; line-height:1.2; color:#000; margin-bottom:16px;">
-                @Model.Name
-            </h1>
-
-            <!-- Mã SP và Loại -->
-            <div style="font-size:0.9rem; color:#666; margin-bottom:24px;">
-                <span>Mã SP: DTJ@(Model.Id.ToString().PadLeft(6, '0'))</span>
-                @if (!string.IsNullOrEmpty(Model.Type))
-                {
-                    <span style="margin-left:16px;">@Model.Type</span>
-                }
-            </div>
-
-            <!-- Giá -->
-            <div style="margin-bottom:8px;">
-                <span style="font-size:2.8rem; font-weight:700; color:var(--brand-gold); line-height:1;">
-                    @if (Model.Price > 0)
-                    {
-                        @Model.Price.ToString("N0")
-                    }
-                    else
-                    {
-                        <text>Liên hệ</text>
-                    }
-                </span>
-                @if (Model.Price > 0)
-                {
-                    <span style="font-size:1.4rem; font-weight:600; color:var(--brand-gold);">₫</span>
-                }
-            </div>
-
-            <p style="font-size:0.85rem; color:#666; margin-bottom:24px;">
-                (Giá đã bao gồm VAT)
-            </p>
-
-            <!-- Mô tả sản phẩm -->
-            @if (!string.IsNullOrEmpty(Model.Description))
+            <!-- Thumbnails - Dùng AllImages thay vì ImageList -->
+            @if (Model.AllImages != null && Model.AllImages.Count > 1)
             {
-                <div style="padding:20px; background:#f8f8f8; border-left:4px solid var(--brand-gold); margin-bottom:28px;">
-                    <h3 style="font-size:1rem; font-weight:600; color:#000; margin-bottom:8px;">
-                        Mô tả sản phẩm
-                    </h3>
-                    <p style="font-size:0.95rem; line-height:1.6; color:#555; margin:0;">
-                        @Model.Description
-                    </p>
+                <div style="display:flex; gap:10px; overflow-x:auto;">
+                    @for (int i = 0; i < Model.AllImages.Count; i++)
+                    {
+                        var imgPath = Model.AllImages[i];
+                        var isFirst = (i == 0);
+                        <img src="@Url.Content(imgPath)"
+                             alt="@Model.Name"
+                             class="thumbnail-image"
+                             onclick="changeMainImage('@Url.Content(imgPath)', this)"
+                             style="width:80px; height:80px; object-fit:cover; cursor:pointer; border:2px solid @(isFirst ? "var(--brand-gold)" : "#ddd"); flex-shrink:0;"
+                             onerror="this.style.display='none'" />
+                    }
                 </div>
             }
+        </div>
+    </div>
 
-            <!-- Button thêm vào giỏ -->
-            <div style="margin-bottom:32px;">
-                <a href="@Url.Action("AddToCart","Cart", new { id = Model.Id })"
-                   class="btn-round-black"
-                   style="display:block; width:100%; padding:16px; font-size:1rem; font-weight:600; text-decoration:none; text-align:center; text-transform:uppercase;">
-                    THÊM VÀO GIỎ
-                </a>
+    <!-- Cột phải: Thông tin sản phẩm -->
+    <div class="col-md-7">
+        <!-- Category -->
+        <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:var(--brand-gold); margin-bottom:12px;">
+            @(Model.Category ?? "BÔNG TAI")
+        </div>
+
+        <!-- Tên sản phẩm -->
+        <h1 style="font-size:2.2rem; font-weight:700; line-height:1.2; color:#000; margin-bottom:16px;">
+            @Model.Name
+        </h1>
+
+        <!-- Mã SP và Loại -->
+        <div style="font-size:0.9rem; color:#666; margin-bottom:24px;">
+            <span>Mã SP: DTJ@(Model.Id.ToString().PadLeft(6, '0'))</span>
+            @if (!string.IsNullOrEmpty(Model.Type))
+            {
+                <span style="margin-left:16px;">@Model.Type</span>
+            }
+        </div>
+
+        <!-- Giá -->
+        <div style="margin-bottom:8px;">
+            <span style="font-size:2.8rem; font-weight:700; color:var(--brand-gold); line-height:1;">
+                @if (Model.Price > 0)
+                {
+                    @Model.Price.ToString("N0")
+                }
+                else
+                {
+                    <text>Liên hệ</text>
+                }
+            </span>
+            @if (Model.Price > 0)
+            {
+                <span style="font-size:1.4rem; font-weight:600; color:var(--brand-gold);">₫</span>
+            }
+        </div>
+
+        <p style="font-size:0.85rem; color:#666; margin-bottom:24px;">
+            (Giá đã bao gồm VAT)
+        </p>
+
+        <!-- Mô tả sản phẩm -->
+        @if (!string.IsNullOrEmpty(Model.Description))
+        {
+            <div style="padding:20px; background:#f8f8f8; border-left:4px solid var(--brand-gold); margin-bottom:28px;">
+                <h3 style="font-size:1rem; font-weight:600; color:#000; margin-bottom:8px;">
+                    Mô tả sản phẩm
+                </h3>
+                <p style="font-size:0.95rem; line-height:1.6; color:#555; margin:0;">
+                    @Model.Description
+                </p>
+            </div>
+        }
+
+        <!-- Button thêm vào giỏ -->
+        <div style="margin-bottom:32px;">
+            <a href="@Url.Action("AddToCart","Cart", new { id = Model.Id })"
+               class="btn-round-black"
+               style="display:block; width:100%; padding:16px; font-size:1rem; font-weight:600; text-decoration:none; text-align:center; text-transform:uppercase;">
+                THÊM VÀO GIỎ
+            </a>
+        </div>
+
+        <!-- Thông tin bổ sung -->
+        <div style="border-top:1px solid #e5e5e5; padding-top:24px;">
+            <div style="margin-bottom:16px;">
+                <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
+                    Bảo hành trọn đời
+                </div>
+                <div style="font-size:0.85rem; color:#666;">
+                    Đổi trả trong 48h
+                </div>
             </div>
 
-            <!-- Thông tin bổ sung -->
-            <div style="border-top:1px solid #e5e5e5; padding-top:24px;">
-                <div style="margin-bottom:16px;">
-                    <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
-                        Bảo hành trọn đời
-                    </div>
-                    <div style="font-size:0.85rem; color:#666;">
-                        Đổi trả trong 48h
-                    </div>
+            <div style="margin-bottom:16px;">
+                <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
+                    Miễn phí vận chuyển
                 </div>
-
-                <div style="margin-bottom:16px;">
-                    <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
-                        Miễn phí vận chuyển
-                    </div>
-                    <div style="font-size:0.85rem; color:#666;">
-                        Cho đơn từ 5.000.000₫
-                    </div>
+                <div style="font-size:0.85rem; color:#666;">
+                    Cho đơn từ 5.000.000₫
                 </div>
+            </div>
 
-                <div>
-                    <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
-                        Quà tặng hấp dẫn
-                    </div>
-                    <div style="font-size:0.85rem; color:#666;">
-                        Hộp sang trọng & giấy chứng nhận
-                    </div>
+            <div>
+                <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
+                    Quà tặng hấp dẫn
+                </div>
+                <div style="font-size:0.85rem; color:#666;">
+                    Hộp sang trọng & giấy chứng nhận
                 </div>
             </div>
         </div>
     </div>
+</div>
+<script>
+    function changeMainImage(imageSrc, thumbnailElement) {
+        // Thay đổi ảnh chính
+        document.getElementById('mainImage').src = imageSrc;
+
+        // Bỏ border vàng của tất cả thumbnails
+        var thumbnails = document.querySelectorAll('.thumbnail-image');
+        thumbnails.forEach(function (thumb) {
+            thumb.style.border = '2px solid #ddd';
+        });
+
+        // Thêm border vàng cho thumbnail được click
+        thumbnailElement.style.border = '2px solid var(--brand-gold)';
+    }
+</script>
 
