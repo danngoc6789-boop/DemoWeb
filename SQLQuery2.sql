@@ -191,5 +191,126 @@ SET Name = N'Kiềng Cưới Vàng Lá Ngọc Cành Vàng 24k',
     Price = 13499000
 WHERE Id = 1055;
 SELECT * FROM PRODUCTS
+--update sản phẩm
+INSERT INTO [DemoWebDb].[dbo].[Products] 
+    (Name, Description, Price, Image, Images, Type, Category, CreatedDate)
+VALUES 
+    (N' Lắc Tay Bạc Ý Nam ', N'Bạc Ý cao cấp', 1999999, 
+     '~/Content/Images/Lac/n1/1.png', 
+     '~/Content/Images/Lac/n1/2.png;~/Content/Images/Lac/n1/3.png;~/Content/Images/Lac/n1/4.jpg;~/Content/Images/Lac/n1/5.jpg;~/Content/Images/Lac/n1/6.jpg;', 
+     N'Bạc ', N'Lắc', GETDATE()),
 
+	   (N' Lắc Tay Bạc Mắt Xích Nam ', N'Bạc cao cấp', 1999999, 
+     '~/Content/Images/Lac/n2/1.png', 
+     '~/Content/Images/Lac/n2/2.png;~/Content/Images/Lac/n2/3.png;~/Content/Images/Lac/n2/4.jpg;~/Content/Images/Lac/n2/5.jpg;~/Content/Images/Lac/n2/6.jpg;', 
+     N'Bạc ', N'Lắc', GETDATE()),
+
+	   (N' Lắc Tay Bạc Đính Đá Cubic Zirconia Nữ ', N'Bạc cao cấp', 2999999, 
+     '~/Content/Images/Lac/nu1/1.png', 
+     '~/Content/Images/Lac/nu1/2.png;~/Content/Images/Lac/nu1/3.jpg;~/Content/Images/Lac/nu1/4.jpg;~/Content/Images/Lac/nu1/5.jpg;~/Content/Images/Lac/nu1/6.jpg;', 
+     N'Bạc ', N'Lắc', GETDATE()),
+
+	 (N' Lắc Tay Bạc Đính Đá Nữ ', N'Bạc cao cấp', 1899999, 
+     '~/Content/Images/Lac/nu2/1.png', 
+     '~/Content/Images/Lac/nu2/2.png;~/Content/Images/Lac/nu2/3.png;~/Content/Images/Lac/nu2/4.jpg;~/Content/Images/Lac/nu2/5.jpg;~/Content/Images/Lac/nu2/6.jpg;', 
+     N'Bạc ', N'Lắc', GETDATE()),
 	 
+	 (N' Lắc Tay Bạc Xoáy Đính Đá Nữ ', N'Bạc cao cấp', 1599999, 
+     '~/Content/Images/Lac/nu3/1.png', 
+     '~/Content/Images/Lac/nu3/2.png;~/Content/Images/Lac/nu3/3.jpg;~/Content/Images/Lac/nu3/4.jpg;~/Content/Images/Lac/nu3/5.jpg;', 
+     N'Bạc ', N'Lắc', GETDATE()),
+
+	 (N' Lắc Tay Bạc Ý Đính Đá Nữ ', N'Bạc Ý cao cấp', 2599999, 
+     '~/Content/Images/Lac/nu4/1.png', 
+	 '~/Content/Images/Lac/nu4/2.png;~/Content/Images/Lac/nu4/3.jpg;~/Content/Images/Lac/nu4/4.jpg;~/Content/Images/Lac/nu4/5.jpg;', 
+     N'Bạc ', N'Lắc', GETDATE()),
+
+	 (N' Lắc Tay Kim Cương Vàng Trắng Nữ ', N'Vàng Trắng', 5999999, 
+     '~/Content/Images/Lac/nu5/1.png', 
+     '~/Content/Images/Lac/nu5/2.png;~/Content/Images/Lac/nu5/3.jpg;~/Content/Images/Lac/nu5/4.jpg;~/Content/Images/Lac/nu5/5.jpg;', 
+     N'Vàng Trắng ', N'Lắc', GETDATE()),
+
+	 (N' Lắc Tay Vàng Trắng Đính Đá Nữ ', N'Vàng Trắng', 1999999, 
+     '~/Content/Images/Lac/nu6/1.png', 
+     '~/Content/Images/Lac/nu6/2.png;~/Content/Images/Lac/nu6/3.png;~/Content/Images/Lac/nu6/4.jpg;~/Content/Images/Lac/nu6/5.jpg;~/Content/Images/Lac/nu6/6.jpg;', 
+     N'Vàng Trắng ', N'Lắc', GETDATE()),
+
+	 (N' Lắc Tay Kim Cương Vàng Trắng Nữ ', N'Vàng Trắng', 8999999, 
+     '~/Content/Images/Lac/nu7/1.png', 
+     '~/Content/Images/Lac/nu7/2.png;~/Content/Images/Lac/nu7/3.jpg;~/Content/Images/Lac/nu7/4.jpg;~/Content/Images/Lac/nu7/5.jpg;', 
+     N'Vàng Trắng ', N'Lắc', GETDATE()),
+
+	  (N' Lắc Tay Kim Cương Vàng Trắng Lá Ngọc Cành Vàng Nữ ', N'Vàng Trắng', 18999999, 
+     '~/Content/Images/Lac/nu8/1.png', 
+     '~/Content/Images/Lac/nu8/2.png;~/Content/Images/Lac/nu8/3.jpg;~/Content/Images/Lac/nu8/4.jpg;~/Content/Images/Lac/nu8/5.jpg;~/Content/Images/Lac/nu8/6.jpg;', 
+     N'Vàng Trắng ', N'Lắc', GETDATE()),
+
+	  (N' Mặt Dây Chuyền Hình Tròn Vàng Trắng Đính Đá 24K ', N'Vàng Trắng', 5899999, 
+     '~/Content/Images/Matdaychuyen/2/1.png', 
+     '~/Content/Images/Matdaychuyen/2/2.png;~/Content/Images/Matdaychuyen/2/3.png;', 
+     N'Vàng Trắng ', N'Mặt Dây Chuyền', GETDATE()),
+
+	 (N' Mặt Dây Chuyền Vàng Trắng Ý Đính Đá 18K ', N'Vàng Trắng Ý 18K', 3599999, 
+     '~/Content/Images/Matdaychuyen/3/1.png', 
+     '~/Content/Images/Matdaychuyen/3/2.png;~/Content/Images/Matdaychuyen/3/3.jpg;', 
+     N'Vàng Trắng ', N'Mặt Dây Chuyền', GETDATE()),
+
+	 (N' Mặt Dây Chuyền Bạc Đính Đá ', N'Bạc Cao Cấp', 2399999, 
+     '~/Content/Images/Matdaychuyen/4/1.png', 
+     '~/Content/Images/Matdaychuyen/4/2.png;~/Content/Images/Matdaychuyen/4/3.png;~/Content/Images/Matdaychuyen/4/4.jpg;~/Content/Images/Matdaychuyen/4/5.jpg;~/Content/Images/Matdaychuyen/4/6.jpg;', 
+     N'Bạc ', N'Mặt Dây Chuyền', GETDATE()),
+
+	 (N' Mặt Dây Chuyền Vàng Trắng Ý Đính Đá 14K ', N'Vàng Trắng Ý', 3499999, 
+     '~/Content/Images/Matdaychuyen/5/1.png', 
+     '~/Content/Images/Matdaychuyen/5/2.png;~/Content/Images/Matdaychuyen/5/3.png;~/Content/Images/Matdaychuyen/5/4.jpg;~/Content/Images/Matdaychuyen/5/5.jpg;~/Content/Images/Matdaychuyen/5/6.jpg;', 
+     N'Vàng Trắng', N'Mặt Dây Chuyền', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Trắng Ý Nam 18K ', N'Vàng Trắng Ý', 64599999, 
+     '~/Content/Images/Nhan/n1/1.png', 
+     '~/Content/Images/Nhan/n1/2.png;~/Content/Images/Nhan/n1/3.png;~/Content/Images/Nhan/n1/4.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Ý Nam 18K ', N'Vàng Trắng Ý', 113499999, 
+     '~/Content/Images/Nhan/n2/1.png', 
+     '~/Content/Images/Nhan/n2/2.png;~/Content/Images/Nhan/n2/3.png;~/Content/Images/Nhan/n2/4.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Trắng Nam 18K ', N'Vàng Trắng', 57499999, 
+     '~/Content/Images/Nhan/n3/1.png', 
+     '~/Content/Images/Nhan/n3/2.png;~/Content/Images/Nhan/n3/3.png;~/Content/Images/Nhan/n3/4.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Ý Nam 18K ', N'Vàng Trắng', 62199999, 
+     '~/Content/Images/Nhan/n4/1.png', 
+     '~/Content/Images/Nhan/n4/2.png;~/Content/Images/Nhan/n4/3.png;~/Content/Images/Nhan/n4/4.jpg;~/Content/Images/Nhan/n4/5.jpg;~/Content/Images/Nhan/n4/6.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Trắng Nam 14K ', N'Vàng Trắng', 51399999, 
+     '~/Content/Images/Nhan/n5/1.png', 
+     '~/Content/Images/Nhan/n5/2.png;~/Content/Images/Nhan/n5/3.png;~/Content/Images/Nhan/n5/4.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Trắng Nữ 14K ', N'Vàng Trắng', 151399999, 
+     '~/Content/Images/Nhan/nu1/1.png', 
+     '~/Content/Images/Nhan/nu1/2.png;~/Content/Images/Nhan/nu1/3.png;~/Content/Images/Nhan/nu1/4.jpg;~/Content/Images/Nhan/nu1/5.jpg;~/Content/Images/Nhan/nu1/6.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Trắng Nữ 14K ', N'Vàng Trắng', 149399999, 
+     '~/Content/Images/Nhan/nu2/1.png', 
+     '~/Content/Images/Nhan/nu2/2.png;~/Content/Images/Nhan/nu2/3.png;~/Content/Images/Nhan/nu2/4.jpg;~/Content/Images/Nhan/nu2/5.jpg;~/Content/Images/Nhan/nu2/6.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Trắng Nữ 18K ', N'Vàng Trắng', 181399999, 
+     '~/Content/Images/Nhan/nu3/1.png', 
+     '~/Content/Images/Nhan/nu3/2.png;~/Content/Images/Nhan/nu3/3.png;~/Content/Images/Nhan/nu3/4.jpg;~/Content/Images/Nhan/nu3/5.jpg;~/Content/Images/Nhan/nu3/6.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Trắng Ý Nữ 14K ', N'Vàng Trắng Ý', 149999999, 
+     '~/Content/Images/Nhan/nu4/1.png', 
+     '~/Content/Images/Nhan/nu4/2.png;~/Content/Images/Nhan/nu4/3.png;~/Content/Images/Nhan/nu4/4.jpg;~/Content/Images/Nhan/nu4/5.jpg;~/Content/Images/Nhan/nu4/6.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE()),
+
+	 (N'Nhẫn Kim Cương Vàng Trắng Nữ 24K ', N'Vàng Trắng Ý', 206200000, 
+     '~/Content/Images/Nhan/nu5/1.png', 
+     '~/Content/Images/Nhan/nu5/2.png;~/Content/Images/Nhan/nu5/3.png;~/Content/Images/Nhan/nu5/4.jpg;~/Content/Images/Nhan/nu5/5.jpg;~/Content/Images/Nhan/nu5/6.jpg;', 
+     N'Vàng Trắng ', N'Nhẫn', GETDATE())
