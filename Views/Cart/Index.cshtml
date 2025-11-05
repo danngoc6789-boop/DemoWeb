@@ -115,11 +115,13 @@ else
                                             Mã sp: @item.ProductId
                                         </div>
 
-                                        <!-- Nếu sau này có ảnh thật -->
-                                        <div class="product-img-fake"
-                                             style="max-width:140px; height:80px; font-size:.7rem; margin-top:8px;">
-                                            Ảnh sản phẩm
+                                        <!-- Hiển thị ảnh thật -->
+                                        <div style="margin-top:8px;">
+                                            <img src="@Url.Content(item.ImagePath)"
+                                                 alt="@item.Name"
+                                                 style="width:140px; height:80px; object-fit:cover; border-radius:6px; border:1px solid #eee;" />
                                         </div>
+
                                     </td>
 
                                     <td style="white-space:nowrap; font-weight:600; color:#000;">
@@ -149,8 +151,9 @@ else
                                     </td>
 
                                     <td style="white-space:nowrap;">
-                                        <a href="@Url.Action("Remove","Cart", new { id = item.ProductId })"
-                                           style="font-size:.75rem; color:#c00; font-weight:500; text-decoration:none;">
+                                        <a href="javascript:void(0);"
+                                           onclick="confirmDelete(@item.ProductId, '@item.Name')"
+                                           style="font-size:.75rem; color:#c00; font-weight:500; text-decoration:none; cursor:pointer;">
                                             Xóa
                                         </a>
                                     </td>
@@ -180,6 +183,13 @@ else
             </div>
         </div>
     </div>
+    <script>
+    function confirmDelete(productId, productName) {
+        if (confirm('Bạn có chắc chắn muốn xóa sản phẩm "' + productName + '" khỏi giỏ hàng?')) {
+            window.location.href = '@Url.Action("Remove", "Cart")?id=' + productId;
+        }
+    }
+    </script>
 }
 
 

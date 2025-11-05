@@ -179,7 +179,17 @@ VALUES
      '~/Content/Images/Kieng/5/2.png;~/Content/Images/Kieng/5/3.npg;~/Content/Images/Kieng/5/4.jpg;', 
      N'Vàng 24K', N'Kiềng', GETDATE())
 
+UPDATE Products 
+SET Name = N'Dây Chuyền Vàng Mắt Xích 24K Nam',
+    Description = N'Dây Chuyền Vàng 24K',
+    Price = 2990000
+WHERE Id = 1042;
 
-
+UPDATE Products 
+SET Name = N'Kiềng Cưới Vàng Lá Ngọc Cành Vàng 24k',
+    Description = N'Kiềng Vàng 24K',
+    Price = 13499000
+WHERE Id = 1055;
+SELECT * FROM PRODUCTS
 
 	 

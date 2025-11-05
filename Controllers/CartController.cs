@@ -8,6 +8,8 @@ namespace DemoWeb.Controllers
 {
     public class CartController : Controller
     {
+        private readonly AppDbContext db = new AppDbContext();
+
         // Lấy cart từ Session, nếu chưa có thì tạo list rỗng
         private List<CartItem> GetCart()
         {
@@ -85,11 +87,16 @@ namespace DemoWeb.Controllers
         // Sau này gọi từ product detail
         public ActionResult AddToCart(int id)
         {
-            // TODO: sau này bạn lấy sản phẩm thật từ DB
-            // Hiện tại ví dụ tạm: nếu có rồi thì +1, nếu chưa có thì thêm mới
-
             var cart = GetCart();
 
+            // Lấy sản phẩm thật từ database
+            var product = db.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return HttpNotFound(); // Nếu không tìm thấy thì báo lỗi
+            }
+
+            // Kiểm tra xem sản phẩm đã có trong giỏ chưa
             var line = cart.FirstOrDefault(x => x.ProductId == id);
             if (line != null)
             {
@@ -97,12 +104,13 @@ namespace DemoWeb.Controllers
             }
             else
             {
+                // Thêm sản phẩm mới với dữ liệu từ DB
                 cart.Add(new CartItem
                 {
-                    ProductId = id,
-                    Name = "Sản phẩm demo " + id,
-                    ImagePath = null,
-                    Price = 5000000m,
+                    ProductId = product.Id,
+                    Name = product.Name,
+                    ImagePath = product.MainImage, // đường dẫn hình trong CSDL
+                    Price = product.Price,
                     Quantity = 1
                 });
             }

@@ -32,9 +32,16 @@ namespace DemoWeb.Models
             [StringLength(2000)]
             public string Images { get; set; }
 
-            public string HoverImage { get; set; }
+            
 
-            [StringLength(50)]
+            [NotMapped]
+            public string ImagePath
+            {
+                get { return MainImage; }
+            }
+
+
+        [StringLength(50)]
             public string Type { get; set; }
 
             [StringLength(100)]
