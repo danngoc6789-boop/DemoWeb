@@ -14,6 +14,9 @@ namespace DemoWeb.Models
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -22,5 +25,6 @@ namespace DemoWeb.Models
             modelBuilder.Entity<Product>().Ignore(p => p.ImageList);
             modelBuilder.Entity<Product>().Ignore(p => p.MainImage);
         }
+
     }
 }

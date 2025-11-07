@@ -1,0 +1,34 @@
+﻿@model DemoWeb.Models.ApplicationUser
+@{
+    ViewBag.Title = "Đăng ký tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName)
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Họ tên")
+        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Mật khẩu</label>
+        <input type="password" name="Password" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Đăng ký</button>
+}

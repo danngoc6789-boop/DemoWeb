@@ -314,3 +314,59 @@ VALUES
      '~/Content/Images/Nhan/nu5/1.png', 
      '~/Content/Images/Nhan/nu5/2.png;~/Content/Images/Nhan/nu5/3.png;~/Content/Images/Nhan/nu5/4.jpg;~/Content/Images/Nhan/nu5/5.jpg;~/Content/Images/Nhan/nu5/6.jpg;', 
      N'Vàng Trắng ', N'Nhẫn', GETDATE())
+
+
+select*from Products
+
+INSERT INTO [DemoWebDb].[dbo].[Products] 
+    (Name, Description, Price, Image, Images, Type, Category, CreatedDate)
+VALUES 
+    (N' Vòng Tay Vàng Trắng Đính Đá 14K ', N'Vàng Trắng', 24589999, 
+     '~/Content/Images/Vong/1/1.png', 
+     '~/Content/Images/Vong/1/2.png;~/Content/Images/Vong/1/3.jpg;~/Content/Images/Vong/1/4.jpg;~/Content/Images/Vong/1/5.jpg;', 
+     N'Vàng Trắng ', N'Vòng', GETDATE()),
+
+	 (N' Vòng Tay Kim Cương Vàng Trắng 18K ', N'Vàng Trắng', 139589999, 
+     '~/Content/Images/Vong/2/1.png', 
+     '~/Content/Images/Vong/2/2.png;~/Content/Images/Vong/2/3.jpg;~/Content/Images/Vong/2/4.jpg;', 
+     N'Vàng Trắng ', N'Vòng', GETDATE()),
+
+	 (N'Vỏ Vòng Tay Kim Cương Vàng Trắng 18K ', N'Vàng Trắng', 183589999, 
+     '~/Content/Images/Vong/3/1.png', 
+     '~/Content/Images/Vong/3/2.png;~/Content/Images/Vong/3/3.png;~/Content/Images/Vong/3/4.jpg;~/Content/Images/Vong/3/5.jpg;~/Content/Images/Vong/3/6.jpg;', 
+     N'Vàng Trắng ', N'Vòng', GETDATE()),
+
+	 (N'Vòng Tay Cưới Vàng 18K Đính Đá Aventurine Lá Ngọc Cành Vàng ', N'Vàng 18K', 69589999, 
+     '~/Content/Images/Vong/4/1.png', 
+     '~/Content/Images/Vong/4/2.png;~/Content/Images/Vong/4/3.jpg;', 
+     N'Vàng 18K ', N'Vòng', GETDATE()),
+
+	 (N'Vòng Tay Cưới Kim Cương Vàng Trắng 14K  Lá Ngọc Cành Vàng ', N'Vàng Trắng', 271589999, 
+     '~/Content/Images/Vong/5/1.png', 
+     '~/Content/Images/Vong/5/2.png;~/Content/Images/Vong/5/3.jpg;~/Content/Images/Vong/5/4.jpg;~/Content/Images/Vong/5/5.jpg;~/Content/Images/Vong/5/6.jpg;', 
+     N'Vàng Trắng ', N'Vòng', GETDATE()),
+
+	 (N'Vòng Tay Kim Cương Vàng Trắng 14K  ', N'Vàng Trắng', 233589999, 
+     '~/Content/Images/Vong/6/1.png', 
+     '~/Content/Images/Vong/6/2.png;~/Content/Images/Vong/6/3.jpg;~/Content/Images/Vong/6/4.jpg;~/Content/Images/Vong/6/5.jpg;~/Content/Images/Vong/6/6.jpg;', 
+     N'Vàng Trắng ', N'Vòng', GETDATE()),
+
+	 (N'Vòng Tay Vàng Trắng Ý 18K  ', N'Vàng Trắng Ý', 71569999, 
+     '~/Content/Images/Vong/7/1.png', 
+     '~/Content/Images/Vong/7/2.jpg;~/Content/Images/Vong/7/3.jpg;~/Content/Images/Vong/7/4.jpg;', 
+     N'Vàng Trắng ', N'Vòng', GETDATE()),
+
+	 (N'Vòng Tay Bạc Ý Cỏ Bốn Lá ', N'Bạc Ý', 16589999, 
+     '~/Content/Images/Vong/8/1.png', 
+     '~/Content/Images/Vong/8/2.png;~/Content/Images/Vong/8/3.jpg;~/Content/Images/Vong/8/4.jpg;~/Content/Images/Vong/8/5.jpg;', 
+     N'Bạc Ý ', N'Vòng', GETDATE()),
+
+	 (N'Vòng Tay Vàng 18K Đính Đá ', N'Vàng 18K', 71589999, 
+     '~/Content/Images/Vong/9/1.png', 
+     '~/Content/Images/Vong/9/2.png;~/Content/Images/Vong/9/3.jpg;~/Content/Images/Vong/9/4.jpg;~/Content/Images/Vong/9/5.jpg;', 
+     N'Vàng 18K ', N'Vòng', GETDATE()),
+
+	 (N'Vòng Tay Vàng 24K Đính Đá ', N'Vàng 24K', 81589999, 
+     '~/Content/Images/Vong/10/1.png', 
+     '~/Content/Images/Vong/10/2.png;~/Content/Images/Vong/10/3.jpg;~/Content/Images/Vong/10/4.jpg;~/Content/Images/Vong/10/5.jpg;', 
+     N'Vàng 24K ', N'Vòng', GETDATE())

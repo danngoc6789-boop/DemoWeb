@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/Checkout.css" rel="stylesheet" />
+
+<div class="checkout-container">
+    <h2>Thanh toán</h2>
+
+    @using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label>Họ tên</label>
+            <input type="text" name="CustomerName" required placeholder="Nhập họ tên của bạn" />
+        </div>
+
+        <div class="form-group">
+            <label>Địa chỉ</label>
+            <input type="text" name="Address" required placeholder="Nhập địa chỉ giao hàng" />
+        </div>
+
+        <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="tel" name="Phone" required placeholder="Nhập số điện thoại" />
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="Email" required placeholder="Nhập email của bạn" />
+        </div>
+
+        <button type="submit" class="btn-order">Đặt hàng</button>
+    }
+</div>

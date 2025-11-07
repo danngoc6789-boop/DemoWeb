@@ -76,11 +76,6 @@ namespace DemoWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        // Trang checkout (chưa build)
-        public ActionResult Checkout()
-        {
-            return Content("Trang thanh toán (đang xây dựng)");
-        }
 
         // (Chuẩn bị cho bước sau)
         // /Cart/AddToCart/5
@@ -117,5 +112,67 @@ namespace DemoWeb.Controllers
 
             return RedirectToAction("Index");
         }
+        // Trang hiển thị form thanh toán
+        [HttpGet]
+        public ActionResult Checkout()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Checkout(string CustomerName, string Address, string Phone, string Email)
+        {
+            var cart = GetCart();
+            if (cart == null || !cart.Any())
+            {
+                ViewBag.Error = "Giỏ hàng của bạn đang trống.";
+                return View();
+            }
+
+            // Tính tổng tiền
+            decimal totalAmount = cart.Sum(x => x.ThanhTien);
+
+            // Tạo mã đơn tự động: ORD + yyyyMMdd + 4 số Id
+            string orderCode = "ORD" + DateTime.Now.ToString("yyyyMMddHHmmss");
+
+            // Tạo đơn hàng
+            var order = new Order
+            {
+                CustomerName = CustomerName,
+                Address = Address,
+                Phone = Phone,
+                Email = Email,
+                OrderDate = DateTime.Now,
+                TotalAmount = totalAmount,
+                OrderCode = orderCode
+            };
+
+            db.Orders.Add(order);
+            db.SaveChanges(); // Lưu để lấy Id
+
+            // Lưu chi tiết sản phẩm
+            // Lưu chi tiết sản phẩm
+            foreach (var item in cart)
+            {
+                var detail = new OrderDetail
+                {
+                    OrderId = order.Id,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.Price
+
+                };
+                db.OrderDetails.Add(detail);
+            }
+
+            db.SaveChanges();
+
+            // Xóa giỏ hàng
+            Session["Cart"] = null;
+
+            ViewBag.OrderCode = orderCode;
+            return View("Success"); // hiển thị trang thành công
+        }
+
     }
 }
