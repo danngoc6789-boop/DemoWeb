@@ -370,3 +370,30 @@ VALUES
      '~/Content/Images/Vong/10/1.png', 
      '~/Content/Images/Vong/10/2.png;~/Content/Images/Vong/10/3.jpg;~/Content/Images/Vong/10/4.jpg;~/Content/Images/Vong/10/5.jpg;', 
      N'Vàng 24K ', N'Vòng', GETDATE())
+ALTER TABLE Products ADD Gender NVARCHAR(50) NULL;
+
+-- Cập nhật loại vàng
+UPDATE Products
+SET Name = N' Nhẫn Kim Cương Vàng Ý 18K Nam   ', Type = N'Vàng 18K', Description =N'Vàng Ý'
+WHERE Id = 1073;
+
+UPDATE Products
+SET Description=N'Bạc Ý', Type =N'Bạc Ý'
+WHERE Id = 1061; 
+
+UPDATE Products
+SET Type = N'Vàng 14K' ,Description=N'Vàng 14K'
+WHERE Id = 1054;
+
+UPDATE Products
+SET Name = N' Nhẫn Kim Cương Vàng Trắng 18K Nam  ',Type =N'Vàng 18K'
+WHERE Id = 1072;
+
+-- Cập nhật giới tính
+UPDATE Products
+SET Gender = 'nam'
+WHERE Id = 1;
+
+UPDATE Products
+SET Gender = 'nu'
+WHERE Id = 2;

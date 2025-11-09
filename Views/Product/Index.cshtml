@@ -15,226 +15,269 @@
     </div>
 }
 
-<!-- KHỐI TIÊU ĐỀ + LỌC -->
-<div class="row" style="margin-bottom:24px;">
-    <div class="col-md-8">
-        <div class="hero-eyebrow" style="margin-bottom:4px;">
-            Bộ sưu tập
+
+<div class="container">
+    <!-- HERO SECTION -->
+    <!-- BỘ LỌC NGANG -->
+    <div style="background:#fff; border:1px solid #e9ecef; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:2rem; margin-bottom:3rem;">
+        <div style="margin-bottom:1.5rem;">
+            <h3 style="font-size:0.85rem; font-weight:700; letter-spacing:0.1em; color:#d4af37; text-transform:uppercase; margin:0; padding-bottom:0.75rem; border-bottom:2px solid #d4af37; display:inline-block;">
+                Bộ lọc sản phẩm
+            </h3>
         </div>
 
-        <div class="hero-headline" style="margin-bottom:8px;">
-            Trang sức vàng cao cấp.
-            <span class="hl-gold">Đẹp & chuẩn tuổi.</span>
-        </div>
+        <form method="get" action="@Url.Action("Index","Product")">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
 
-        <div class="hero-subtitle" style="margin-bottom:12px;">
-            Lắc tay nam 24K, nhẫn cưới, dây chuyền nữ, vòng phong thủy...
-            Chọn mẫu bạn thích, hoặc ghé cửa hàng để thử form tay thật.
-        </div>
-    </div>
-
-    <!-- Bộ lọc nhỏ bên phải -->
-    <div class="col-md-4">
-        <div class="product-card" style="margin-bottom:0; text-align:left;">
-            <div style="font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--brand-gold); margin-bottom:12px;">
-                Lọc nhanh
-            </div>
-
-            <form method="get" action="@Url.Action("Index","Product")">
-                <div style="margin-bottom:12px;">
-                    <label style="display:block; font-size:.8rem; font-weight:500; color:#000; margin-bottom:4px;">
+                <!-- Loại vàng -->
+                <div>
+                    <label style="display:block; font-size:0.875rem; font-weight:600; color:#333; margin-bottom:0.5rem;">
                         Loại vàng
                     </label>
-                    <select name="loai" style="width:100%; border:1px solid var(--border-soft); border-radius:8px; padding:.5rem .75rem; font-size:.85rem; line-height:1.2rem;">
+                    <select name="loai" style="width:100%; padding:0.75rem 1rem; border:1px solid #e9ecef; border-radius:8px; font-size:0.95rem; color:#333; background-color:#fafafa; cursor:pointer;">
                         <option value="">Tất cả</option>
-                        <option value="24k" @(ViewBag.CurrentLoai == "24k" ? "selected" : "")>Vàng 24K</option>
-                        <option value="18k" @(ViewBag.CurrentLoai == "18k" ? "selected" : "")>Vàng 18K</option>
-                        <option value="16k" @(ViewBag.CurrentLoai == "16k" ? "selected" : "")>Vàng 16K</option>
-                        <option value="10k" @(ViewBag.CurrentLoai == "10k" ? "selected" : "")>Vàng 10K</option>
+                        <option value="Vàng 24K" @(ViewBag.CurrentLoai == "Vàng 24K" ? "selected" : "")>Vàng 24K</option>
+                        <option value="Vàng 18K" @(ViewBag.CurrentLoai == "Vàng 18K" ? "selected" : "")>Vàng 18K</option>
+                        <option value="Vàng 14K" @(ViewBag.CurrentLoai == "Vàng 14K" ? "selected" : "")>Vàng 14K</option>
+                        <option value="Vàng 10K" @(ViewBag.CurrentLoai == "Vàng 10K" ? "selected" : "")>Vàng 10K</option>
+                        <option value="Vàng Ý 24K" @(ViewBag.CurrentLoai == "Vàng Ý 24K" ? "selected" : "")>Vàng Ý 24K</option>
+                        <option value="Vàng Ý 18K" @(ViewBag.CurrentLoai == "Vàng Ý 18K" ? "selected" : "")>Vàng Ý 18K</option>
+                        <option value="Vàng Ý 14K" @(ViewBag.CurrentLoai == "Vàng Ý 14K" ? "selected" : "")>Vàng Ý 14K</option>
+                        <option value="Vàng Ý 10K" @(ViewBag.CurrentLoai == "Vàng Ý 10K" ? "selected" : "")>Vàng Ý 10K</option>
+                        <option value="Vàng Trắng 24K" @(ViewBag.CurrentLoai == "Vàng Trắng 24K" ? "selected" : "")>Vàng Trắng 24K</option>
+                        <option value="Vàng Trắng 18K" @(ViewBag.CurrentLoai == "Vàng Trắng 18K" ? "selected" : "")>Vàng Trắng 18K</option>
+                        <option value="Vàng Trắng 14K" @(ViewBag.CurrentLoai == "Vàng Trắng 14K" ? "selected" : "")>Vàng Trắng 14K</option>
+                        <option value="Vàng Trắng 10K" @(ViewBag.CurrentLoai == "Vàng Trắng 10K" ? "selected" : "")>Vàng Trắng 10K</option>
+                        <option value="Vàng Trắng Ý 24K" @(ViewBag.CurrentLoai == "Vàng Trắng Ý 24K" ? "selected" : "")>Vàng Trắng Ý 24K</option>
+                        <option value="Vàng Trắng Ý 18K" @(ViewBag.CurrentLoai == "Vàng Trắng Ý 18K" ? "selected" : "")>Vàng Trắng Ý 18K</option>
+                        <option value="Vàng Trắng Ý 14K" @(ViewBag.CurrentLoai == "Vàng Trắng Ý 14K" ? "selected" : "")>Vàng Trắng Ý 14K</option>
+                        <option value="Vàng Trắng Ý 10K" @(ViewBag.CurrentLoai == "Vàng Trắng Ý 10K" ? "selected" : "")>Vàng Trắng Ý 10K</option>
+                        <option value="Bạc" @(ViewBag.CurrentLoai == "Bạc" ? "selected" : "")>Bạc</option>
+                        <option value="Bạc Ý" @(ViewBag.CurrentLoai == "Bạc Ý" ? "selected" : "")>Bạc Ý</option>
+
+
                     </select>
                 </div>
 
-                <div style="margin-bottom:16px;">
-                    <label style="display:block; font-size:.8rem; font-weight:500; color:#000; margin-bottom:4px;">
+                <!-- Giới tính -->
+                <div>
+                    <label style="display:block; font-size:0.875rem; font-weight:600; color:#333; margin-bottom:0.5rem;">
+                        Dành cho
+                    </label>
+                    <select name="gender" style="width:100%; padding:0.75rem 1rem; border:1px solid #e9ecef; border-radius:8px; font-size:0.95rem; color:#333; background-color:#fafafa; cursor:pointer;">
+                        <option value="">Tất cả</option>
+                        <option value="Nam" @(ViewBag.CurrentGender == "Nam" ? "selected" : "")>Nam</option>
+                        <option value="Nữ" @(ViewBag.CurrentGender == "Nữ" ? "selected" : "")>Nữ</option>
+                        <option value="Unisex" @(ViewBag.CurrentGender == "Unisex" ? "selected" : "")>Unisex</option>
+                    </select>
+                </div>
+
+                <!-- Loại sản phẩm -->
+                <div>
+                    <label style="display:block; font-size:0.875rem; font-weight:600; color:#333; margin-bottom:0.5rem;">
+                        Loại sản phẩm
+                    </label>
+                    <select name="category" style="width:100%; padding:0.75rem 1rem; border:1px solid #e9ecef; border-radius:8px; font-size:0.95rem; color:#333; background-color:#fafafa; cursor:pointer;">
+                        <option value="">Tất cả</option>
+                        <option value="Nhẫn" @(ViewBag.CurrentCategory == "Nhẫn" ? "selected" : "")>Nhẫn</option>
+                        <option value="Dây Chuyền" @(ViewBag.CurrentCategory == "Dây Chuyền" ? "selected" : "")>Dây chuyền</option>
+                        <option value="Lắc" @(ViewBag.CurrentCategory == "Lắc" ? "selected" : "")>Lắc </option>
+                        <option value="Bông Tai" @(ViewBag.CurrentCategory == "Bông Tai" ? "selected" : "")>Bông tai</option>
+                        <option value="Vòng" @(ViewBag.CurrentCategory == "Vòng" ? "selected" : "")>Vòng</option>
+                    </select>
+                </div>
+
+                <!-- Khoảng giá -->
+                <div>
+                    <label style="display:block; font-size:0.875rem; font-weight:600; color:#333; margin-bottom:0.5rem;">
+                        Khoảng giá
+                    </label>
+                    <select name="price" style="width:100%; padding:0.75rem 1rem; border:1px solid #e9ecef; border-radius:8px; font-size:0.95rem; color:#333; background-color:#fafafa; cursor:pointer;">
+                        <option value="">Tất cả</option>
+                        <option value="0-5" @(ViewBag.CurrentPrice == "0-5" ? "selected" : "")>Dưới 5 triệu</option>
+                        <option value="5-10" @(ViewBag.CurrentPrice == "5-10" ? "selected" : "")>5 - 10 triệu</option>
+                        <option value="10-20" @(ViewBag.CurrentPrice == "10-20" ? "selected" : "")>10 - 20 triệu</option>
+                        <option value="20-50" @(ViewBag.CurrentPrice == "20-50" ? "selected" : "")>20 - 50 triệu</option>
+                        <option value="50-100" @(ViewBag.CurrentPrice == "50-100" ? "selected" : "")>50 - 100 triệu</option>
+                        <option value="100" @(ViewBag.CurrentPrice == "100" ? "selected" : "")>Trên 100 triệu</option>
+                    </select>
+                </div>
+
+                <!-- Tìm kiếm -->
+                <div style="grid-column: span 2;">
+                    <label style="display:block; font-size:0.875rem; font-weight:600; color:#333; margin-bottom:0.5rem;">
                         Tìm tên sản phẩm
                     </label>
                     <input name="q" type="text" value="@ViewBag.CurrentQ"
-                           placeholder="Ví dụ: nhẫn cưới"
-                           style="width:100%; border:1px solid var(--border-soft); border-radius:8px; padding:.5rem .75rem; font-size:.85rem; line-height:1.2rem;" />
-                </div>
-
-                <button type="submit"
-                        class="btn-round-black"
-                        style="width:100%; text-align:center;">
-                    Áp dụng lọc
-                </button>
-
-                @if (!string.IsNullOrEmpty(ViewBag.CurrentLoai) || !string.IsNullOrEmpty(ViewBag.CurrentQ))
-                {
-                    <a href="@Url.Action("Index")" class="btn btn-secondary" style="width:100%; margin-top:8px; display:block; text-align:center;">
-                        Xóa bộ lọc
-                    </a>
-                }
-            </form>
-        </div>
-    </div>
-</div>
-
-<hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
-<div class="d-flex justify-content-between align-items-center" style="margin-bottom:20px;">
-    <span class="section-heading">
-        Tất cả sản phẩm
-    </span>
-    <span style="font-size:0.9rem; color:#666;">
-        Hiển thị @Model.FirstItemOnPage - @Model.LastItemOnPage trong tổng số @Model.TotalItemCount sản phẩm
-    </span>
-</div>
-<!-- DANH SÁCH SẢN PHẨM -->
-
-
-<div class="row">
-    @if (Model != null && Model.Any())
-    {
-        foreach (var item in Model)
-        {
-            <div class="col-sm-6 col-md-4 col-lg-3 mb-4" style="display:flex; flex-direction:column;">
-                <div class="product-card"
-                     onclick="window.location='@Url.Action("Details","Product", new { id = item.Id })';"
-                     style="display:flex; flex-direction:column; height:100%; min-height:450px;">
-
-                    <!-- PHẦN ẢNH SẢN PHẨM -->
-                    <div class="product-img" style="height:220px; min-height:220px; flex-shrink:0;">
-                        @if (!string.IsNullOrEmpty(item.Image))
-                        {
-                            <img src="@Url.Content(item.Image)"
-                                 alt="@item.Name"
-                                 onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
-                        }
-                        else if (item.ImageList != null && item.ImageList.Any())
-                        {
-                            <img src="@Url.Content(item.ImageList[0])"
-                                 alt="@item.Name"
-                                 onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
-                        }
-                        else
-                        {
-                            <img src="@Url.Content("~/Content/Images/no-image.jpg")"
-                                 alt="No Image" />
-                        }
-                    </div>
-                    
-
-                    <!-- TÊN SẢN PHẨM -->
-                    <div class="product-name" style="min-height:2.8rem; max-height:2.8rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; margin-bottom:8px;">
-                        @item.Name
-                    </div>
-
-                    <!-- MÔ TẢ -->
-                    <div class="product-desc" style="min-height:2.6rem; max-height:2.6rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; margin-bottom:8px;">
-                        @if (!string.IsNullOrEmpty(item.Description))
-                        {
-                            @(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)
-                        }
-                        else
-                        {
-                            <text>Sản phẩm cao cấp, chất lượng</text>
-                        }
-                    </div>
-
-                    <!-- GIÁ -->
-                    <div class="product-price" style="min-height:1.4rem; margin-bottom:12px;">
-                        @if (item.Price > 0)
-                        {
-                            @item.Price.ToString("N0")<text>₫</text>
-                        }
-                        else
-                        {
-                            <text>Liên hệ báo giá</text>
-                        }
-                    </div>
-
-                    <!-- BUTTON THÊM VÀO GIỎ -->
-                    <a href="@Url.Action("AddToCart","Cart", new { id = item.Id })"
-                       class="btn-add-cart"
-                       onclick="event.stopPropagation();"
-                       style="background-color:var(--brand-gold); color:#000; display:block; padding:.5rem .75rem; border-radius:8px; text-decoration:none; margin-top:auto; text-align:center;">
-                        Thêm vào giỏ
-                    </a>
+                           placeholder="Nhập từ khóa..."
+                           style="width:100%; padding:0.75rem 1rem; border:1px solid #e9ecef; border-radius:8px; font-size:0.95rem; color:#333; background-color:#fafafa;" />
                 </div>
             </div>
-        }
-    }
-    else
-    {
-        <div class="col-12 text-center" style="padding:60px 20px;">
-            <i class="fas fa-search" style="font-size:4rem; color:#ccc; margin-bottom:20px;"></i>
-            <p style="font-size:1.3rem; color:#666; margin-bottom:10px;">Không tìm thấy sản phẩm nào</p>
-            <p style="font-size:1rem; color:#999;">Vui lòng thử tìm kiếm với từ khóa khác</p>
-            <a href="@Url.Action("Index")" class="btn btn-primary" style="margin-top:20px;">Xem tất cả sản phẩm</a>
-        </div>
-    }
-</div>
 
-<hr style="border-top:1px solid var(--border-soft); margin:32px 0;" />
+            <!-- Buttons -->
+            <div style="display:flex; gap:1rem; justify-content:flex-end;">
+                <button type="submit" style="background-color:#d4af37; color:#000; border:none; border-radius:8px; padding:0.875rem 2rem; font-size:0.875rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; cursor:pointer; transition:all 0.3s ease;">
+                    ÁP DỤNG LỌC
+                </button>
 
-<!-- PHÂN TRANG -->
-@if (Model != null && Model.PageCount > 1)
-{
-    <nav aria-label="Page navigation" style="margin: 40px 0;">
-        <ul class="pagination justify-content-center">
-            <!-- First Page -->
-            <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
-                <a class="page-link"
-                   href="@(Model.HasPreviousPage ? Url.Action("Index", new { page = 1, loai = ViewBag.CurrentLoai, q = ViewBag.CurrentQ }) : "javascript:void(0)")">
-                    &laquo;&laquo;
-                </a>
-            </li>
+                @if (!string.IsNullOrEmpty(ViewBag.CurrentLoai) ||
+                     !string.IsNullOrEmpty(ViewBag.CurrentGender) ||
+                     !string.IsNullOrEmpty(ViewBag.CurrentCategory) ||
+                     !string.IsNullOrEmpty(ViewBag.CurrentPrice) ||
+                     !string.IsNullOrEmpty(ViewBag.CurrentQ))
+                {
+                    <a href="@Url.Action("Index")" style="background-color:transparent; color:#666; border:1px solid #e9ecef; border-radius:8px; padding:0.875rem 1.5rem; font-size:0.875rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; transition:all 0.3s ease;">
+                        XÓA BỘ LỌC
+                    </a>
+                }
+            </div>
+        </form>
+    </div>
 
-            <!-- Previous -->
-            <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
-                <a class="page-link"
-                   href="@(Model.HasPreviousPage ? Url.Action("Index", new { page = Model.PageNumber - 1, loai = ViewBag.CurrentLoai, q = ViewBag.CurrentQ }) : "javascript:void(0)")">
-                    &laquo;
-                </a>
-            </li>
+    <!-- SECTION HEADER -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid #e9ecef;">
+        <h2 style="font-size:0.95rem; font-weight:700; color:#d4af37; letter-spacing:0.08em; text-transform:uppercase; margin:0;">
+            TẤT CẢ SẢN PHẨM
+        </h2>
+        <span style="font-size:0.9rem; color:#666;">
+            Hiển thị @Model.FirstItemOnPage - @Model.LastItemOnPage trong tổng số @Model.TotalItemCount sản phẩm
+        </span>
+    </div>
 
-            @{
-                int startPage = Math.Max(1, Model.PageNumber - 2);
-                int endPage = Math.Min(Model.PageCount, Model.PageNumber + 2);
-            }
-
-            <!-- Page Numbers -->
-            @for (int i = startPage; i <= endPage; i++)
+    <!-- DANH SÁCH SẢN PHẨM -->
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
             {
-                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-4" style="display:flex; flex-direction:column;">
+                    <div class="product-card"
+                         onclick="window.location='@Url.Action("Details","Product", new { id = item.Id })';"
+                         style="display:flex; flex-direction:column; height:100%; min-height:450px; cursor:pointer;">
+
+                        <!-- PHẦN ẢNH SẢN PHẨM -->
+                        <div class="product-img" style="height:220px; min-height:220px; flex-shrink:0;">
+                            @if (!string.IsNullOrEmpty(item.Image))
+                            {
+                                <img src="@Url.Content(item.Image)"
+                                     alt="@item.Name"
+                                     onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
+                            }
+                            else if (item.ImageList != null && item.ImageList.Any())
+                            {
+                                <img src="@Url.Content(item.ImageList[0])"
+                                     alt="@item.Name"
+                                     onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/Content/Images/no-image.jpg")"
+                                     alt="No Image" />
+                            }
+                        </div>
+
+                        <!-- TÊN SẢN PHẨM -->
+                        <div class="product-name" style="min-height:2.8rem; max-height:2.8rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; margin-bottom:8px;">
+                            @item.Name
+                        </div>
+
+                        <!-- MÔ TẢ -->
+                        <div class="product-desc" style="min-height:2.6rem; max-height:2.6rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; margin-bottom:8px;">
+                            @if (!string.IsNullOrEmpty(item.Description))
+                            {
+                                @(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)
+                            }
+                            else
+                            {
+                                <text>Sản phẩm cao cấp, chất lượng</text>
+                            }
+                        </div>
+
+                        <!-- GIÁ -->
+                        <div class="product-price" style="min-height:1.4rem; margin-bottom:12px;">
+                            @if (item.Price > 0)
+                            {
+                                @item.Price.ToString("N0")<text>₫</text>
+                            }
+                            else
+                            {
+                                <text>Liên hệ báo giá</text>
+                            }
+                        </div>
+
+                        <!-- BUTTON THÊM VÀO GIỎ -->
+                        <a href="@Url.Action("AddToCart","Cart", new { id = item.Id })"
+                           class="btn-add-cart"
+                           onclick="event.stopPropagation();"
+                           style="background-color:var(--brand-gold); color:#000; display:block; padding:.5rem .75rem; border-radius:8px; text-decoration:none; margin-top:auto; text-align:center;">
+                            Thêm vào giỏ
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center" style="padding:60px 20px;">
+                <i class="fas fa-search" style="font-size:4rem; color:#ccc; margin-bottom:20px;"></i>
+                <p style="font-size:1.3rem; color:#666; margin-bottom:10px;">Không tìm thấy sản phẩm nào</p>
+                <p style="font-size:1rem; color:#999;">Vui lòng thử tìm kiếm với từ khóa khác</p>
+                <a href="@Url.Action("Index")" class="btn btn-primary" style="margin-top:20px;">Xem tất cả sản phẩm</a>
+            </div>
+        }
+    </div>
+
+    <!-- PHÂN TRANG -->
+    @if (Model != null && Model.PageCount > 1)
+    {
+        <nav aria-label="Page navigation" style="margin: 40px 0;">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
                     <a class="page-link"
-                       href="@Url.Action("Index", new { page = i, loai = ViewBag.CurrentLoai, q = ViewBag.CurrentQ })">
-                        @i
+                       href="@(Model.HasPreviousPage ? Url.Action("Index", new { page = 1, loai = ViewBag.CurrentLoai, gender = ViewBag.CurrentGender, category = ViewBag.CurrentCategory, price = ViewBag.CurrentPrice, q = ViewBag.CurrentQ }) : "javascript:void(0)")">
+                        &laquo;&laquo;
                     </a>
                 </li>
-            }
 
-            <!-- Next -->
-            <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
-                <a class="page-link"
-                   href="@(Model.HasNextPage ? Url.Action("Index", new { page = Model.PageNumber + 1, loai = ViewBag.CurrentLoai, q = ViewBag.CurrentQ }) : "javascript:void(0)")">
-                    &raquo;
-                </a>
-            </li>
+                <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+                    <a class="page-link"
+                       href="@(Model.HasPreviousPage ? Url.Action("Index", new { page = Model.PageNumber - 1, loai = ViewBag.CurrentLoai, gender = ViewBag.CurrentGender, category = ViewBag.CurrentCategory, price = ViewBag.CurrentPrice, q = ViewBag.CurrentQ }) : "javascript:void(0)")">
+                        &laquo;
+                    </a>
+                </li>
 
-            <!-- Last Page -->
-            <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
-                <a class="page-link"
-                   href="@(Model.HasNextPage ? Url.Action("Index", new { page = Model.PageCount, loai = ViewBag.CurrentLoai, q = ViewBag.CurrentQ }) : "javascript:void(0)")">
-                    &raquo;&raquo;
-                </a>
-            </li>
-        </ul>
-    </nav>
-}
-    
+                @{
+                    int startPage = Math.Max(1, Model.PageNumber - 2);
+                    int endPage = Math.Min(Model.PageCount, Model.PageNumber + 2);
+                }
 
+                @for (int i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link"
+                           href="@Url.Action("Index", new { page = i, loai = ViewBag.CurrentLoai, gender = ViewBag.CurrentGender, category = ViewBag.CurrentCategory, price = ViewBag.CurrentPrice, q = ViewBag.CurrentQ })">
+                            @i
+                        </a>
+                    </li>
+                }
 
+                <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                    <a class="page-link"
+                       href="@(Model.HasNextPage ? Url.Action("Index", new { page = Model.PageNumber + 1, loai = ViewBag.CurrentLoai, gender = ViewBag.CurrentGender, category = ViewBag.CurrentCategory, price = ViewBag.CurrentPrice, q = ViewBag.CurrentQ }) : "javascript:void(0)")">
+                        &raquo;
+                    </a>
+                </li>
+
+                <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+                    <a class="page-link"
+                       href="@(Model.HasNextPage ? Url.Action("Index", new { page = Model.PageCount, loai = ViewBag.CurrentLoai, gender = ViewBag.CurrentGender, category = ViewBag.CurrentCategory, price = ViewBag.CurrentPrice, q = ViewBag.CurrentQ }) : "javascript:void(0)")">
+                        &raquo;&raquo;
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>
 
 <!-- Thông báo thêm vào giỏ hàng -->
 @if (TempData["Message"] != null)
@@ -246,14 +289,13 @@
         </button>
     </div>
 }
+
 <style>
-    /* Force flexbox cho cols */
     .row > [class*="col-"] {
         display: flex;
         flex-direction: column;
     }
 
-    /* Force hover animation */
     .product-card:hover {
         transform: translateY(-8px) !important;
         box-shadow: 0 24px 48px rgba(0,0,0,0.15) !important;

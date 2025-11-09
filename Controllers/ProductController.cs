@@ -3,6 +3,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,33 +17,87 @@ namespace DemoWeb.Controllers
         private readonly AppDbContext db = new AppDbContext();
 
         // GET: Product/Index
-        public ActionResult Index(int? page, string loai, string q)
+        public ActionResult Index(string loai, string gender, string category, string price, string q, int? page)
         {
-            int pageSize = 12; // mỗi trang 12 sản phẩm
-            int pageNumber = (page ?? 1);
+                int pageSize = 12; // Mỗi trang 12 sản phẩm
+                int pageNumber = (page ?? 1);
 
-            var products = db.Products.AsQueryable();
+                var products = db.Products.AsQueryable();
 
-            // Bộ lọc loại vàng
-            if (!string.IsNullOrEmpty(loai))
-            {
-                products = products.Where(p => p.Type == loai);
-            }
+                // ===== LỌC LOẠI VÀNG =====
+                if (!string.IsNullOrEmpty(loai))
+                {
+                        string loaiLower = loai.ToLower();
+                        products = products.Where(p => p.Type.ToLower() == loaiLower);
+                }
 
-            // Tìm kiếm
-            if (!string.IsNullOrEmpty(q))
-            {
-                products = products.Where(p => p.Name.Contains(q));
-            }
+                // ===== LỌC GIỚI TÍNH =====
+                if (!string.IsNullOrEmpty(gender))
+                {
+                    if (gender == "unisex")
+                    {
+                        products = products.Where(p => p.Gender == "unisex");
+                    }
+                    else
+                    {
+                        // Lọc sản phẩm dành cho giới tính đó HOẶC unisex
+                        products = products.Where(p => p.Gender == gender || p.Gender == "unisex");
+                    }
+                }
 
-            ViewBag.CurrentLoai = loai;
-            ViewBag.CurrentQ = q;
+                // ===== LỌC LOẠI SẢN PHẨM =====
+                if (!string.IsNullOrEmpty(category))
+                {
+                    products = products.Where(p => p.Category.Contains(category));
+                }
 
-            // QUAN TRỌNG: phải chuyển sang ToPagedList
-            return View(products
-                .OrderByDescending(p => p.Id)
-                .ToPagedList(pageNumber, pageSize));
+                // ===== LỌC GIÁ =====
+                if (!string.IsNullOrEmpty(price))
+                {
+                    switch (price)
+                    {
+                        case "0-5":
+                            products = products.Where(p => p.Price > 0 && p.Price < 5000000);
+                            break;
+                        case "5-10":
+                            products = products.Where(p => p.Price >= 5000000 && p.Price < 10000000);
+                            break;
+                        case "10-20":
+                            products = products.Where(p => p.Price >= 10000000 && p.Price < 20000000);
+                            break;
+                        case "20-50":
+                            products = products.Where(p => p.Price >= 20000000 && p.Price < 50000000);
+                            break;
+                        case "50-100":
+                            products = products.Where(p => p.Price >= 50000000 && p.Price < 100000000);
+                            break;
+                        case "100":
+                            products = products.Where(p => p.Price >= 100000000);
+                            break;
+                    }
+                }
+
+                // ===== TÌM KIẾM =====
+                if (!string.IsNullOrEmpty(q))
+                {
+                    products = products.Where(p => p.Name.Contains(q));
+                }
+
+                // ===== GÁN LẠI VIEWBAG ĐỂ GIỮ TRẠNG THÁI FORM =====
+                ViewBag.CurrentLoai = loai;
+                ViewBag.CurrentGender = gender;
+                ViewBag.CurrentCategory = category;
+                ViewBag.CurrentPrice = price;
+                ViewBag.CurrentQ = q;
+
+                // ===== PHÂN TRANG & TRẢ VỀ VIEW =====
+                var pagedProducts = products
+                    .OrderByDescending(p => p.Id)
+                    .ToPagedList(pageNumber, pageSize);
+
+                return View(pagedProducts);
         }
+
         
         // GET: Product/Create
         public ActionResult Create()

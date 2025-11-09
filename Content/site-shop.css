@@ -467,7 +467,119 @@ a {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
+/* ========= BỘ LỌC SẢN PHẨM (Filter Sidebar) ========= */
+.filter-card {
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-card);
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    font-size: 0.9rem;
+}
 
+.filter-card-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--brand-gold);
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 6px;
+}
+
+.filter-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.filter-input,
+.filter-select {
+    width: 100%;
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.85rem;
+    line-height: 1.2rem;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+    .filter-input:hover,
+    .filter-select:hover {
+        border-color: var(--brand-gold);
+    }
+
+    .filter-input:focus,
+    .filter-select:focus {
+        outline: none;
+        border-color: var(--brand-gold);
+        box-shadow: 0 0 4px rgba(212, 175, 55, 0.4);
+    }
+
+/* Nút áp dụng lọc */
+.filter-apply-btn {
+    width: 100%;
+    background-color: var(--brand-gold);
+    border: none;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    color: #000;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .filter-apply-btn:hover {
+        background-color: #c29b30;
+    }
+
+/* Nút xóa lọc */
+.filter-reset-btn {
+    width: 100%;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+    border: 1px solid var(--brand-gold);
+    border-radius: 10px;
+    padding: 0.55rem 1rem;
+    font-weight: 600;
+    color: var(--brand-gold);
+    background: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+    .filter-reset-btn:hover {
+        background-color: #fff8e1;
+    }
+
+/* Responsive filter */
+@media (max-width: 768px) {
+    form > div:first-child {
+        grid-template-columns: 1fr !important;
+    }
+
+        form > div:first-child > div[style*="grid-column"] {
+            grid-column: span 1 !important;
+        }
+
+    form > div:nth-child(2) {
+        flex-direction: column !important;
+    }
+
+        form > div:nth-child(2) button,
+        form > div:nth-child(2) a {
+            width: 100% !important;
+            justify-content: center !important;
+        }
+}
 /* ========= PHÂN TRANG ========= */
 .pagination-container {
     margin: 40px 0;

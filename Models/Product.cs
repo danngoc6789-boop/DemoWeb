@@ -32,9 +32,9 @@ namespace DemoWeb.Models
             [StringLength(2000)]
             public string Images { get; set; }
 
-            
+        public string Gender { get; set; }
 
-            [NotMapped]
+        [NotMapped]
             public string ImagePath
             {
                 get { return MainImage; }
