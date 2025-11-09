@@ -374,26 +374,33 @@ ALTER TABLE Products ADD Gender NVARCHAR(50) NULL;
 
 -- Cập nhật loại vàng
 UPDATE Products
-SET Name = N' Nhẫn Kim Cương Vàng Ý 18K Nam   ', Type = N'Vàng 18K', Description =N'Vàng Ý'
-WHERE Id = 1073;
+SET Name = N'  Vòng Tay Vàng Trắng 14K Đính Đá   ', Type = N'Vàng 14K', Description =N'Vàng Trắng'
+WHERE Id = 1083;
 
 UPDATE Products
-SET Description=N'Bạc Ý', Type =N'Bạc Ý'
-WHERE Id = 1061; 
+SET  Type =N'Vàng Trắng 14K'
+WHERE Id = 1088; 
 
 UPDATE Products
-SET Type = N'Vàng 14K' ,Description=N'Vàng 14K'
-WHERE Id = 1054;
+SET  Type =N'Vàng Trắng Ý 18K'
+WHERE Id = 1089;
 
 UPDATE Products
-SET Name = N' Nhẫn Kim Cương Vàng Trắng 18K Nam  ',Type =N'Vàng 18K'
-WHERE Id = 1072;
+SET Name = N' Mặt Dây Chuyền Hình Tròn Vàng Trắng 24K Đính Đá   ',Type =N'Vàng Trắng 24K'
+WHERE Id = 1066;
 
 -- Cập nhật giới tính
 UPDATE Products
-SET Gender = 'nam'
-WHERE Id = 1;
+SET Gender = 'Unisex'
+WHERE Id = 1036;
 
 UPDATE Products
-SET Gender = 'nu'
-WHERE Id = 2;
+SET Gender = N'Nam'
+WHERE Id = 1074;
+
+UPDATE Products
+SET Gender = N'Nữ'
+WHERE Id = 1027;
+
+
+

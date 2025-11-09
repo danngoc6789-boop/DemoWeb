@@ -18,6 +18,8 @@ namespace DemoWeb.Models
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
 
+        public DbSet<GoldPrice> GoldPrices { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

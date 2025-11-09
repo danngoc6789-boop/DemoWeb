@@ -1,0 +1,31 @@
+﻿@model IEnumerable<DemoWeb.Models.GoldPrice>
+
+<h2>Bảng giá vàng hôm nay</h2>
+<a href="@Url.Action("UpdatePrices","Gold")" class="btn btn-warning">Cập nhật giá vàng mới</a>
+
+<div style="overflow-x:auto; margin-top:12px;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Loại vàng</th>
+                <th>Tuổi vàng</th>
+                <th>Giá mua</th>
+                <th>Giá bán</th>
+                <th>Thời gian</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var g in Model)
+            {
+                <tr>
+                    <td>@g.ProductName</td>
+                    <td>@g.Purity</td>
+                    <td>@g.BuyPrice.ToString("N0")₫</td>
+                    <td>@g.SellPrice.ToString("N0")₫</td>
+                    <td>@g.Timestamp.ToString("HH:mm dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
