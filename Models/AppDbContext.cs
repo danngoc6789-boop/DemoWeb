@@ -1,16 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using System.Data.Entity;
 
 namespace DemoWeb.Models
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
-        
+       
         public AppDbContext() : base("DefaultConnection")
-        {
+        { 
         }
 
         public DbSet<Product> Products { get; set; }
@@ -19,6 +20,7 @@ namespace DemoWeb.Models
 
 
         public DbSet<GoldPrice> GoldPrices { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

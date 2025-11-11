@@ -6,7 +6,8 @@ namespace DemoWeb.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext() : base("DefaultConnection")
-        {
+        {// TẮT VALIDATION - THÊM DÒNG NÀY
+            Database.SetInitializer<ApplicationDbContext>(null);
         }
 
         public static ApplicationDbContext Create()

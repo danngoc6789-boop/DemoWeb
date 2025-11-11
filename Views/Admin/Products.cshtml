@@ -1,0 +1,195 @@
+﻿@model IEnumerable<DemoWeb.Models.Product>
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-box"></i> QUẢN LÝ SẢN PHẨM</h2>
+        <a href="@Url.Action("Create")" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Thêm sản phẩm mới
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <strong>@TempData["SuccessMessage"]</strong>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    }
+
+    <!-- Tìm kiếm và lọc -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" action="@Url.Action("Products")" class="form-inline">
+                <div class="form-group mr-2">
+                    <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="@ViewBag.Search" />
+                </div>
+                <div class="form-group mr-2">
+                    <select name="category" class="form-control">
+                        <option value="">-- Tất cả danh mục --</option>
+                        @if (ViewBag.Categories != null)
+                        {
+                            foreach (var cat in ViewBag.Categories)
+                            {
+                                <option value="@cat" selected="@(ViewBag.Category == cat ? "selected" : null)">@cat</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+                <a href="@Url.Action("Products")" class="btn btn-secondary ml-2">
+                    <i class="fas fa-redo"></i> Reset
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bảng sản phẩm -->
+    <div class="card shadow">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">
+                Danh sách sản phẩm
+                @if (ViewBag.TotalItems != null)
+                {
+                    <span class="badge badge-light">@ViewBag.TotalItems sản phẩm</span>
+                }
+            </h6>
+        </div>
+        <div class="card-body">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th width="5%">ID</th>
+                                <th width="10%">Hình ảnh</th>
+                                <th width="25%">Tên sản phẩm</th>
+                                <th width="15%">Danh mục</th>
+                                <th width="10%">Giá</th>
+                                <th width="8%">Tồn kho</th>
+                                <th width="12%">Ngày tạo</th>
+                                <th width="15%">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">@item.ProductId</td>
+                                    <td class="text-center">
+                                        @if (!string.IsNullOrEmpty(item.Images))
+                                        {
+                                            <img src="@item.Images" alt="@item.Name" style="max-width: 80px; max-height: 80px;" class="img-thumbnail" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Content/images/no-image.png" alt="No image" style="max-width: 80px; max-height: 80px;" class="img-thumbnail" />
+                                        }
+                                    </td>
+                                    <td>
+                                        <strong>@item.Name</strong>
+                                        @if (!string.IsNullOrEmpty(item.Description))
+                                        {
+                                            <br /><small class="text-muted">@(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)</small>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-info">@item.Category</span>
+                                    </td>
+                                    <td class="text-right">
+                                        <strong class="text-danger">@item.Price.ToString("N0")đ</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.StockQuantity <= 5)
+                                        {
+                                            <span class="badge badge-danger badge-lg">@item.StockQuantity</span>
+                                        }
+                                        else if (item.StockQuantity <= 10)
+                                        {
+                                            <span class="badge badge-warning badge-lg">@item.StockQuantity</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-success badge-lg">@item.StockQuantity</span>
+                                        }
+                                    </td>
+                                    <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="@Url.Action("Details", new { id = item.ProductId })" class="btn btn-sm btn-info" title="Xem chi tiết">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="@Url.Action("Edit", new { id = item.ProductId })" class="btn btn-sm btn-warning" title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteProduct(@item.ProductId)" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Phân trang -->
+                @if (ViewBag.TotalPages > 1)
+                {
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("Products", new { page = i, search = ViewBag.Search, category = ViewBag.Category })">@i</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning text-center">
+                    <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                    <h4>Không tìm thấy sản phẩm nào</h4>
+                    <p>Hãy thêm sản phẩm mới để bắt đầu</p>
+                    <a href="@Url.Action("Create")" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Thêm sản phẩm đầu tiên
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function deleteProduct(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                $.ajax({
+                    url: '@Url.Action("DeleteProduct")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload();
+                        } else {
+                            alert('Lỗi: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Có lỗi xảy ra khi xóa sản phẩm!');
+                    }
+                });
+            }
+        }
+    </script>
+}

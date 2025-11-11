@@ -1,163 +1,135 @@
-﻿
+﻿@model List<DemoWeb.Models.GoldPrice>
 @{
-    ViewBag.Title = "BangGia";
+    ViewBag.Title = "Bảng Giá Vàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section Breadcrumb {
-    <div class="breadcrumb-box">
-        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>Sản phẩm</span>
-    </div>
-}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">BẢNG GIÁ VÀNG HÔM NAY</h2>
 
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Lỗi:</strong> @ViewBag.Error
+        </div>
+    }
 
-
-<div class="row" style="margin-bottom:24px;">
-    <div class="col-md-8">
-        <div class="hero-eyebrow" style="margin-bottom:4px;">
-            Cập nhật tham khảo
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="alert alert-info">
+            <strong>Cập nhật lúc:</strong> @Model.First().Timestamp.ToString("HH:mm dd/MM/yyyy")
         </div>
 
-        <div class="hero-headline" style="margin-bottom:8px;">
-            Bảng giá vàng hôm nay.
-            <span class="hl-gold">Mua vào / Bán ra.</span>
-        </div>
-
-        <div class="hero-subtitle" style="margin-bottom:12px;">
-            Giá mang tính chất tham khảo tại cửa hàng. Vui lòng liên hệ trực tiếp
-            để xác nhận giá cuối cùng theo trọng lượng, tuổi vàng và mẫu gia công.
-        </div>
-
-        <div style="display:flex; flex-wrap:wrap; column-gap:8px; row-gap:8px;">
-            <a href="tel:0522 945 087" class="btn-round-black">
-                Gọi cửa hàng
-            </a>
-
-            <a href="https://zalo.me/" class="btn-round-outline-gold">
-                Nhắn Zalo
-            </a>
-        </div>
-    </div>
-
-    <div class="col-md-4" style="margin-top:24px;">
-        <div class="product-card" style="margin-bottom:0;">
-            <div style="font-size:0.8rem;
-                        font-weight:600;
-                        text-transform:uppercase;
-                        letter-spacing:.08em;
-                        color:var(--brand-gold);
-                        margin-bottom:12px;
-                        text-align:center;">
-                Lưu ý
-            </div>
-
-            <div style="font-size:.8rem; line-height:1.3rem; color:var(--text-dim); text-align:left;">
-                • Giá có thể thay đổi theo từng giờ.<br />
-                • Giá thu mua lại trang sức đã qua sử dụng phụ thuộc tình trạng sản phẩm.<br />
-                • Trang sức có đá, kim cương, charm đặc biệt sẽ được báo giá riêng.
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
-
-<span class="section-heading">
-    Bảng giá vàng (VNĐ / 1 chỉ)
-</span>
-
-<div class="row" style="margin-bottom:24px;">
-    <div class="col-12">
-        <div class="product-card" style="text-align:left;">
-            <div style="overflow-x:auto;">
-                <table class="table" style="margin-bottom:0; font-size:0.9rem; line-height:1.4rem;">
-                    <thead>
-                        <tr style="border-bottom:1px solid var(--border-soft);">
-                            <th style="white-space:nowrap; font-weight:600; color:#000;">Loại vàng</th>
-                            <th style="white-space:nowrap; font-weight:600; color:#000;">Tuổi vàng</th>
-                            <th style="white-space:nowrap; font-weight:600; color:#000;">Mua vào</th>
-                            <th style="white-space:nowrap; font-weight:600; color:#000;">Bán ra</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom:1px solid var(--border-soft);">
-                            <td style="font-weight:600; color:#000;">Vàng 24K (9999)</td>
-                            <td style="color:var(--text-dim);">~99.99%</td>
-                            <td style="font-weight:600; color:#000;">7.500.000₫</td>
-                            <td style="font-weight:600; color:#000;">7.650.000₫</td>
-                        </tr>
-                        <tr style="border-bottom:1px solid var(--border-soft);">
-                            <td style="font-weight:600; color:#000;">Vàng 18K</td>
-                            <td style="color:var(--text-dim);">~75%</td>
-                            <td style="font-weight:600; color:#000;">5.250.000₫</td>
-                            <td style="font-weight:600; color:#000;">5.450.000₫</td>
-                        </tr>
-                        <tr style="border-bottom:1px solid var(--border-soft);">
-                            <td style="font-weight:600; color:#000;">Vàng 16K</td>
-                            <td style="color:var(--text-dim);">~68%</td>
-                            <td style="font-weight:600; color:#000;">4.600.000₫</td>
-                            <td style="font-weight:600; color:#000;">4.800.000₫</td>
-                        </tr>
-                        <tr style="border-bottom:1px solid var(--border-soft);">
-                            <td style="font-weight:600; color:#000;">Nhãn cưới / vàng trơn</td>
-                            <td style="color:var(--text-dim);">24K / 18K tuỳ mẫu</td>
-                            <td style="font-weight:600; color:#000;">Liên hệ</td>
-                            <td style="font-weight:600; color:#000;">Liên hệ</td>
-                        </tr>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-warning">
+                    <tr>
+                        <th>Loại vàng</th>
+                        <th>Tuổi vàng</th>
+                        <th>Độ tinh khiết</th>
+                        <th class="text-end">Mua vào</th>
+                        <th class="text-end">Bán ra</th>
+                        <th>Cập nhật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var gold in Model)
+                    {
                         <tr>
-                            <td style="font-weight:600; color:#000;">Trang sức phong thủy</td>
-                            <td style="color:var(--text-dim);">Charm / mix đá</td>
-                            <td style="font-weight:600; color:#000;">Liên hệ</td>
-                            <td style="font-weight:600; color:#000;">Liên hệ</td>
+                            <td><strong>@gold.ProductName</strong></td>
+                            <td>@gold.Karat</td>
+                            <td>@(string.IsNullOrEmpty(gold.Purity) ? "-" : gold.Purity + "%")</td>
+                            <td class="text-end">
+                                @if (gold.BuyPrice > 0)
+                                {
+                                    <strong class="text-success">@gold.BuyPrice.ToString("N0")đ</strong>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Liên hệ</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                @if (gold.SellPrice > 0)
+                                {
+                                    <strong class="text-danger">@gold.SellPrice.ToString("N0")đ</strong>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Liên hệ</span>
+                                }
+                            </td>
+                            <td>@gold.Timestamp.ToString("HH:mm dd/MM/yyyy")</td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div style="font-size:.75rem; line-height:1.2rem; color:var(--text-soft); margin-top:12px;">
-                Đơn vị: VNĐ / 1 chỉ. Giá hiển thị chỉ mang tính tham khảo và có thể chênh lệch
-                tùy mẫu gia công, độ phức tạp, trọng lượng thực tế.
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
-    </div>
+
+        <div class="alert alert-warning mt-3">
+            <strong>Lưu ý:</strong>
+            <ul class="mb-0">
+                <li>Giá có thể thay đổi theo từng giờ</li>
+                <li>Giá thu mua lại trang sức đã qua sử dụng phụ thuộc tính trang sức, đá phụ tạp, trọng lượng thực tế</li>
+                <li>Trang sức có đá, kim cương, charm đặc biệt sẽ được báo giá riêng</li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <strong>Thông báo:</strong> Không có dữ liệu giá vàng. Vui lòng thử lại sau.
+        </div>
+    }
 </div>
 
-<hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
+<style>
+    .table thead th {
+        background-color: #ffc107;
+        color: #000;
+        font-weight: bold;
+    }
 
-<span class="section-heading">
-    Thu mua & thu đổi
-</span>
+    .table tbody tr:hover {
+        background-color: #fff3cd;
+    }
 
-<div class="row">
-    <div class="col-md-4" style="margin-bottom:16px;">
-        <div class="service-block-title">
-            Thu mua vàng trang sức
-        </div>
-        <div class="service-block-desc">
-            Thu mua vàng 24K / 18K / nhẫn cưới / lắc tay cũ với giá cạnh tranh,
-            báo rõ tuổi vàng và trọng lượng.
-        </div>
-    </div>
+    .text-success {
+        color: #28a745 !important;
+    }
 
-    <div class="col-md-4" style="margin-bottom:16px;">
-        <div class="service-block-title">
-            Thu đổi linh hoạt
-        </div>
-        <div class="service-block-desc">
-            Đổi mẫu cũ sang mẫu mới chỉ bù phần chênh lệch.
-            Giá trị sản phẩm được tính minh bạch, công khai.
-        </div>
-    </div>
+    .text-danger {
+        color: #dc3545 !important;
+    }
+</style>
+@* Thêm vào cuối file *@
 
-    <div class="col-md-4" style="margin-bottom:16px;">
-        <div class="service-block-title">
-            Tư vấn trực tiếp
-        </div>
-        <div class="service-block-desc">
-            Bạn có thể mang sản phẩm tới cửa hàng để cân, test tuổi vàng và nhận báo giá ngay.
-        </div>
-    </div>
+<script>
+    // Tự động refresh trang mỗi 5 phút
+    setTimeout(function(){
+        location.reload();
+    }, 5 * 60 * 1000); // 5 phút = 5 * 60 * 1000 milliseconds
+</script>
+
+@* Hoặc nếu muốn hiển thị countdown: *@
+
+<div id="countdown" class="text-center text-muted mt-3">
+    Tự động cập nhật sau: <span id="timer">5:00</span>
 </div>
 
+<script>
+    var timeLeft = 300; // 5 phút = 300 giây
+    var timerElement = document.getElementById('timer');
+
+    var countdown = setInterval(function(){
+        timeLeft--;
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft % 60;
+        timerElement.textContent = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+        if(timeLeft <= 0){
+            clearInterval(countdown);
+            location.reload();
+        }
+    }, 1000);
+</script>

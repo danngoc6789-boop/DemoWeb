@@ -48,6 +48,7 @@ namespace DemoWeb.Models
             public string Category { get; set; }
 
             public DateTime CreatedDate { get; set; } = DateTime.Now;
+            
         [NotMapped]
         public List<string> ImageList
         {

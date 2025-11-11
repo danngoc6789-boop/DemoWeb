@@ -6,14 +6,14 @@ namespace DemoWeb.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddGoldPrice : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
+    public sealed partial class UpdateAppDbContext : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddGoldPrice));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateAppDbContext));
         
         string IMigrationMetadata.Id
         {
-            get { return "202511091321528_AddGoldPrice"; }
+            get { return "202511111642530_UpdateAppDbContext"; }
         }
         
         string IMigrationMetadata.Source
