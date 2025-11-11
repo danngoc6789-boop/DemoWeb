@@ -29,7 +29,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Tổng sản phẩm
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalProducts</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalProducts ?? 0)</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-box fa-2x text-gray-300"></i>
@@ -48,7 +48,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Tổng đơn hàng
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalOrders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalOrders ?? 0)</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
@@ -65,15 +65,15 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Chờ xử lý
+                                Đơn hôm nay
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.PendingOrders</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TodayOrders ?? 0)</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-clock fa-2x text-gray-300"></i>
                         </div>
                     </div>
-                    <a href="@Url.Action("Orders", new { status = "Chờ xử lý" })" class="btn btn-warning btn-sm mt-2 btn-block">Xem chi tiết</a>
+                    <a href="@Url.Action("Orders")" class="btn btn-warning btn-sm mt-2 btn-block">Xem chi tiết</a>
                 </div>
             </div>
         </div>
@@ -98,10 +98,11 @@
                 </div>
             </div>
         </div>
+    </div>
 
     <div class="row">
         <!-- Đơn hàng gần đây -->
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 bg-primary text-white">
                     <h6 class="m-0 font-weight-bold"><i class="fas fa-list"></i> Đơn hàng gần đây</h6>
@@ -115,8 +116,9 @@
                                     <tr>
                                         <th>Mã ĐH</th>
                                         <th>Khách hàng</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Ngày đặt</th>
                                         <th>Tổng tiền</th>
-                                        <th>Trạng thái</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -124,26 +126,14 @@
                                     {
                                         <tr>
                                             <td>
-                                                <a href="@Url.Action("OrderDetail", new { id = order.OrderId })" class="font-weight-bold">
-                                                    #@order.OrderId
+                                                <a href="@Url.Action("OrderDetail", new { id = order.Id })" class="font-weight-bold">
+                                                    @order.OrderCode
                                                 </a>
                                             </td>
-                                            <td>@order.FullName</td>
-                                            <td class="font-weight-bold">@order.TotalPrice.ToString("N0")đ</td>
-                                            <td>
-                                                @if (order.Status == "Hoàn thành")
-                                                {
-                                                    <span class="badge badge-success">@order.Status</span>
-                                                }
-                                                else if (order.Status == "Chờ xử lý")
-                                                {
-                                                    <span class="badge badge-warning">@order.Status</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="badge badge-secondary">@order.Status</span>
-                                                }
-                                            </td>
+                                            <td>@order.CustomerName</td>
+                                            <td>@order.Phone</td>
+                                            <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td class="font-weight-bold">@order.TotalAmount.ToString("N0")đ</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -156,58 +146,6 @@
                     else
                     {
                         <p class="text-center text-muted py-4">Chưa có đơn hàng nào</p>
-                    }
-                </div>
-            </div>
-        </div>
-
-        <!-- Sản phẩm sắp hết hàng -->
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-danger text-white">
-                    <h6 class="m-0 font-weight-bold"><i class="fas fa-exclamation-triangle"></i> Sản phẩm sắp hết</h6>
-                </div>
-                <div class="card-body">
-                    @if (ViewBag.LowStockProducts != null && ViewBag.LowStockProducts.Count > 0)
-                    {
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Sản phẩm</th>
-                                        <th>Tồn kho</th>
-                                        <th>Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var product in ViewBag.LowStockProducts)
-                                    {
-                                        <tr>
-                                            <td>@product.Name</td>
-                                            <td>
-                                                <span class="badge badge-danger badge-lg">
-                                                    @product.StockQuantity
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <a href="@Url.Action("Edit", new { id = product.ProductId })" class="btn btn-sm btn-warning">
-                                                    <i class="fas fa-edit"></i> Sửa
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <a href="@Url.Action("Products")" class="btn btn-danger btn-block">
-                            <i class="fas fa-arrow-right"></i> Xem tất cả sản phẩm
-                        </a>
-                    }
-                    else
-                    {
-                        <p class="text-center text-muted py-4">
-                            <i class="fas fa-check-circle text-success"></i> Tất cả sản phẩm đều còn hàng
-                        </p>
                     }
                 </div>
             </div>

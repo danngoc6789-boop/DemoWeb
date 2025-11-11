@@ -5,104 +5,179 @@
 }
 
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card shadow">
-                <div class="card-header bg-warning text-white">
-                    <h4 class="mb-0"><i class="fas fa-edit"></i> CHỈNH SỬA SẢN PHẨM</h4>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0">
+                        <i class="fas fa-edit"></i> CHỈNH SỬA SẢN PHẨM
+                    </h3>
+                    <small class="text-muted">Mã sản phẩm: #@Model.Id</small>
                 </div>
-                <div class="card-body">
-                    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                <div class="card-body p-4">
+                    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation" }))
                     {
                         @Html.AntiForgeryToken()
-                        @Html.HiddenFor(m => m.ProductId)
+                        @Html.HiddenFor(m => m.Id)
+                        @Html.HiddenFor(m => m.Image)
                         @Html.HiddenFor(m => m.Images)
                         @Html.HiddenFor(m => m.CreatedDate)
 
-                        <!-- Giống Create.cshtml nhưng thay đổi:
-                             - Card header: bg-warning
-                             - Title: "CHỈNH SỬA SẢN PHẨM"
-                             - Button: "Cập nhật sản phẩm"
-                             - Hiển thị ảnh hiện tại nếu có
-                        -->
+                        if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                @Html.ValidationSummary(true, "Vui lòng kiểm tra lại các trường bên dưới.")
+                            </div>
+                        }
 
                         <div class="row">
+                            <!-- Cột trái - Thông tin sản phẩm -->
                             <div class="col-md-8">
-                                <!-- Các trường giống Create.cshtml -->
+                                <h5 class="border-bottom pb-2 mb-3">
+                                    <i class="fas fa-info-circle text-warning"></i> Thông tin cơ bản
+                                </h5>
+
                                 <div class="form-group">
-                                    <label class="font-weight-bold">Tên sản phẩm <span class="text-danger">*</span></label>
-                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required" })
+                                    <label class="font-weight-bold">
+                                        Tên sản phẩm <span class="text-danger">*</span>
+                                    </label>
+                                    @Html.TextBoxFor(m => m.Name, new
+                                    {
+                                        @class = "form-control form-control-lg",
+                                        required = "required"
+                                    })
+                                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger small" })
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="font-weight-bold">Mô tả</label>
-                                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "4" })
+                                    <label class="font-weight-bold">Mô tả chi tiết</label>
+                                    @Html.TextAreaFor(m => m.Description, new
+                                    {
+                                        @class = "form-control",
+                                        rows = "5"
+                                    })
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold">Danh mục</label>
-                                            @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+                                            <label class="font-weight-bold">
+                                                Danh mục <span class="text-danger">*</span>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.Category, new
+                                            {
+                                                @class = "form-control",
+                                                required = "required"
+                                            })
+                                            @if (ViewBag.Categories != null && ViewBag.Categories.Count > 0)
+                                            {
+                                                <small class="form-text text-muted">
+                                                    Danh mục hiện có: @string.Join(", ", ViewBag.Categories)
+                                                </small>
+                                            }
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold">Giá (VNĐ)</label>
-                                            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number" })
+                                            <label class="font-weight-bold">Loại sản phẩm</label>
+                                            @Html.TextBoxFor(m => m.Type, new
+                                            {
+                                                @class = "form-control"
+                                            })
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold">Số lượng</label>
-                                            @Html.TextBoxFor(m => m.StockQuantity, new { @class = "form-control", type = "number" })
+                                            <label class="font-weight-bold">
+                                                Giá bán (VNĐ) <span class="text-danger">*</span>
+                                            </label>
+                                            @Html.TextBoxFor(m => m.Price, new
+                                            {
+                                                @class = "form-control",
+                                                type = "number",
+                                                step = "1000",
+                                                min = "0",
+                                                required = "required"
+                                            })
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="font-weight-bold">Trọng lượng (g)</label>
-                                            @Html.TextBoxFor(m => m.Weight, new { @class = "form-control", type = "number", step = "0.01" })
+                                            <label class="font-weight-bold">Giới tính</label>
+                                            <select name="Gender" class="form-control">
+                                                <option value="">-- Chọn giới tính --</option>
+                                                <option value="Nam" @(Model.Gender == "Nam" ? "selected" : "")>👨 Nam</option>
+                                                <option value="Nữ" @(Model.Gender == "Nữ" ? "selected" : "")>👩 Nữ</option>
+                                                <option value="Unisex" @(Model.Gender == "Unisex" ? "selected" : "")>🧑 Unisex</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="font-weight-bold">Chất liệu</label>
-                                            @Html.TextBoxFor(m => m.Material, new { @class = "form-control" })
-                                        </div>
-                                    </div>
+                                </div>
+
+                                <div class="alert alert-info">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <strong>Ngày tạo:</strong> @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm")
                                 </div>
                             </div>
 
+                            <!-- Cột phải - Upload ảnh -->
                             <div class="col-md-4">
+                                <h5 class="border-bottom pb-2 mb-3">
+                                    <i class="fas fa-image text-warning"></i> Hình ảnh
+                                </h5>
+
                                 <div class="form-group">
-                                    <label class="font-weight-bold">Hình ảnh</label>
-                                    <div class="custom-file">
+                                    <label class="font-weight-bold">Ảnh hiện tại</label>
+
+                                    <div class="text-center border rounded p-3 bg-light mb-3">
+                                        @{
+                                            var currentImage = !string.IsNullOrEmpty(Model.Image) ? Url.Content(Model.Image) : Url.Content("~/Content/images/no-image.png");
+                                        }
+                                        <img id="currentImage"
+                                             src="@currentImage"
+                                             alt="@Model.Name"
+                                             class="img-fluid rounded shadow-sm"
+                                             style="max-height: 250px; width: 100%; object-fit: contain;" />
+                                    </div>
+
+                                    <label class="font-weight-bold">Thay đổi ảnh</label>
+                                    <div class="custom-file mb-3">
                                         <input type="file" name="imageFile" class="custom-file-input" id="imageFile" accept="image/*" onchange="previewImage(this)">
-                                        <label class="custom-file-label" for="imageFile">Chọn hình ảnh mới...</label>
+                                        <label class="custom-file-label" for="imageFile">Chọn ảnh mới...</label>
                                     </div>
-                                    <div class="mt-3 text-center">
+
+                                    <div id="newImagePreview" class="text-center border rounded p-3 bg-white" style="display:none;">
+                                        <p class="text-success"><strong>Ảnh mới:</strong></p>
                                         <img id="imagePreview"
-                                             src="@(string.IsNullOrEmpty(Model.Images) ? Url.Content("~/Content/images/no-image.png") : Model.Images)"
-                                             alt="Preview"
-                                             class="img-thumbnail"
-                                             style="max-width: 100%; max-height: 300px;" />
+                                             src=""
+                                             alt="New Preview"
+                                             class="img-fluid rounded shadow-sm"
+                                             style="max-height: 250px; width: 100%; object-fit: contain;" />
                                     </div>
-                                    <small class="text-muted">Để trống nếu không muốn thay đổi ảnh</small>
+
+                                    <small class="form-text text-muted mt-2">
+                                        <i class="fas fa-info-circle"></i> Để trống nếu không muốn thay đổi ảnh
+                                    </small>
                                 </div>
                             </div>
                         </div>
 
-                        <hr />
+                        <hr class="my-4" />
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-warning btn-lg text-white">
+                        <div class="form-group mb-0">
+                            <button type="submit" class="btn btn-warning btn-lg px-5 text-dark">
                                 <i class="fas fa-save"></i> Cập nhật sản phẩm
                             </button>
-                            <a href="@Url.Action("Products")" class="btn btn-secondary btn-lg">
-                                <i class="fas fa-times"></i> Hủy
+                            <a href="@Url.Action("Products")" class="btn btn-secondary btn-lg px-4 ml-2">
+                                <i class="fas fa-times"></i> Hủy bỏ
+                            </a>
+                            <a href="@Url.Action("Details", new { id = Model.Id })" class="btn btn-info btn-lg px-4 ml-2">
+                                <i class="fas fa-eye"></i> Xem chi tiết
                             </a>
                         </div>
                     }
@@ -117,14 +192,38 @@
     <script>
         function previewImage(input) {
             if (input.files && input.files[0]) {
+                // Check file size (max 5MB)
+                if (input.files[0].size > 5242880) {
+                    alert('File quá lớn! Vui lòng chọn ảnh dưới 5MB.');
+                    input.value = '';
+                    return;
+                }
+
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     $('#imagePreview').attr('src', e.target.result);
+                    $('#newImagePreview').show();
                 }
                 reader.readAsDataURL(input.files[0]);
+
                 var fileName = input.files[0].name;
                 $(input).next('.custom-file-label').html(fileName);
             }
         }
     </script>
+
+    <style>
+        .card {
+            border: none;
+        }
+
+        .form-control:focus {
+            border-color: #ffc107;
+            box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+        }
+
+        .custom-file-label::after {
+            content: "Chọn file";
+        }
+    </style>
 }

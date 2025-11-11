@@ -69,23 +69,22 @@
                             <tr>
                                 <th width="5%">ID</th>
                                 <th width="10%">Hình ảnh</th>
-                                <th width="25%">Tên sản phẩm</th>
+                                <th width="30%">Tên sản phẩm</th>
                                 <th width="15%">Danh mục</th>
                                 <th width="10%">Giá</th>
-                                <th width="8%">Tồn kho</th>
                                 <th width="12%">Ngày tạo</th>
-                                <th width="15%">Thao tác</th>
+                                <th width="18%">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td class="text-center">@item.ProductId</td>
+                                    <td class="text-center">@item.Id</td>
                                     <td class="text-center">
-                                        @if (!string.IsNullOrEmpty(item.Images))
+                                        @if (!string.IsNullOrEmpty(item.Image))
                                         {
-                                            <img src="@item.Images" alt="@item.Name" style="max-width: 80px; max-height: 80px;" class="img-thumbnail" />
+                                            <img src="@Url.Content(item.Image)" alt="@item.Name" style="max-width: 80px; max-height: 80px;" class="img-thumbnail" />
                                         }
                                         else
                                         {
@@ -101,35 +100,25 @@
                                     </td>
                                     <td>
                                         <span class="badge badge-info">@item.Category</span>
+                                        @if (!string.IsNullOrEmpty(item.Type))
+                                        {
+                                            <br /><span class="badge badge-secondary mt-1">@item.Type</span>
+                                        }
                                     </td>
                                     <td class="text-right">
                                         <strong class="text-danger">@item.Price.ToString("N0")đ</strong>
                                     </td>
-                                    <td class="text-center">
-                                        @if (item.StockQuantity <= 5)
-                                        {
-                                            <span class="badge badge-danger badge-lg">@item.StockQuantity</span>
-                                        }
-                                        else if (item.StockQuantity <= 10)
-                                        {
-                                            <span class="badge badge-warning badge-lg">@item.StockQuantity</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-success badge-lg">@item.StockQuantity</span>
-                                        }
-                                    </td>
                                     <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                                     <td>
-                                        <div class="btn-group" role="group">
-                                            <a href="@Url.Action("Details", new { id = item.ProductId })" class="btn btn-sm btn-info" title="Xem chi tiết">
-                                                <i class="fas fa-eye"></i>
+                                        <div class="btn-group-vertical btn-block" role="group">
+                                            <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-sm btn-info mb-1">
+                                                <i class="fas fa-eye"></i> Xem
                                             </a>
-                                            <a href="@Url.Action("Edit", new { id = item.ProductId })" class="btn btn-sm btn-warning" title="Chỉnh sửa">
-                                                <i class="fas fa-edit"></i>
+                                            <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-sm btn-warning mb-1">
+                                                <i class="fas fa-edit"></i> Sửa
                                             </a>
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteProduct(@item.ProductId)" title="Xóa">
-                                                <i class="fas fa-trash"></i>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteProduct(@item.Id)">
+                                                <i class="fas fa-trash"></i> Xóa
                                             </button>
                                         </div>
                                     </td>
@@ -140,7 +129,7 @@
                 </div>
 
                 <!-- Phân trang -->
-                @if (ViewBag.TotalPages > 1)
+                if (ViewBag.TotalPages > 1)
                 {
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center">
