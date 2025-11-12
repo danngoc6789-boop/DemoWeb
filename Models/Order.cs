@@ -17,6 +17,7 @@ namespace DemoWeb.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public string OrderCode { get; set; }
+        public string Status { get; set; } = "Chưa xử lý";
 
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }

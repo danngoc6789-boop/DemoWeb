@@ -18,7 +18,7 @@ namespace DemoWeb.Controllers
         private AppDbContext db = new AppDbContext();
         private GoldPriceDbService _goldPriceService = new GoldPriceDbService();
 
-
+        [Authorize(Roles = "Admin")]
         // GET: Admin
         public async Task<ActionResult> Index()
         {
@@ -40,7 +40,7 @@ namespace DemoWeb.Controllers
                     .Take(5)
                     .ToListAsync();
 
-                ViewBag.LowStockProducts = new List<Product>(); // Product không có StockQuantity
+              
 
                 return View();
             }
@@ -295,7 +295,7 @@ namespace DemoWeb.Controllers
             }
 
             // GET: Admin/OrderDetail/5
-            public async Task<ActionResult> OrderDetail(int id)
+            public async Task<ActionResult> OrderDetail(int? id)
             {
                 var order = await db.Orders
                     .Include(o => o.OrderDetails)
@@ -308,11 +308,24 @@ namespace DemoWeb.Controllers
 
                 return View(order);
             }
+           // cập nhật trạng thái đơn
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public ActionResult UpdateStatus(int orderId, string status)
+            {
+                var order = db.Orders.Find(orderId);
+                if (order != null)
+                {
+                    order.Status = status;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Orders");
+            }
 
-            // ==================== QUẢN LÝ GIÁ VÀNG ====================
+        // ==================== QUẢN LÝ GIÁ VÀNG ====================
 
-            // GET: Admin/GoldPrices
-            public async Task<ActionResult> GoldPrices()
+        // GET: Admin/GoldPrices
+        public async Task<ActionResult> GoldPrices()
             {
                 try
                 {

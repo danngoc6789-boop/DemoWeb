@@ -204,6 +204,10 @@
     <Compile Include="Migrations\202511120734215_UpdateModels.Designer.cs">
       <DependentUpon>202511120734215_UpdateModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511121021358_AddStatusToOrders.cs" />
+    <Compile Include="Migrations\202511121021358_AddStatusToOrders.Designer.cs">
+      <DependentUpon>202511121021358_AddStatusToOrders.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -646,6 +650,8 @@
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Products.cshtml" />
+    <Content Include="Views\Admin\Orders.cshtml" />
+    <Content Include="Views\Admin\OrderDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -696,6 +702,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511120734215_UpdateModels.resx">
       <DependentUpon>202511120734215_UpdateModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511121021358_AddStatusToOrders.resx">
+      <DependentUpon>202511121021358_AddStatusToOrders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

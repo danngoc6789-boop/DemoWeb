@@ -1,0 +1,63 @@
+﻿@model IEnumerable<DemoWeb.Models.Order>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Mã đơn hàng</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.CustomerName</td>
+                <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@order.TotalAmount.ToString("C")</td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        using (Html.BeginForm("UpdateStatus", "Admin", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="orderId" value="@order.Id" />
+                            <select name="status" class="form-control form-control-sm">
+                                <option value="Chưa xử lý" @(order.Status == "Chưa xử lý" ? "selected" : "")>Chưa xử lý</option>
+                                <option value="Đang xử lý" @(order.Status == "Đang xử lý" ? "selected" : "")>Đang xử lý</option>
+                                <option value="Đã giao" @(order.Status == "Đã giao" ? "selected" : "")>Đã giao</option>
+                                <option value="Hủy" @(order.Status == "Hủy" ? "selected" : "")>Hủy</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary mt-1">Cập nhật</button>
+                        }
+                    }
+                    else
+                    {
+                        @order.Status
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Chi tiết", "OrderDetail", "Admin", new { id = order.Id }, new { @class = "btn btn-sm btn-info" })
+
+                    @using (Html.BeginForm("DeleteOrder", "Admin", FormMethod.Post, new { @style = "display:inline;" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("id", order.Id)
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
