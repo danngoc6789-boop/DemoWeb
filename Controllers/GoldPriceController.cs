@@ -41,6 +41,7 @@ namespace DemoWeb.Controllers
                 ViewBag.ErrorMessage = "Không thể tải giá vàng: " + ex.Message;
                 return View(new List<GoldPrice>());
             }
+           
         }
     }
 }

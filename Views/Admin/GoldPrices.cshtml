@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DemoWeb.Models.GoldPrice>
+@{
+    ViewBag.Title = "Quản lý giá vàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">QUẢN LÝ GIÁ VÀNG</h2>
+
+    <p>
+        <a href="@Url.Action("CreateGoldPrice", "Admin")" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Thêm mới
+        </a>
+    </p>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Tuổi vàng</th>
+                <th>Độ tinh khiết</th>
+                <th>Mua vào</th>
+                <th>Bán ra</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Karat</td>
+                    <td>@item.Purity</td>
+                    <td>@item.BuyPrice.ToString("N0")</td>
+                    <td>@item.SellPrice.ToString("N0")</td>
+                    <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <a href="@Url.Action("EditGoldPrice", "Admin", new { id = item.Id })" class="btn btn-sm btn-warning">Sửa</a>
+                        <a href="@Url.Action("DeleteGoldPrice", "Admin", new { id = item.Id })" class="btn btn-sm btn-danger" onclick="return confirm('Xóa giá vàng này?');">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
