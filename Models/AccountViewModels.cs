@@ -13,6 +13,10 @@ namespace DemoWeb.Models
         [Required, MinLength(6), DataType(DataType.Password)]
         public string Password { get; set; }
         [Required]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Mật khẩu xác nhận không khớp.")]
+        public string ConfirmPassword { get; set; }
+        [Required]
         public string FullName { get; set; }
     }
 

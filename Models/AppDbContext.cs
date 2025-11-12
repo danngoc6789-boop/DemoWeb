@@ -11,14 +11,19 @@ namespace DemoWeb.Models
     {
        
         public AppDbContext() : base("DefaultConnection")
-        { 
+        {
+            // Tắt auto-migration
+            Database.SetInitializer<AppDbContext>(null);
         }
-
+        public static AppDbContext Create()
+        {
+            return new AppDbContext();
+        }
+        ///tất cả bảng
         public DbSet<Product> Products { get; set; }
+        
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-
-
         public DbSet<GoldPrice> GoldPrices { get; set; }
 
 
@@ -28,7 +33,9 @@ namespace DemoWeb.Models
             // Bỏ qua các property NotMapped
             modelBuilder.Entity<Product>().Ignore(p => p.ImageList);
             modelBuilder.Entity<Product>().Ignore(p => p.MainImage);
-        }
 
+
+        }
+      
     }
 }

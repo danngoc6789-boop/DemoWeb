@@ -1,7 +1,15 @@
-﻿@model DemoWeb.Models.ApplicationUser
+﻿@model DemoWeb.Models.RegisterViewModel
 @{
     ViewBag.Title = "Đăng ký tài khoản";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Lấy danh sách role dựa trên quyền của user hiện tại
+    var roles = new List<string> { "Customer" };
+    if (User.IsInRole("Admin"))
+    {
+        roles.Add("Admin");
+    }
+    ViewBag.Roles = new SelectList(roles, "Customer");
 }
 
 <h2>@ViewBag.Title</h2>
@@ -11,24 +19,48 @@
     @Html.AntiForgeryToken()
 
     <div class="form-group">
-        @Html.LabelFor(m => m.UserName)
-        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
         @Html.LabelFor(m => m.Email)
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        @Html.Label("Họ tên")
+        @Html.LabelFor(m => m.FullName, "Họ tên")
         @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        <label>Mật khẩu</label>
-        <input type="password" name="Password" class="form-control" />
+        @Html.LabelFor(m => m.Password, "Mật khẩu")
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, "Xác nhận mật khẩu")
+        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Vai trò")
+        @Html.DropDownList("Role", (SelectList)ViewBag.Roles, new { @class = "form-control" })
     </div>
 
     <button type="submit" class="btn btn-primary">Đăng ký</button>
+
+    @* Thông báo thành công *@
+    {
+        if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+        }
+    }
+
+    @* Thông báo lỗi chung *@
+    @Html.ValidationSummary(true, "", new { @class = "text-danger mt-2" })
 }
+
+<div class="mt-2">
+    @Html.ActionLink("Bạn chưa có tài khoản? Đăng nhập ngay", "Login", "Account")
+</div>

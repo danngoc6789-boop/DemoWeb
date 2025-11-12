@@ -17,26 +17,28 @@ namespace DemoWeb.Controllers
         {
             try
             {
-                Debug.WriteLine("=== BẮT ĐẦU GỌI API BTMC ===");
+                var goldPriceService = new GoldPriceDbService();
 
-                var goldService = new GoldBtmcService();
-                var goldPrices = await goldService.FetchAsync();
+                // Lấy dữ liệu từ database
+                var prices = await goldPriceService.GetGoldPricesFromDbAsync();
 
-                Debug.WriteLine($"=== ĐÃ LẤY ĐƯỢC {goldPrices.Count} MỤC GIÁ VÀNG ===");
+                // Lấy thời gian cập nhật
+                var lastUpdate = await goldPriceService.GetLastUpdateTimeAsync();
+                ViewBag.LastUpdate = lastUpdate;
 
-                foreach (var item in goldPrices.Take(3))
-                {
-                    Debug.WriteLine($"Item: {item.ProductName} - Mua: {item.BuyPrice} - Bán: {item.SellPrice}");
-                }
+                // Nhóm theo ProductName để loại bỏ trùng lặp (nếu cần)
+                // Nếu muốn chỉ hiển thị dữ liệu mới nhất
+                var latestPrices = prices
+                    .GroupBy(p => p.ProductName)
+                    .Select(g => g.OrderByDescending(p => p.CreatedAt).First())
+                    .OrderBy(p => p.ProductName)
+                    .ToList();
 
-                return View(goldPrices);
+                return View(latestPrices);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"=== LỖI KHI GỌI API: {ex.Message} ===");
-                Debug.WriteLine($"Stack trace: {ex.StackTrace}");
-
-                ViewBag.Error = $"Lỗi khi lấy dữ liệu: {ex.Message}";
+                ViewBag.ErrorMessage = "Không thể tải giá vàng: " + ex.Message;
                 return View(new List<GoldPrice>());
             }
         }

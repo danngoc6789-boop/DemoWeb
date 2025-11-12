@@ -81,11 +81,36 @@
                         @Html.ActionLink("Liên hệ", "Contact", "Trangchu", null,
                             new { @class = "nav-link" })
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tài Khoản
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="accountDropdown">
+                            @if (Request.IsAuthenticated)
+                            {
+                                <span class="dropdown-item">Tài khoản của bạn</span>
 
-                    <li class="nav-item">
-                        @Html.ActionLink("Quản trị", "Index", "Admin", null,
-                            new { @class = "nav-link" })
+                                if (User.IsInRole("Admin"))
+                                {
+                                    <a class="dropdown-item text-warning" href="@Url.Action("Register", "Account")">
+                                        Tạo tài khoản Admin
+                                    </a>
+                                }
+
+                                using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="dropdown-item text-danger">Đăng xuất</button>
+                                }
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Đăng nhập", "Login", "Account", null, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Đăng ký", "Register", "Account", null, new { @class = "dropdown-item" })
+                            }
+                        </div>
                     </li>
+
 
                 </ul>
             </div>

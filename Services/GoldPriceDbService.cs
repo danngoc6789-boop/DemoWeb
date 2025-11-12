@@ -45,27 +45,58 @@ namespace DemoWeb.Services
 
                 Debug.WriteLine($"Đã lấy {newPrices.Count} mục giá vàng từ API");
 
-                // 2. Xóa dữ liệu cũ và lưu dữ liệu mới
+                // 2. Xóa dữ liệu cũ và thêm dữ liệu mới
                 using (var db = new AppDbContext())
                 {
-                    // Xóa TẤT CẢ dữ liệu giá vàng cũ
-                    Debug.WriteLine("Đang xóa dữ liệu cũ...");
-                    db.Database.ExecuteSqlCommand("DELETE FROM GoldPrices");
+                    // BƯỚC 1: Đếm số bản ghi cũ
+                    var oldCount = await db.GoldPrices.CountAsync();
+                    Debug.WriteLine($"Số bản ghi cũ trong DB: {oldCount}");
 
-                    // Set CreatedAt cho tất cả items mới
+                    if (oldCount > 0)
+                    {
+                        // BƯỚC 2: Lấy tất cả bản ghi cũ
+                        Debug.WriteLine("Đang lấy tất cả bản ghi cũ...");
+                        var oldPrices = await db.GoldPrices.ToListAsync();
+                        Debug.WriteLine($"Đã lấy {oldPrices.Count} bản ghi");
+
+                        // BƯỚC 3: Xóa bằng RemoveRange
+                        Debug.WriteLine("Đang xóa bản ghi cũ...");
+                        db.GoldPrices.RemoveRange(oldPrices);
+
+                        // BƯỚC 4: Lưu việc xóa NGAY LẬP TỨC
+                        var deletedCount = await db.SaveChangesAsync();
+                        Debug.WriteLine($"✓ Đã xóa thành công {deletedCount} bản ghi");
+
+                        // BƯỚC 5: Verify đã xóa hết chưa
+                        var remainCount = await db.GoldPrices.CountAsync();
+                        Debug.WriteLine($"Số bản ghi còn lại sau khi xóa: {remainCount}");
+
+                        if (remainCount > 0)
+                        {
+                            throw new Exception($"LỖI: Vẫn còn {remainCount} bản ghi chưa xóa!");
+                        }
+                    }
+
+                    // BƯỚC 6: Thêm dữ liệu mới
+                    Debug.WriteLine($"Đang thêm {newPrices.Count} bản ghi mới...");
                     var now = DateTime.Now;
+
                     foreach (var price in newPrices)
                     {
                         price.CreatedAt = now;
                     }
 
-                    // Thêm dữ liệu mới
-                    Debug.WriteLine("Đang lưu dữ liệu mới...");
                     db.GoldPrices.AddRange(newPrices);
 
-                    // Lưu vào database
-                    await db.SaveChangesAsync();
-                    Debug.WriteLine("=== CẬP NHẬT THÀNH CÔNG ===");
+                    // BƯỚC 7: Lưu dữ liệu mới
+                    var savedCount = await db.SaveChangesAsync();
+                    Debug.WriteLine($"✓ Đã lưu thành công {savedCount} bản ghi mới");
+
+                    // BƯỚC 8: Verify dữ liệu mới
+                    var finalCount = await db.GoldPrices.CountAsync();
+                    Debug.WriteLine($"Tổng số bản ghi sau cập nhật: {finalCount}");
+
+                    Debug.WriteLine("=== CẬP NHẬT HOÀN TẤT ===");
                 }
 
                 return newPrices;

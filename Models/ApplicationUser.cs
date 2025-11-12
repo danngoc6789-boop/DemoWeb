@@ -1,11 +1,22 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace DemoWeb.Models
 {
     public class ApplicationUser : IdentityUser
     {
         public string FullName { get; set; }
-        // Các properties Email và UserName đã có sẵn từ IdentityUser
-        // Bạn có thể thêm properties tùy chỉnh ở đây nếu cần
+        public string Address { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        {
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            return userIdentity;
+        }
+
     }
 }
