@@ -140,13 +140,15 @@ namespace DemoWeb.Controllers
             // Tạo đơn hàng
             var order = new Order
             {
+                Username = User.Identity.Name,
                 CustomerName = CustomerName,
                 Address = Address,
                 Phone = Phone,
                 Email = Email,
                 OrderDate = DateTime.Now,
                 TotalAmount = totalAmount,
-                OrderCode = orderCode
+                OrderCode = orderCode,
+                Status = "Đang xử lý"
             };
 
             db.Orders.Add(order);

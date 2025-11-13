@@ -88,18 +88,27 @@
                         <div class="dropdown-menu" aria-labelledby="accountDropdown">
                             @if (Request.IsAuthenticated)
                             {
-                                <span class="dropdown-item">Xin chào @Session["FullName"]</span>
+                                <span class="dropdown-item-text">
+                                    <strong>Xin chào @Session["FullName"]</strong>
+                                </span>
+                                <div class="dropdown-divider"></div>
+
+                                @Html.ActionLink("Đơn hàng của tôi", "Index", "CustomerOrder", null, new { @class = "dropdown-item" })
 
                                 if (User.IsInRole("Admin"))
                                 {
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Quản lý Admin</a>
                                     <a class="dropdown-item text-warning" href="@Url.Action("Register", "Account")">Tạo tài khoản Admin</a>
                                 }
 
-                                using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                <div class="dropdown-divider"></div>
+                                using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "d-inline" }))
                                 {
                                     @Html.AntiForgeryToken()
-                                    <button type="submit" class="dropdown-item text-danger">Đăng xuất</button>
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                    </button>
                                 }
                             }
                             else

@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CustomerOrderController.cs" />
     <Compile Include="Controllers\GoldController.cs" />
     <Compile Include="Controllers\GoldPriceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -211,6 +212,14 @@
     <Compile Include="Migrations\202511121650492_AddSizeToOrderDetail.cs" />
     <Compile Include="Migrations\202511121650492_AddSizeToOrderDetail.Designer.cs">
       <DependentUpon>202511121650492_AddSizeToOrderDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511130351244_AddCancelledDateToOrder.cs" />
+    <Compile Include="Migrations\202511130351244_AddCancelledDateToOrder.Designer.cs">
+      <DependentUpon>202511130351244_AddCancelledDateToOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202511130408045_AddUsernameToOrder.cs" />
+    <Compile Include="Migrations\202511130408045_AddUsernameToOrder.Designer.cs">
+      <DependentUpon>202511130408045_AddUsernameToOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -657,6 +666,8 @@
     <Content Include="Views\Admin\Orders.cshtml" />
     <Content Include="Views\Admin\OrderDetail.cshtml" />
     <Content Include="Views\Admin\GoldPrices.cshtml" />
+    <Content Include="Views\CustomerOrder\Index.cshtml" />
+    <Content Include="Views\CustomerOrder\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -713,6 +724,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511121650492_AddSizeToOrderDetail.resx">
       <DependentUpon>202511121650492_AddSizeToOrderDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130351244_AddCancelledDateToOrder.resx">
+      <DependentUpon>202511130351244_AddCancelledDateToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511130408045_AddUsernameToOrder.resx">
+      <DependentUpon>202511130408045_AddUsernameToOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

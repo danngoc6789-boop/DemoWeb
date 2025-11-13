@@ -11,13 +11,15 @@ namespace DemoWeb.Models
     {
         [Key]
         public int Id { get; set; }
-
+        [StringLength(256)]
+        public string Username { get; set; }
         public string CustomerName { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string OrderCode { get; set; }
         public string Status { get; set; } = "Chưa xử lý";
+        public DateTime? CancelledDate { get; set; }
 
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }

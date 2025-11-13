@@ -26,7 +26,9 @@ namespace DemoWeb.Models
         public decimal UnitPrice { get; set; }
 
         // Navigation properties
+       
         public virtual Order Order { get; set; }
+        
         public virtual Product Product { get; set; }
     }
 }

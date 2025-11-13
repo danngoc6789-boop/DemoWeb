@@ -1,0 +1,192 @@
+﻿@model DemoWeb.Models.Order
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="margin-top: 100px; min-height: 500px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Chi Tiết Đơn Hàng #@Model.OrderCode</h2>
+                @Html.ActionLink("← Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            }
+
+            <!-- Thông tin đơn hàng -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Thông Tin Đơn Hàng</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+                            <p>
+                                <strong>Trạng thái:</strong>
+                                @if (Model.Status == "Đang xử lý" || Model.Status == "Pending")
+                                {
+                                    <span class="badge badge-warning">Đang xử lý</span>
+                                }
+                                else if (Model.Status == "Đang giao" || Model.Status == "Shipping")
+                                {
+                                    <span class="badge badge-info">Đang giao</span>
+                                }
+                                else if (Model.Status == "Đã giao" || Model.Status == "Delivered")
+                                {
+                                    <span class="badge badge-success">Đã giao</span>
+                                }
+                                else if (Model.Status == "Đã hủy" || Model.Status == "Cancelled")
+                                {
+                                    <span class="badge badge-danger">Đã hủy</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Người nhận:</strong> @Model.CustomerName</p>
+                            <p><strong>Số điện thoại:</strong> @Model.Phone</p>
+                            <p><strong>Địa chỉ:</strong> @Model.Address</p>
+                        </div>
+                    </div>
+
+                    @if (Model.Status == "Đang xử lý" || Model.Status == "Pending")
+                    {
+                        using (Html.BeginForm("Cancel", "CustomerOrders", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("OrderCode", Model.OrderCode)
+                            <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?')">
+                                <i class="fas fa-times"></i> Hủy đơn hàng
+                            </button>
+                        }
+                    }
+                </div>
+            </div>
+
+            <!-- Chi tiết sản phẩm -->
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Sản Phẩm Đã Đặt</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 100px">Hình ảnh</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th style="width: 150px">Đơn giá</th>
+                                    <th style="width: 100px">Số lượng</th>
+                                    <th style="width: 150px">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.OrderDetails != null)
+                                {
+                                    foreach (var item in ViewBag.OrderDetails)
+                                    {
+                                        
+                                            // Xử lý đường dẫn hình ảnh
+                                            string imagePath = "";
+                                            if (!string.IsNullOrEmpty(item.Product.Image))
+                                            {
+                                            // Nếu đường dẫn đã có ~/ thì dùng luôn
+                                            if (item.Product.Image.StartsWith("~/"))
+                                            {
+                                            imagePath = item.Product.Image;
+                                            }
+                                            // Nếu đường dẫn đã có /Content thì thêm ~
+                                            else if (item.Product.Image.StartsWith("/Content") || item.Product.Image.StartsWith("Content"))
+                                            {
+                                            imagePath = "~/" + item.Product.Image.TrimStart('/');
+                                            }
+                                            // Nếu chỉ là tên file hoặc đường dẫn tương đối
+                                            else
+                                            {
+                                            imagePath = "~/Content/Images/" + item.Product.Image;
+                                            }
+                                            }
+        
+                                        <tr>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(imagePath))
+                                                {
+                                                    <img src="@Url.Content(imagePath)"
+                                                         alt="@item.Product.Name"
+                                                         class="img-thumbnail"
+                                                         style="width: 80px; height: 80px; object-fit: cover;"
+                                                         onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="@Url.Content("~/Content/Images/no-image.jpg")"
+                                                         alt="No image"
+                                                         class="img-thumbnail"
+                                                         style="width: 80px; height: 80px; object-fit: cover;" />
+                                                }
+                                            </td>
+                                            <td>@item.Product.Name</td>
+                                            <td>@item.UnitPrice.ToString("N0") VNĐ</td>
+                                            <td class="text-center">@item.Quantity</td>
+                                            <td><strong>@((item.UnitPrice * item.Quantity).ToString("N0")) VNĐ</strong></td>
+                                        </tr>
+                                        }
+                                        }
+                                    </tbody>
+                            <tfoot>
+                                <tr class="table-active">
+                                    <td colspan="4" class="text-right"><strong>Tổng cộng:</strong></td>
+                                    <td><strong class="text-danger">@Model.TotalAmount.ToString("N0") VNĐ</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .badge {
+        display: inline-block;
+        padding: 8px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 4px;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .badge-info {
+        background-color: #17a2b8;
+        color: #fff;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+</style>

@@ -1,0 +1,215 @@
+﻿@model IEnumerable<DemoWeb.Models.Order>
+@using DemoWeb.Models
+@{
+    ViewBag.Title = "Đơn Hàng Của Tôi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-top: 100px; min-height: 500px;">
+    <h2 class="mb-4">Đơn Hàng Của Tôi</h2>
+
+    <!-- Bộ lọc trạng thái -->
+    <div class="btn-group mb-4" role="group">
+        @Html.ActionLink("Tất cả", "Index", null, new { @class = string.IsNullOrEmpty(ViewBag.CurrentStatus) ? "btn btn-primary" : "btn btn-outline-primary" })
+        @Html.ActionLink("Đang xử lý", "Index", new { status = "Đang xử lý" }, new { @class = ViewBag.CurrentStatus == "Đang xử lý" ? "btn btn-warning" : "btn btn-outline-warning" })
+        @Html.ActionLink("Đang giao", "Index", new { status = "Đang giao" }, new { @class = ViewBag.CurrentStatus == "Đang giao" ? "btn btn-info" : "btn btn-outline-info" })
+        @Html.ActionLink("Đã giao", "Index", new { status = "Đã giao" }, new { @class = ViewBag.CurrentStatus == "Đã giao" ? "btn btn-success" : "btn btn-outline-success" })
+        @Html.ActionLink("Đã hủy", "Index", new { status = "Đã hủy" }, new { @class = ViewBag.CurrentStatus == "Đã hủy" ? "btn btn-danger" : "btn btn-outline-danger" })
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Sản phẩm</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        // Lấy danh sách sản phẩm trong đơn hàng
+                        var orderDetails = order.OrderDetails ?? new List<OrderDetail>();
+
+                        <tr>
+                            <td><strong>@order.OrderCode</strong></td>
+                            <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                @if (orderDetails.Any())
+                                {
+                                    <div class="product-list">
+                                        @foreach (var detail in orderDetails.Take(2))
+                                        {
+                                            <div class="product-item">
+                                                <span>• @detail.Product.Name</span>
+                                                <span class="text-muted">(@detail.Quantity)</span>
+                                            </div>
+                                        }
+                                        @if (orderDetails.Count() > 2)
+                                        {
+                                            <small class="text-muted">và @(orderDetails.Count() - 2) sản phẩm khác...</small>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td><strong>@order.TotalAmount.ToString("N0") VNĐ</strong></td>
+                            <td>
+                                @if (order.Status == "Đang xử lý" || order.Status == "Pending")
+                                {
+                                    <span class="badge badge-warning">Đang xử lý</span>
+                                }
+                                else if (order.Status == "Đang giao" || order.Status == "Shipping")
+                                {
+                                    <span class="badge badge-info">Đang giao</span>
+                                }
+                                else if (order.Status == "Đã giao" || order.Status == "Delivered")
+                                {
+                                    <span class="badge badge-success">Đã giao</span>
+                                }
+                                else if (order.Status == "Đã hủy" || order.Status == "Cancelled")
+                                {
+                                    <span class="badge badge-danger">Đã hủy</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-secondary">@order.Status</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Chi tiết", "Details", new { id = order.Id }, new { @class = "btn btn-sm btn-primary" })
+
+                                @* Nút hủy đơn - chỉ hiện khi đang xử lý *@
+                                @if (order.Status == "Đang xử lý" || order.Status == "Pending")
+                                {
+                                    using (Html.BeginForm("Cancel", "CustomerOrders", FormMethod.Post, new { @class = "d-inline", id = "cancelForm" + order.Id }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("id", order.Id)
+                                        <button type="button"
+                                                class="btn btn-sm btn-danger ml-1"
+                                                onclick="confirmCancel(@order.Id)">
+                                            Hủy
+                                        </button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Bạn chưa có đơn hàng nào@(ViewBag.CurrentStatus != null ? " với trạng thái này" : "").
+        </div>
+    }
+</div>
+
+<style>
+    .badge {
+        display: inline-block;
+        padding: 8px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 4px;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .badge-info {
+        background-color: #17a2b8;
+        color: #fff;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .badge-secondary {
+        background-color: #6c757d;
+        color: #fff;
+    }
+
+    .table {
+        background-color: #fff;
+    }
+
+        .table thead th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            border-bottom: 2px solid #dee2e6;
+            padding: 12px;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+            padding: 12px;
+            border: 1px solid #dee2e6;
+        }
+
+    .btn-group {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    /* Style cho danh sách sản phẩm */
+    .product-list {
+        max-width: 300px;
+    }
+
+    .product-item {
+        margin-bottom: 3px;
+        font-size: 14px;
+    }
+
+        .product-item .text-muted {
+            font-size: 12px;
+        }
+
+    /* Style cho nút hành động */
+    .btn-sm {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    .ml-1 {
+        margin-left: 5px;
+    }
+</style>
+
+<script>
+    function confirmCancel(orderId) {
+        if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')) {
+            document.getElementById('cancelForm' + orderId).submit();
+        }
+    }</script>
