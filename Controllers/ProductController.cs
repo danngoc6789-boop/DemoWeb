@@ -268,16 +268,14 @@ namespace DemoWeb.Controllers
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest, "Product ID is required");
-            }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Product ID is required");
 
             var product = db.Products.FirstOrDefault(p => p.Id == id.Value);
             if (product == null)
                 return HttpNotFound();
-           
 
             return View(product);
+
         }
         // GET: Product/Delete/5
         public ActionResult Delete(int? id)

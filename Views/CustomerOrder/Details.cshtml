@@ -10,21 +10,14 @@
                 <h2>Chi Tiết Đơn Hàng #@Model.OrderCode</h2>
                 @Html.ActionLink("← Quay lại", "Index", null, new { @class = "btn btn-secondary" })
             </div>
-
+            <!-- Thông báo thành công / lỗi -->
             @if (TempData["SuccessMessage"] != null)
             {
-                <div class="alert alert-success alert-dismissible fade show">
-                    @TempData["SuccessMessage"]
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
             }
-
             @if (TempData["ErrorMessage"] != null)
             {
-                <div class="alert alert-danger alert-dismissible fade show">
-                    @TempData["ErrorMessage"]
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                </div>
+                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
             }
 
             <!-- Thông tin đơn hàng -->
@@ -65,15 +58,19 @@
 
                     @if (Model.Status == "Đang xử lý" || Model.Status == "Pending")
                     {
-                        using (Html.BeginForm("Cancel", "CustomerOrders", FormMethod.Post))
+                        using (Html.BeginForm("Cancel", "CustomerOrder", new { id = Model.Id }, FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
-                            @Html.Hidden("OrderCode", Model.OrderCode)
-                            <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?')">
+                            <button type="submit" class="btn btn-danger mt-3"
+                                    onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">
                                 <i class="fas fa-times"></i> Hủy đơn hàng
                             </button>
                         }
+
                     }
+
+
+
                 </div>
             </div>
 
@@ -99,28 +96,28 @@
                                 {
                                     foreach (var item in ViewBag.OrderDetails)
                                     {
-                                        
-                                            // Xử lý đường dẫn hình ảnh
-                                            string imagePath = "";
-                                            if (!string.IsNullOrEmpty(item.Product.Image))
-                                            {
+
+                                        // Xử lý đường dẫn hình ảnh
+                                        string imagePath = "";
+                                        if (!string.IsNullOrEmpty(item.Product.Image))
+                                        {
                                             // Nếu đường dẫn đã có ~/ thì dùng luôn
                                             if (item.Product.Image.StartsWith("~/"))
                                             {
-                                            imagePath = item.Product.Image;
+                                                imagePath = item.Product.Image;
                                             }
                                             // Nếu đường dẫn đã có /Content thì thêm ~
                                             else if (item.Product.Image.StartsWith("/Content") || item.Product.Image.StartsWith("Content"))
                                             {
-                                            imagePath = "~/" + item.Product.Image.TrimStart('/');
+                                                imagePath = "~/" + item.Product.Image.TrimStart('/');
                                             }
                                             // Nếu chỉ là tên file hoặc đường dẫn tương đối
                                             else
                                             {
-                                            imagePath = "~/Content/Images/" + item.Product.Image;
+                                                imagePath = "~/Content/Images/" + item.Product.Image;
                                             }
-                                            }
-        
+                                        }
+
                                         <tr>
                                             <td>
                                                 @if (!string.IsNullOrEmpty(imagePath))
@@ -144,9 +141,9 @@
                                             <td class="text-center">@item.Quantity</td>
                                             <td><strong>@((item.UnitPrice * item.Quantity).ToString("N0")) VNĐ</strong></td>
                                         </tr>
-                                        }
-                                        }
-                                    </tbody>
+                                    }
+                                }
+                            </tbody>
                             <tfoot>
                                 <tr class="table-active">
                                     <td colspan="4" class="text-right"><strong>Tổng cộng:</strong></td>

@@ -16,22 +16,27 @@ namespace DemoWeb.Controllers
         public ActionResult Index(string status)
         {
             // Lấy username của user đang đăng nhập
+       
             string username = User.Identity.Name;
 
-            // Lấy tất cả đơn hàng của customer này
+            // Lấy tất cả đơn hàng của user
             var orders = db.Orders
                 .Where(o => o.Username == username)
-                .OrderByDescending(o => o.OrderDate);
-            // Lọc theo trạng thái (giữ nguyên không cần map vì Admin lưu tiếng Việt)
+                .OrderByDescending(o => o.OrderDate)
+                .ToList();
+
+            // Nếu có status chọn, lọc
             if (!string.IsNullOrEmpty(status))
             {
-                orders = (IOrderedQueryable<Order>)orders.Where(o => o.Status == status);
+
+                orders = orders.Where(o => o.Status == status).ToList();
             }
 
-            ViewBag.CurrentStatus = status;
+            ViewBag.CurrentStatus = status; // để view biết tab nào active
+           
             return View(orders.ToList());
 
-        }
+        }   
         
       
         // GET: CustomerOrders/Details/5
@@ -89,7 +94,7 @@ namespace DemoWeb.Controllers
             // Chỉ cho phép hủy đơn hàng đang chờ xử lý
             if (order.Status == "Pending" || order.Status == "Đang xử lý")
             {
-                order.Status = "Cancelled";
+                order.Status = "Đã hủy";
                 order.CancelledDate = DateTime.Now;
                 db.SaveChanges();
 

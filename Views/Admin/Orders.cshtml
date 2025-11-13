@@ -38,7 +38,9 @@
                             <input type="hidden" name="orderId" value="@order.Id" />
                             <select name="status" class="form-control form-control-sm">
                                 <option value="Chưa xử lý" @(order.Status == "Chưa xử lý" ? "selected" : "")>Chưa xử lý</option>
+
                                 <option value="Đang xử lý" @(order.Status == "Đang xử lý" ? "selected" : "")>Đang xử lý</option>
+                                <option value="Đang giao" @(order.Status == "Đang giao" ? "selected" : "")>Đang giao</option>
                                 <option value="Đã giao" @(order.Status == "Đã giao" ? "selected" : "")>Đã giao</option>
                                 <option value="Hủy" @(order.Status == "Hủy" ? "selected" : "")>Hủy</option>
                             </select>

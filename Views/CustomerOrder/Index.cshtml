@@ -4,7 +4,7 @@
     ViewBag.Title = "Đơn Hàng Của Tôi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/Content/Checkout.css" rel="stylesheet" />
 <div class="container" style="margin-top: 100px; min-height: 500px;">
     <h2 class="mb-4">Đơn Hàng Của Tôi</h2>
 
@@ -86,23 +86,23 @@
                                 }
                             </td>
                             <td>
-                                @Html.ActionLink("Chi tiết", "Details", new { id = order.Id }, new { @class = "btn btn-sm btn-primary" })
+                                <div class="action-buttons">
+                                    @Html.ActionLink("Chi tiết", "Details", new { id = order.Id }, new { @class = "btn btn-sm btn-primary" })
 
-                                @* Nút hủy đơn - chỉ hiện khi đang xử lý *@
-                                @if (order.Status == "Đang xử lý" || order.Status == "Pending")
-                                {
-                                    using (Html.BeginForm("Cancel", "CustomerOrders", FormMethod.Post, new { @class = "d-inline", id = "cancelForm" + order.Id }))
+                                    @if (order.Status == "Đang xử lý" || order.Status == "Pending")
                                     {
-                                        @Html.AntiForgeryToken()
-                                        @Html.Hidden("id", order.Id)
-                                        <button type="button"
-                                                class="btn btn-sm btn-danger ml-1"
-                                                onclick="confirmCancel(@order.Id)">
-                                            Hủy
-                                        </button>
+                                        using (Html.BeginForm("Cancel", "CustomerOrder", new { id = order.Id }, FormMethod.Post, new { @style = "margin:0;" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger cancel-btn"
+                                                    onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">
+                                                Hủy
+                                            </button>
+                                        }
                                     }
-                                }
+                                </div>
                             </td>
+
                         </tr>
                     }
                 </tbody>
