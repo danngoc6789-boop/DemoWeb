@@ -221,6 +221,10 @@
     <Compile Include="Migrations\202511130408045_AddUsernameToOrder.Designer.cs">
       <DependentUpon>202511130408045_AddUsernameToOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511131343164_AddAvailableSizesToProduct.cs" />
+    <Compile Include="Migrations\202511131343164_AddAvailableSizesToProduct.Designer.cs">
+      <DependentUpon>202511131343164_AddAvailableSizesToProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -730,6 +734,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511130408045_AddUsernameToOrder.resx">
       <DependentUpon>202511130408045_AddUsernameToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511131343164_AddAvailableSizesToProduct.resx">
+      <DependentUpon>202511131343164_AddAvailableSizesToProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

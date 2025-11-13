@@ -403,4 +403,33 @@ SET Gender = N'Nữ'
 WHERE Id = 1027;
 
 
+SELECT Id, Name FROM Products
 
+SELECT Id, Name, Type, Category, AvailableSizes 
+FROM Products
+ORDER BY Type
+
+UPDATE Products 
+SET AvailableSizes = '6,7,8,9,10,11,12,13,14,15,16,17,18,19,20'
+WHERE Category = N'Nhẫn'
+
+UPDATE Products 
+SET AvailableSizes = '40cm,45cm,50cm,55cm,60cm'
+WHERE Category = N'Dây Chuyền'
+
+UPDATE Products 
+SET AvailableSizes = '16cm,17cm,18cm,19cm,20cm'
+WHERE Category = N'Vòng'
+
+UPDATE Products 
+SET AvailableSizes = '16cm,17cm,18cm,19cm,20cm'
+WHERE Category = N'Lắc'
+
+UPDATE Products 
+SET AvailableSizes = NULL
+WHERE Category = N'Bộ Trang Sức'
+-- Xem tất cả các giá trị Type đang có
+SELECT DISTINCT Type, COUNT(*) AS SoLuong
+FROM Products
+GROUP BY Type
+ORDER BY Type

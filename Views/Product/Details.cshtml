@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 @section Breadcrumb {
     <div class="breadcrumb-box">
         <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
@@ -25,7 +24,7 @@
                 <img id="mainImage"
                      src="@Url.Content(Model.MainImage)"
                      alt="@Model.Name"
-                     style="width:100%; display:block;"
+                     style="width:100%; display:block; border-radius:8px;"
                      onerror="this.src='@Url.Content("~/Content/Images/no-image.jpg")'" />
 
                 @if (Model.AllImages != null && Model.AllImages.Count > 1)
@@ -36,7 +35,7 @@
                 }
             </div>
 
-            <!-- Thumbnails - Dùng AllImages thay vì ImageList -->
+            <!-- Thumbnails -->
             @if (Model.AllImages != null && Model.AllImages.Count > 1)
             {
                 <div style="display:flex; gap:10px; overflow-x:auto;">
@@ -48,7 +47,7 @@
                              alt="@Model.Name"
                              class="thumbnail-image"
                              onclick="changeMainImage('@Url.Content(imgPath)', this)"
-                             style="width:80px; height:80px; object-fit:cover; cursor:pointer; border:2px solid @(isFirst ? "var(--brand-gold)" : "#ddd"); flex-shrink:0;"
+                             style="width:80px; height:80px; object-fit:cover; cursor:pointer; border:2px solid @(isFirst ? "var(--brand-gold)" : "#ddd"); border-radius:5px; flex-shrink:0; transition: all 0.3s;"
                              onerror="this.style.display='none'" />
                     }
                 </div>
@@ -59,8 +58,8 @@
     <!-- Cột phải: Thông tin sản phẩm -->
     <div class="col-md-7">
         <!-- Category -->
-        <div style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:var(--brand-gold); margin-bottom:12px;">
-            @(Model.Category ?? "BÔNG TAI")
+        <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:var(--brand-gold); margin-bottom:12px;">
+            @(Model.Category ?? "SẢN PHẨM")
         </div>
 
         <!-- Tên sản phẩm -->
@@ -73,7 +72,7 @@
             <span>Mã SP: DTJ@(Model.Id.ToString().PadLeft(6, '0'))</span>
             @if (!string.IsNullOrEmpty(Model.Type))
             {
-                <span style="margin-left:16px;">@Model.Type</span>
+                <span style="margin-left:16px;">• @Model.Type</span>
             }
         </div>
 
@@ -95,83 +94,180 @@
             }
         </div>
 
-        <p style="font-size:0.85rem; color:#666; margin-bottom:24px;">
+        <p style="font-size:0.85rem; color:#666; margin-bottom:32px;">
             (Giá đã bao gồm VAT)
         </p>
 
+        <!-- FORM THÊM VÀO GIỎ -->
+        @using (Html.BeginForm("AddToCart", "Cart", FormMethod.Post, new { id = "addToCartForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("id", Model.Id)
 
-        <!--Chọn Size-->
-        <label>Chọn size:</label>
-        <div class="size-options">
-            @if (Model.Sizes.Any())
+            <!-- Chọn Size -->
+            if (Model.Sizes != null && Model.Sizes.Any())
             {
-                foreach (var size in Model.Sizes)
-                {
-                    var sizeId = "size_" + size.Replace(" ", "").Replace("cm", "");
-                    <input type="radio" id="@sizeId" name="size" value="@size" />
-                    <label for="@sizeId">@size</label>
-                }
+                <div style="margin-bottom:28px;">
+                    <label style="display:block; font-weight:600; font-size:0.95rem; color:#000; margin-bottom:12px;">
+                        Chọn kích thước: <span style="color:red;">*</span>
+                    </label>
+                    <div class="size-options" style="display:flex; flex-wrap:wrap; gap:6px;">
+                        @foreach (var size in Model.Sizes)
+                        {
+                            var sizeId = "size_" + Guid.NewGuid().ToString("N").Substring(0, 8);
+                            <label class="size-option-label" style="position:relative; cursor:pointer; margin:0;">
+                                <input type="radio"
+                                       id="@sizeId"
+                                       name="size"
+                                       value="@size"
+                                       style="position:absolute; opacity:0; cursor:pointer;" />
+                                <span class="size-display" style="display:inline-block; min-width:38px; padding:6px 10px; text-align:center; border:1.5px solid #ddd; border-radius:4px; font-weight:500; font-size:0.8rem; background:#fff; transition: all 0.3s;">
+                                    @size
+                                </span>
+                            </label>
+                        }
+                    </div>
+                    <!-- Thông báo lỗi - chỉ hiện khi submit -->
+                    <small id="sizeError" style="display:none; margin-top:8px; color:#dc3545; font-size:0.85rem; font-weight:500;">
+                        <i class="fas fa-exclamation-circle"></i> Vui lòng chọn kích thước trước khi thêm vào giỏ hàng
+                    </small>
+                </div>
             }
             else
             {
-                <span>Chưa có size cho sản phẩm này</span>
+                @Html.Hidden("size", "")
             }
-        </div>
+
+            <!-- Số lượng -->
+            <div style="margin-bottom:28px;">
+                <label style="display:block; font-weight:600; font-size:0.95rem; color:#000; margin-bottom:12px;">
+                    Số lượng:
+                </label>
+                <div style="display:flex; align-items:center; gap:12px; max-width:180px;">
+                    <button type="button"
+                            onclick="decreaseQty()"
+                            style="width:40px; height:40px; border:1px solid #ddd; background:#fff; border-radius:5px; cursor:pointer; font-size:1.2rem; display:flex; align-items:center; justify-content:center; transition: all 0.3s;">
+                        −
+                    </button>
+                    <input type="number"
+                           name="quantity"
+                           id="quantity"
+                           value="1"
+                           min="1"
+                           max="99"
+                           required
+                           style="width:80px; height:40px; text-align:center; border:1px solid #ddd; border-radius:5px; font-weight:600; font-size:1rem;" />
+                    <button type="button"
+                            onclick="increaseQty()"
+                            style="width:40px; height:40px; border:1px solid #ddd; background:#fff; border-radius:5px; cursor:pointer; font-size:1.2rem; display:flex; align-items:center; justify-content:center; transition: all 0.3s;">
+                        +
+                    </button>
+                </div>
+            </div>
+
+            <!-- Button thêm vào giỏ -->
+            <div style="margin-bottom:32px;">
+                <button type="submit"
+                        class="btn-round-black"
+                        style="display:block; width:100%; padding:18px; font-size:1rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; border:none; cursor:pointer; transition: all 0.3s;">
+                    <i class="fas fa-shopping-cart"></i> THÊM VÀO GIỎ HÀNG
+                </button>
+            </div>
+        }
 
         <!-- Mô tả sản phẩm -->
         @if (!string.IsNullOrEmpty(Model.Description))
         {
-            <div style="padding:20px; background:#f8f8f8; border-left:4px solid var(--brand-gold); margin-bottom:28px;">
+            <div style="padding:20px; background:#f8f8f8; border-left:4px solid var(--brand-gold); margin-bottom:28px; border-radius:5px;">
                 <h3 style="font-size:1rem; font-weight:600; color:#000; margin-bottom:8px;">
                     Mô tả sản phẩm
                 </h3>
                 <p style="font-size:0.95rem; line-height:1.6; color:#555; margin:0;">
-                    @Model.Description
+                    @Html.Raw(Model.Description)
                 </p>
             </div>
         }
 
-        <!-- Button thêm vào giỏ -->
-        <div style="margin-bottom:32px;">
-            <a href="@Url.Action("AddToCart","Cart", new { id = Model.Id })"
-               class="btn-round-black"
-               style="display:block; width:100%; padding:16px; font-size:1rem; font-weight:600; text-decoration:none; text-align:center; text-transform:uppercase;">
-
-                THÊM VÀO GIỎ
-            </a>
-        </div>
-
         <!-- Thông tin bổ sung -->
         <div style="border-top:1px solid #e5e5e5; padding-top:24px;">
-            <div style="margin-bottom:16px;">
-                <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
-                    Bảo hành trọn đời
-                </div>
-                <div style="font-size:0.85rem; color:#666;">
-                    Đổi trả trong 48h
-                </div>
-            </div>
-
-            <div style="margin-bottom:16px;">
-                <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
-                    Miễn phí vận chuyển
-                </div>
-                <div style="font-size:0.85rem; color:#666;">
-                    Cho đơn từ 5.000.000₫
+            <div style="margin-bottom:16px; display:flex; align-items:start; gap:12px;">
+                <i class="fas fa-shield-alt" style="color:var(--brand-gold); font-size:1.3rem; margin-top:2px;"></i>
+                <div>
+                    <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
+                        Bảo hành trọn đời
+                    </div>
+                    <div style="font-size:0.85rem; color:#666;">
+                        Đổi trả trong 48h - Bảo hành làm sáng miễn phí
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
-                    Quà tặng hấp dẫn
+            <div style="margin-bottom:16px; display:flex; align-items:start; gap:12px;">
+                <i class="fas fa-shipping-fast" style="color:var(--brand-gold); font-size:1.3rem; margin-top:2px;"></i>
+                <div>
+                    <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
+                        Miễn phí vận chuyển
+                    </div>
+                    <div style="font-size:0.85rem; color:#666;">
+                        Cho đơn từ 5.000.000₫ - Giao hàng toàn quốc
+                    </div>
                 </div>
-                <div style="font-size:0.85rem; color:#666;">
-                    Hộp sang trọng & giấy chứng nhận
+            </div>
+
+            <div style="display:flex; align-items:start; gap:12px;">
+                <i class="fas fa-gift" style="color:var(--brand-gold); font-size:1.3rem; margin-top:2px;"></i>
+                <div>
+                    <div style="font-weight:600; font-size:0.95rem; color:#000; margin-bottom:4px;">
+                        Quà tặng hấp dẫn
+                    </div>
+                    <div style="font-size:0.85rem; color:#666;">
+                        Hộp sang trọng & giấy chứng nhận vàng 24K
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>
+
+<style>
+    /* Style cho size options */
+    .size-option-label input[type="radio"]:checked + .size-display {
+        background-color: var(--brand-gold);
+        color: #fff;
+        border-color: var(--brand-gold);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .size-option-label:hover .size-display {
+        border-color: var(--brand-gold);
+        transform: translateY(-2px);
+    }
+
+    /* Style cho quantity buttons */
+    button[onclick*="Qty"]:hover {
+        background-color: #f5f5f5 !important;
+        border-color: var(--brand-gold) !important;
+    }
+
+    /* Style cho thumbnail hover */
+    .thumbnail-image:hover {
+        border-color: var(--brand-gold) !important;
+        transform: scale(1.05);
+    }
+
+    /* Ẩn spinner của number input */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+</style>
+
 <script>
     function changeMainImage(imageSrc, thumbnailElement) {
         // Thay đổi ảnh chính
@@ -186,5 +282,33 @@
         // Thêm border vàng cho thumbnail được click
         thumbnailElement.style.border = '2px solid var(--brand-gold)';
     }
-</script>
 
+    function increaseQty() {
+        var qtyInput = document.getElementById('quantity');
+        var currentVal = parseInt(qtyInput.value) || 1;
+        if (currentVal < 99) {
+            qtyInput.value = currentVal + 1;
+        }
+    }
+
+    function decreaseQty() {
+        var qtyInput = document.getElementById('quantity');
+        var currentVal = parseInt(qtyInput.value) || 1;
+        if (currentVal > 1) {
+            qtyInput.value = currentVal - 1;
+        }
+    }
+
+    // Validate form trước khi submit
+    document.getElementById('addToCartForm').addEventListener('submit', function (e) {
+        var sizeInputs = document.querySelectorAll('input[name="size"]');
+        if (sizeInputs.length > 0) {
+            var sizeSelected = Array.from(sizeInputs).some(input => input.checked);
+            if (!sizeSelected) {
+                e.preventDefault();
+                alert('Vui lòng chọn kích thước!');
+                return false;
+            }
+        }
+    });
+</script>

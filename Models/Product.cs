@@ -18,7 +18,10 @@ namespace DemoWeb.Models
             [Required]
             [StringLength(200)]
             public string Name { get; set; }
-            public List<string> Sizes { get; set; }
+
+            [StringLength(200)]
+            public string AvailableSizes { get; set; }
+
 
             [StringLength(500)]
             public string Description { get; set; }
@@ -33,16 +36,16 @@ namespace DemoWeb.Models
             [StringLength(2000)]
             public string Images { get; set; }
 
-        public string Gender { get; set; }
+            public string Gender { get; set; }
 
-        [NotMapped]
+            [NotMapped]
             public string ImagePath
             {
                 get { return MainImage; }
             }
 
 
-        [StringLength(50)]
+            [StringLength(50)]
             public string Type { get; set; }
 
             [StringLength(100)]
@@ -50,67 +53,88 @@ namespace DemoWeb.Models
 
             public DateTime CreatedDate { get; set; } = DateTime.Now;
             
-        [NotMapped]
-        public List<string> ImageList
-        {
-            get
+            [NotMapped]
+            public List<string> ImageList
             {
-                if (string.IsNullOrEmpty(Images))
-                    return new List<string>();
+                get
+                {
+                    if (string.IsNullOrEmpty(Images))
+                        return new List<string>();
 
-                return Images
-                    .Replace(";~", ";")
-                    .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(img => img.Trim())
-                    .Where(img => !string.IsNullOrWhiteSpace(img))
-                    .Select(img => img.StartsWith("~") ? img : "~" + img)
-                    .ToList();
+                    return Images
+                        .Replace(";~", ";")
+                        .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(img => img.Trim())
+                        .Where(img => !string.IsNullOrWhiteSpace(img))
+                        .Select(img => img.StartsWith("~") ? img : "~" + img)
+                        .ToList();
+                }
             }
-        }
         
-        [NotMapped]
-        public string MainImage
-        {
-            get
+            [NotMapped]
+            public string MainImage
             {
-                // 1. Ưu tiên cột Image (ảnh chính do admin chọn)
-                if (!string.IsNullOrEmpty(Image))
+                get
                 {
-                    return Image.StartsWith("~") ? Image : "~" + Image;
+                    // 1. Ưu tiên cột Image (ảnh chính do admin chọn)
+                    if (!string.IsNullOrEmpty(Image))
+                    {
+                        return Image.StartsWith("~") ? Image : "~" + Image;
+                    }
+
+                    // 2. Nếu không có Image, lấy ảnh đầu từ ImageList
+                    var firstImage = ImageList.FirstOrDefault();
+                    if (!string.IsNullOrEmpty(firstImage))
+                        return firstImage;
+
+                    // 3. Cuối cùng dùng no-image
+                    return "~/Content/Images/no-image.jpg";
                 }
-
-                // 2. Nếu không có Image, lấy ảnh đầu từ ImageList
-                var firstImage = ImageList.FirstOrDefault();
-                if (!string.IsNullOrEmpty(firstImage))
-                    return firstImage;
-
-                // 3. Cuối cùng dùng no-image
-                return "~/Content/Images/no-image.jpg";
             }
-        }
 
-        // ← THÊM: Lấy tất cả ảnh (Image + ImageList) để hiện thumbnails
-        [NotMapped]
-        public List<string> AllImages
-        {
-            get
+            // ← THÊM: Lấy tất cả ảnh (Image + ImageList) để hiện thumbnails
+            [NotMapped]
+            public List<string> AllImages
             {
-                var allImages = new List<string>();
-
-                // Thêm ảnh chính vào đầu
-                if (!string.IsNullOrEmpty(Image))
+                get
                 {
-                    var mainImg = Image.StartsWith("~") ? Image : "~" + Image;
-                    allImages.Add(mainImg);
+                    var allImages = new List<string>();
+
+                    // Thêm ảnh chính vào đầu
+                    if (!string.IsNullOrEmpty(Image))
+                    {
+                        var mainImg = Image.StartsWith("~") ? Image : "~" + Image;
+                        allImages.Add(mainImg);
+                    }
+
+                    // Thêm các ảnh phụ từ ImageList (không trùng với Image)
+                    var additionalImages = ImageList.Where(img => img != Image && img != "~" + Image);
+                    allImages.AddRange(additionalImages);
+
+                    return allImages;
                 }
-
-                // Thêm các ảnh phụ từ ImageList (không trùng với Image)
-                var additionalImages = ImageList.Where(img => img != Image && img != "~" + Image);
-                allImages.AddRange(additionalImages);
-
-                return allImages;
             }
-        }
+            [NotMapped]
+            public List<string> Sizes
+            {
+                get
+                {
+                    if (string.IsNullOrEmpty(AvailableSizes))
+                        return new List<string>();
+
+                    return new List<string>(
+                        AvailableSizes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                      .Select(s => s.Trim())
+                    );
+                }
+            }
+
+            // Hoặc dùng tên SizeList cho rõ ràng hơn
+            [NotMapped]
+            public List<string> SizeList
+            {
+                get { return Sizes; }
+            }
 
     }
 }

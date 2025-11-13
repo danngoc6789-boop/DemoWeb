@@ -40,10 +40,10 @@ namespace DemoWeb.Controllers
 
         // Tăng số lượng 1 sản phẩm
         // /Cart/Plus/5
-        public ActionResult Plus(int id)
+        public ActionResult Plus(int id,string size)
         {
             var cart = GetCart();
-            var line = cart.FirstOrDefault(x => x.ProductId == id);
+            var line = cart.FirstOrDefault(x => x.ProductId == id && x.Size == size);
             if (line != null)
             {
                 line.Quantity += 1;
@@ -53,10 +53,10 @@ namespace DemoWeb.Controllers
 
         // Giảm số lượng 1 sản phẩm (tối thiểu 1)
         // /Cart/Minus/5
-        public ActionResult Minus(int id)
+        public ActionResult Minus(int id,string size)
         {
             var cart = GetCart();
-            var line = cart.FirstOrDefault(x => x.ProductId == id);
+            var line = cart.FirstOrDefault(x => x.ProductId == id && x.Size == size);
             if (line != null)
             {
                 line.Quantity = Math.Max(1, line.Quantity - 1);
@@ -66,10 +66,10 @@ namespace DemoWeb.Controllers
 
         // Xoá sản phẩm khỏi giỏ
         // /Cart/Remove/5
-        public ActionResult Remove(int id)
+        public ActionResult Remove(int id, string size)
         {
             var cart = GetCart();
-            var line = cart.FirstOrDefault(x => x.ProductId == id);
+            var line = cart.FirstOrDefault(x => x.ProductId == id && x.Size == size);
             if (line != null)
             {
                 cart.Remove(line);
@@ -81,10 +81,12 @@ namespace DemoWeb.Controllers
         // (Chuẩn bị cho bước sau)
         // /Cart/AddToCart/5
         // Sau này gọi từ product detail
-        public ActionResult AddToCart(int id,string size)
+        [HttpPost]
+        public ActionResult AddToCart(int id, int quantity, string size)
         {
             var cart = GetCart();
-
+            // Validate quantity
+            if (quantity <= 0) quantity = 1;
             // Lấy sản phẩm thật từ database
             var product = db.Products.FirstOrDefault(p => p.Id == id);
             if (product == null)
@@ -96,7 +98,7 @@ namespace DemoWeb.Controllers
             var line = cart.FirstOrDefault(x => x.ProductId == id && x.Size == size);
             if (line != null)
             {
-                line.Quantity += 1;
+                line.Quantity += quantity;
             }
             else
             {
@@ -108,10 +110,12 @@ namespace DemoWeb.Controllers
                     ImagePath = product.MainImage, // đường dẫn hình trong CSDL
                     Price = product.Price,
                     Quantity = 1,
-                    Size = size
+                    Size = size 
                 });
             }
-
+            TempData["SuccessMessage"] = $"Đã thêm {product.Name}" +
+               (!string.IsNullOrEmpty(size) ? $" (Size: {size})" : "") +
+               " vào giỏ hàng!";
             return RedirectToAction("Index");
         }
         // Trang hiển thị form thanh toán
@@ -176,6 +180,14 @@ namespace DemoWeb.Controllers
 
             ViewBag.OrderCode = orderCode;
             return View("Success"); // hiển thị trang thành công
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
     }
