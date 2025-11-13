@@ -12,7 +12,7 @@ namespace DemoWeb.Models
         public string ImagePath { get; set; }   // Link hình
         public decimal Price { get; set; }      // Giá 1 cái
         public int Quantity { get; set; }       // Số lượng mua
-
+        public string Size { get; set; }
         public decimal ThanhTien
         {
             get { return Price * Quantity; }

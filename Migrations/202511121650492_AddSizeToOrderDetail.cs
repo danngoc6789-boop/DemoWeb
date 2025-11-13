@@ -1,0 +1,18 @@
+﻿namespace DemoWeb.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class AddSizeToOrderDetail : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.OrderDetails", "Size", c => c.String());
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.OrderDetails", "Size");
+        }
+    }
+}

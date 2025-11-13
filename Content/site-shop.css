@@ -580,6 +580,49 @@ a {
             justify-content: center !important;
         }
 }
+/*size*/
+.size-options {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+    .size-options input[type="radio"] {
+        display: none;
+    }
+
+    .size-options label {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background-color: #f8f8f8;
+    }
+
+    .size-options input[type="radio"]:checked + label {
+        background-color: #ffc107;
+        color: #fff;
+        border-color: #ffc107;
+    }
+
+    .size-options label:hover {
+        background-color: #ffe082;
+    }
+
+.btn-submit {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .btn-submit:hover {
+        background-color: #218838;
+    }
+
 /* ========= PHÂN TRANG ========= */
 .pagination-container {
     margin: 40px 0;

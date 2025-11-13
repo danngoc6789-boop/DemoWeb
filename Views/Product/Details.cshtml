@@ -99,6 +99,25 @@
             (Giá đã bao gồm VAT)
         </p>
 
+
+        <!--Chọn Size-->
+        <label>Chọn size:</label>
+        <div class="size-options">
+            @if (Model.Sizes.Any())
+            {
+                foreach (var size in Model.Sizes)
+                {
+                    var sizeId = "size_" + size.Replace(" ", "").Replace("cm", "");
+                    <input type="radio" id="@sizeId" name="size" value="@size" />
+                    <label for="@sizeId">@size</label>
+                }
+            }
+            else
+            {
+                <span>Chưa có size cho sản phẩm này</span>
+            }
+        </div>
+
         <!-- Mô tả sản phẩm -->
         @if (!string.IsNullOrEmpty(Model.Description))
         {
@@ -117,6 +136,7 @@
             <a href="@Url.Action("AddToCart","Cart", new { id = Model.Id })"
                class="btn-round-black"
                style="display:block; width:100%; padding:16px; font-size:1rem; font-weight:600; text-decoration:none; text-align:center; text-transform:uppercase;">
+
                 THÊM VÀO GIỎ
             </a>
         </div>
@@ -151,7 +171,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 <script>
     function changeMainImage(imageSrc, thumbnailElement) {
         // Thay đổi ảnh chính

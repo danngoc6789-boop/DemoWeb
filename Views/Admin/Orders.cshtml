@@ -10,12 +10,14 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
+            <th>Số thứ tự </th>
             <th>Mã đơn hàng</th>
             <th>Khách hàng</th>
             <th>Ngày đặt</th>
             <th>Tổng tiền</th>
             <th>Trạng thái</th>
             <th>Hành động</th>
+
         </tr>
     </thead>
     <tbody>
@@ -23,6 +25,7 @@
         {
             <tr>
                 <td>@order.Id</td>
+                <td>@order.OrderCode</td>
                 <td>@order.CustomerName</td>
                 <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
                 <td>@order.TotalAmount.ToString("C")</td>

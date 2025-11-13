@@ -275,6 +275,32 @@ namespace DemoWeb.Controllers
             var product = db.Products.FirstOrDefault(p => p.Id == id.Value);
             if (product == null)
                 return HttpNotFound();
+            // Khởi tạo danh sách size dựa trên loại sản phẩm
+            if (product.Sizes == null || !product.Sizes.Any())
+            {
+                switch (product.Type)
+                {
+
+                    case "Nhẫn":
+                        product.Sizes = new List<string> { "15", "16", "17", "18" };
+                        break;
+                    case "Vòng":
+                        product.Sizes = new List<string> { "52cm" };
+                        break;
+                    case "Dây Chuyền":
+                        product.Sizes = new List<string> { "42", "45" };
+                        break;
+                    case "Lắc":
+                        product.Sizes = new List<string> { "16", "17", "18", "19" };
+                        break;
+                    case "Kiềng":
+                        product.Sizes = new List<string> { "40", "42" };
+                        break;
+                    default:
+                        product.Sizes = new List<string>();
+                        break;
+                }
+            }
 
             return View(product);
         }

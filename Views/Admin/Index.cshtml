@@ -19,139 +19,6 @@
         </div>
     }
 
-    <!-- Thống kê tổng quan -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Tổng sản phẩm
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalProducts ?? 0)</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-box fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                    <a href="@Url.Action("Products")" class="btn btn-primary btn-sm mt-2 btn-block">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Tổng đơn hàng
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalOrders ?? 0)</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                    <a href="@Url.Action("Orders")" class="btn btn-success btn-sm mt-2 btn-block">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Đơn hôm nay
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TodayOrders ?? 0)</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clock fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                    <a href="@Url.Action("Orders")" class="btn btn-warning btn-sm mt-2 btn-block">Xem chi tiết</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Doanh thu tháng
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                @((ViewBag.MonthRevenue ?? 0).ToString("N0"))đ
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                    <a href="@Url.Action("Reports")" class="btn btn-info btn-sm mt-2 btn-block">Xem báo cáo</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Đơn hàng gần đây -->
-        <div class="col-lg-12 mb-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-primary text-white">
-                    <h6 class="m-0 font-weight-bold"><i class="fas fa-list"></i> Đơn hàng gần đây</h6>
-                </div>
-                <div class="card-body">
-                    @if (ViewBag.RecentOrders != null && ViewBag.RecentOrders.Count > 0)
-                    {
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Mã ĐH</th>
-                                        <th>Khách hàng</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Ngày đặt</th>
-                                        <th>Tổng tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var order in ViewBag.RecentOrders)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <a href="@Url.Action("OrderDetail", new { id = order.Id })" class="font-weight-bold">
-                                                    @order.OrderCode
-                                                </a>
-                                            </td>
-                                            <td>@order.CustomerName</td>
-                                            <td>@order.Phone</td>
-                                            <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
-                                            <td class="font-weight-bold">@order.TotalAmount.ToString("N0")đ</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <a href="@Url.Action("Orders")" class="btn btn-primary btn-block">
-                            <i class="fas fa-arrow-right"></i> Xem tất cả đơn hàng
-                        </a>
-                    }
-                    else
-                    {
-                        <p class="text-center text-muted py-4">Chưa có đơn hàng nào</p>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Menu quản lý nhanh -->
     <div class="row">
         <div class="col-12">
@@ -187,6 +54,140 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <!-- Đơn hàng gần đây -->
+    <div class="col-lg-12 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 bg-primary text-white">
+                <h6 class="m-0 font-weight-bold"><i class="fas fa-list"></i> Đơn hàng gần đây</h6>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.RecentOrders != null && ViewBag.RecentOrders.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Mã ĐH</th>
+                                    <th>Khách hàng</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Tổng tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var order in ViewBag.RecentOrders)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("OrderDetail", new { id = order.Id })" class="font-weight-bold">
+                                                @order.OrderCode
+                                            </a>
+                                        </td>
+                                        <td>@order.CustomerName</td>
+                                        <td>@order.Phone</td>
+                                        <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                        <td class="font-weight-bold">@order.TotalAmount.ToString("N0")đ</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="@Url.Action("Orders")" class="btn btn-primary btn-block">
+                        <i class="fas fa-arrow-right"></i> Xem tất cả đơn hàng
+                    </a>
+                }
+                else
+                {
+                    <p class="text-center text-muted py-4">Chưa có đơn hàng nào</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Thống kê tổng quan -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Tổng sản phẩm
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalProducts ?? 0)</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-box fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+                <a href="@Url.Action("Products")" class="btn btn-primary btn-sm mt-2 btn-block">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Tổng đơn hàng
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalOrders ?? 0)</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+                <a href="@Url.Action("Orders")" class="btn btn-success btn-sm mt-2 btn-block">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Đơn hôm nay
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TodayOrders ?? 0)</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clock fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+                <a href="@Url.Action("Orders")" class="btn btn-warning btn-sm mt-2 btn-block">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Doanh thu tháng
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            @((ViewBag.MonthRevenue ?? 0).ToString("N0"))đ
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+                <a href="@Url.Action("Reports")" class="btn btn-info btn-sm mt-2 btn-block">Xem báo cáo</a>
             </div>
         </div>
     </div>

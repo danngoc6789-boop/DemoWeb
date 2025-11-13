@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DemoWeb.Models;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
-using DemoWeb.Models;
 
 namespace DemoWeb.Controllers
 {
@@ -80,7 +81,7 @@ namespace DemoWeb.Controllers
         // (Chuẩn bị cho bước sau)
         // /Cart/AddToCart/5
         // Sau này gọi từ product detail
-        public ActionResult AddToCart(int id)
+        public ActionResult AddToCart(int id,string size)
         {
             var cart = GetCart();
 
@@ -90,9 +91,9 @@ namespace DemoWeb.Controllers
             {
                 return HttpNotFound(); // Nếu không tìm thấy thì báo lỗi
             }
-
+            
             // Kiểm tra xem sản phẩm đã có trong giỏ chưa
-            var line = cart.FirstOrDefault(x => x.ProductId == id);
+            var line = cart.FirstOrDefault(x => x.ProductId == id && x.Size == size);
             if (line != null)
             {
                 line.Quantity += 1;
@@ -106,7 +107,8 @@ namespace DemoWeb.Controllers
                     Name = product.Name,
                     ImagePath = product.MainImage, // đường dẫn hình trong CSDL
                     Price = product.Price,
-                    Quantity = 1
+                    Quantity = 1,
+                    Size = size
                 });
             }
 
@@ -120,7 +122,7 @@ namespace DemoWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout(string CustomerName, string Address, string Phone, string Email)
+        public ActionResult Checkout(string CustomerName, string Address, string Phone, string Email,string size)
         {
             var cart = GetCart();
             if (cart == null || !cart.Any())
@@ -159,8 +161,8 @@ namespace DemoWeb.Controllers
                     OrderId = order.Id,
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
-                    UnitPrice = item.Price
-
+                    UnitPrice = item.Price,
+                    Size = item.Size
                 };
                 db.OrderDetails.Add(detail);
             }
