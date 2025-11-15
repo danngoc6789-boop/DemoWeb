@@ -24,9 +24,16 @@
             <h3 style="font-size:0.85rem; font-weight:700; letter-spacing:0.1em; color:#d4af37; text-transform:uppercase; margin:0; padding-bottom:0.75rem; border-bottom:2px solid #d4af37; display:inline-block;">
                 Bộ lọc sản phẩm
             </h3>
+            <h3 style="font-size:0.85rem; font-weight:700; letter-spacing:0.1em; color:#d4af37; text-transform:uppercase; margin:0; padding-bottom:0.75rem; border-bottom:2px solid #d4af37; display:inline-block;">
+                <a href="@Url.Action("Index","MeasureRingSize")"
+                   style="font-size: 0.85rem; font-weight: 700; color: #d4af37; text-decoration: none; ">
+                    📏 Đo ni tay
+                </a>
+            </h3>
         </div>
 
         <form method="get" action="@Url.Action("Index","Product")">
+
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
 
                 <!-- Loại vàng -->
@@ -206,7 +213,7 @@
                             }
                         </div>
 
-                    
+
                     </div>
                 </div>
             }

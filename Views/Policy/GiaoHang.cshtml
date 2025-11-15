@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Chính sách Giao hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        Chính sách giao hàng
+    </div>
+}
+<div class="main-wrapper" style="padding:40px 20px;">
+
+    <div class="content-card">
+        <h2 class="section-heading">Chính sách Giao hàng</h2>
+
+        <p>
+            Chúng tôi cam kết giao hàng nhanh chóng, an toàn và minh bạch để bạn nhận sản phẩm đúng hẹn:
+        </p>
+
+        <ul class="policy-list">
+            <li>Thời gian xử lý đơn hàng: 1–2 ngày làm việc kể từ khi đặt hàng.</li>
+            <li>Thời gian giao hàng: từ 2–7 ngày tùy khu vực.</li>
+            <li>Phí vận chuyển được tính theo trọng lượng sản phẩm và khoảng cách.</li>
+            <li>Tất cả sản phẩm được đóng gói cẩn thận, đảm bảo an toàn trong quá trình vận chuyển.</li>
+            <li>Khách hàng có thể theo dõi đơn hàng trực tuyến qua email hoặc hotline.</li>
+        </ul>
+
+        <p>
+            Nếu có vấn đề trong quá trình giao hàng, vui lòng <a href="@Url.Action("Contact","TrangChu")">liên hệ cửa hàng</a> hoặc gọi hotline: <strong>1900 1011</strong>.
+        </p>
+    </div>
+
+</div>
+
+
+<style>
+    .policy-list {
+        list-style-type: disc;
+        padding-left: 20px;
+        margin: 20px 0;
+        color: #555;
+        font-size: 0.95rem;
+    }
+
+        .policy-list li {
+            margin-bottom: 10px;
+            line-height: 1.5rem;
+        }
+
+    .section-heading {
+        font-size: 1.2rem;
+        color: var(--brand-gold);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        font-weight: 600;
+    }
+</style>
+

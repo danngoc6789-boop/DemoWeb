@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="~/Content/site-shop.css" />
 
     @RenderSection("Head", required: false)
+
 </head>
 <body>
 
@@ -95,9 +96,9 @@
                                         <strong>Xin chào Admin</strong>
                                     </span>
                                     <div class="dropdown-divider"></div>
-
-                                    <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Quản lý Admin</a>
-                                    <a class="dropdown-item text-warning" href="@Url.Action("Register", "Account")">Tạo tài khoản Admin</a>
+                                    <div> <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Quản lý Admin</a></div>
+                                    <div class="dropdown-divider"></div>
+                                    <div><a class="dropdown-item text-warning" href="@Url.Action("Register", "Account")">Tạo tài khoản Admin</a></div>
 
                                     <div class="dropdown-divider"></div>
                                     using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "d-inline" }))
@@ -111,7 +112,7 @@
                                 else
                                 {
                                     <span class="dropdown-item-text">
-                                        <strong>Xin chào @Session["FullName"]</strong>
+                                        <strong>Chào @Session["FullName"]</strong>
                                     </span>
                                     <div class="dropdown-divider"></div>
 
@@ -128,21 +129,23 @@
                                 }
                             }
                             else
-                            {
+                            { 
                                 @Html.ActionLink("Đăng nhập", "Login", "Account", null, new { @class = "dropdown-item" })
+                                <div class="dropdown-divider"></div>
                                 @Html.ActionLink("Đăng ký", "Register", "Account", null, new { @class = "dropdown-item" })
                             }
 
                         </div>
                     </li>
-                    </ul>
-                </div>
+                </ul>
+            </div>
         </div>
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="main-wrapper">
-        <div class="container">
+   
+    <main class="main-wrapper ">
+        <div class="container ">
 
             @RenderSection("Breadcrumb", required: false)
 
@@ -154,7 +157,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="jewelry-footer">
+    <footer class="jewerly-footer" >
         <div class="container">
             <div class="row">
 
@@ -184,10 +187,11 @@
 
                 <div class="col-sm-6 col-md-3 mb-4">
                     <div class="footer-title">Hỗ trợ</div>
-                    <div><a href="#">Chính sách thu đổi</a></div>
-                    <div><a href="#">Chính sách giao hàng</a></div>
-                    <div><a href="#">Cách đo ni tay</a></div>
-                    <div><a href="#">Câu hỏi thường gặp</a></div>
+                    <div><a href="@Url.Action("ThuDoi","Policy")">Chính sách thu đổi</a></div>
+                    <div><a href="@Url.Action("BaoHanh","Policy")">Chính sách bảo hành</a></div>
+                    <div><a href="@Url.Action("GiaoHang","Policy")">Chính sách giao hàng</a></div>
+                    <div><a href="@Url.Action("Index","MeasureRingSize")">Cách đo ni tay</a></div>
+                    <div><a href="@Url.Action("QA","Policy")">Câu hỏi thường gặp</a></div>
                 </div>
 
             </div>

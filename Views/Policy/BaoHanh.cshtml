@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Chính sách bảo hành";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        Chính sách bảo hành
+    </div>
+}
+
+<div class="content-card" style="max-width:900px; margin:auto;">
+    <h2>Chính sách bảo hành</h2>
+
+    <p>Chúng tôi cam kết mang đến cho khách hàng dịch vụ bảo hành tốt nhất cho các sản phẩm trang sức:</p>
+
+    <ul>
+        <li><strong>Bảo hành trọn đời:</strong> Sáng bóng cơ bản, lau sạch sản phẩm miễn phí tại cửa hàng.</li>
+        <li><strong>Bảo hành đổi mới:</strong> Trong vòng 7 ngày nếu sản phẩm gặp lỗi kỹ thuật do nhà sản xuất.</li>
+        <li><strong>Bảo hành sửa chữa:</strong> Các lỗi do hao mòn, hư hỏng vật liệu sẽ được tư vấn sửa chữa với chi phí hợp lý.</li>
+        <li><strong>Hóa đơn và chứng từ:</strong> Khi bảo hành, khách hàng cần mang theo hóa đơn hoặc phiếu bảo hành đi kèm sản phẩm.</li>
+        <li><strong>Điều kiện bảo hành:</strong> Không bảo hành các sản phẩm bị hư hỏng do tác động bên ngoài, tai nạn, hoặc sử dụng sai cách.</li>
+    </ul>
+
+    <p>
+        Mọi vấn đề trong chính sách bảo hành, vui lòng <a href="@Url.Action("Contact","TrangChu")">liên hệ cửa hàng</a> hoặc gọi hotline: <strong>1900 1011</strong>.
+    </p>
+
+
+</div>

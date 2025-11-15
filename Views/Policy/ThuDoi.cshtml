@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Chính sách Thu đổi linh hoạt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        Chính sách thu đổi
+    </div>
+}
+<div class="main-wrapper" style="padding:40px 20px;">
+
+    <div class="content-card">
+        <h2 class="section-heading">Chính sách Thu đổi linh hoạt</h2>
+
+        <p>
+            Chúng tôi luôn mong muốn khách hàng được trải nghiệm dịch vụ tốt nhất.
+            Nếu bạn muốn đổi hoặc trả sản phẩm cũ, hãy tham khảo chính sách sau:
+        </p>
+
+        <ul class="policy-list">
+            <li>Sản phẩm phải còn nguyên vẹn, không bị trầy xước, hư hại.</li>
+            <li>Có hóa đơn mua hàng rõ ràng.</li>
+            <li>Thời gian thu đổi trong vòng 30 ngày kể từ ngày mua.</li>
+            <li>Giá thu đổi dựa trên tình trạng sản phẩm và giá vàng hiện hành.</li>
+            <li>Khách hàng có thể nhận tiền mặt hoặc quy đổi sang sản phẩm khác.</li>
+        </ul>
+
+        <p>
+            Để biết thêm chi tiết, vui lòng <a href="@Url.Action("Contact","TrangChu")">liên hệ cửa hàng</a> hoặc gọi hotline: <strong>1900 1011</strong>.
+        </p>
+    </div>
+
+</div>
+
+
+<style>
+    .policy-list {
+        list-style-type: disc;
+        padding-left: 20px;
+        margin: 20px 0;
+        color: #555;
+        font-size: 0.95rem;
+    }
+
+        .policy-list li {
+            margin-bottom: 10px;
+            line-height: 1.5rem;
+        }
+
+    .section-heading {
+        font-size: 1.2rem;
+        color: var(--brand-gold);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        font-weight: 600;
+    }
+</style>
+

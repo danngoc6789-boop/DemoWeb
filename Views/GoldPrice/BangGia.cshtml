@@ -4,7 +4,13 @@
     ViewBag.Title = "Bảng Giá Vàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Bảng Giá Vàng</span>
+    </div>
+}
 <div class="container mt-5">
     <h2 class="text-center mb-4">BẢNG GIÁ VÀNG HÔM NAY</h2>
 

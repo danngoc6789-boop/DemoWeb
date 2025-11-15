@@ -1,6 +1,4 @@
-﻿
-@{
-
+﻿@{
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -79,10 +77,10 @@
         </div>
     </div>
 </div>
+
 <!-- KHUNG TRẮNG CHỨA SẢN PHẨM & DỊCH VỤ -->
 <div style="background:#fff; border-radius:12px; padding:40px; box-shadow:0 4px 16px rgba(0,0,0,0.05);">
 
-    <!-- SẢN PHẨM NỔI BẬT -->
     <!-- SẢN PHẨM NỔI BẬT -->
     <span class="section-heading">
         Sản phẩm nổi bật
@@ -93,20 +91,9 @@
         <!-- Sản phẩm 1 -->
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="product-card">
-
-                <div class="product-img-fake">
-                    <div class="product-img">
-
-
-                        <img src="~/Content/Images/Nhan/nu1/1.png" />
-
-
-
-                    </div>
-
+                <div class="product-img">
+                    <img src="~/Content/Images/Nhan/nu1/1.png" alt="Nhẫn Kim Cương" />
                 </div>
-
-
 
                 <div class="product-name">
                     Nhẫn Kim Cương Vàng Trắng Nữ 14K
@@ -123,7 +110,6 @@
                    class="btn-product-detail">
                     Xem chi tiết
                 </a>
-
             </div>
         </div>
 
@@ -131,8 +117,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="product-card">
                 <div class="product-img">
-                    <img src="~/Content/Images/Lac/nu1/1.png" />
-
+                    <img src="~/Content/Images/Lac/nu1/1.png" alt="Lắc Tay Bạc" />
                 </div>
 
                 <div class="product-name">
@@ -157,8 +142,9 @@
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="product-card">
                 <div class="product-img">
-                    <img src="~/Content/Images/DayChuyen/N1/1.png" />
+                    <img src="~/Content/Images/DayChuyen/N1/1.png" alt="Dây chuyền vàng" />
                 </div>
+
                 <div class="product-name">
                     Dây chuyền vàng mắt xích 24K nam
                 </div>
@@ -167,7 +153,7 @@
                 </div>
 
                 <div class="product-price">
-                    18.989.000₫
+                    18,989,000₫
                 </div>
 
                 <a href="@Url.Action("Details","Product", new { id = 1042 })"
@@ -177,11 +163,11 @@
             </div>
         </div>
 
-        <!-- Bạn có thể thêm sản phẩm 4 nếu muốn lấp hàng đủ 4 cột -->
+        <!-- Sản phẩm 4 -->
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="product-card">
                 <div class="product-img">
-                    <img src="~/Content/Images/Kieng/5/1.png" />
+                    <img src="~/Content/Images/Kieng/5/1.png" alt="Kiềng vàng" />
                 </div>
 
                 <div class="product-name">
@@ -192,7 +178,7 @@
                 </div>
 
                 <div class="product-price">
-                    187.000.000₫
+                    187,000,000₫
                 </div>
 
                 <a href="@Url.Action("Details","Product", new { id = 1055 })"
@@ -202,46 +188,50 @@
             </div>
         </div>
 
+    </div>
+    <!-- Kết thúc row sản phẩm -->
 
+    <hr style="border-top:1px solid var(--border-soft); margin:40px 0;" />
 
-        <hr style="border-top:1px solid var(--border-soft); margin:24px 0;" />
+    <!-- DỊCH VỤ & CAM KẾT -->
+    <span class="section-heading">
+        Dịch vụ & cam kết
+    </span>
 
-        <!-- DỊCH VỤ & CAM KẾT -->
-        <span class="section-heading">
-            Dịch vụ & cam kết
-        </span>
-
-        <div class="row">
-
-            <div class="col-md-4" style="margin-bottom:16px;">
-                <div class="service-block-title">
-                    Chuẩn tuổi vàng
-                </div>
-                <div class="service-block-desc">
-                    Mỗi sản phẩm đều có thông tin tuổi vàng rõ ràng và hóa đơn minh bạch.
-                </div>
+    <div class="row">
+        <div class="col-md-4" style="margin-bottom:16px;">
+            <div class="service-block-title">
+                Chuẩn tuổi vàng
             </div>
-
-            <div class="col-md-4" style="margin-bottom:16px;">
-                <div class="service-block-title">
-                    Thu đổi linh hoạt
-                </div>
-                <div class="service-block-desc">
-                    Hỗ trợ thu đổi trang sức cũ với giá tốt, rõ ràng, dễ hiểu.
-                </div>
+            <div class="service-block-desc">
+                Mỗi sản phẩm đều có thông tin tuổi vàng rõ ràng và hóa đơn minh bạch.
             </div>
+        </div>
 
-            <div class="col-md-4" style="margin-bottom:16px;">
-                <div class="service-block-title">
-                    Bảo hành sáng bóng
-                </div>
-                <div class="service-block-desc">
-                    Lau sạch làm sáng trọn đời tại cửa hàng, miễn phí dịch vụ cơ bản.
-                </div>
+        <div class="col-md-4" style="margin-bottom:16px;">
+            <div class="service-block-title">
+                Thu đổi linh hoạt
             </div>
+            <div class="service-block-desc">
+                Hỗ trợ thu đổi trang sức cũ với giá tốt, rõ ràng, dễ hiểu.
+            </div>
+        </div>
 
+        <div class="col-md-4" style="margin-bottom:16px;">
+            <div class="service-block-title">
+                Bảo hành sáng bóng
+            </div>
+            <div class="service-block-desc">
+                Lau sạch làm sáng trọn đời tại cửa hàng, miễn phí dịch vụ cơ bản.
+            </div>
         </div>
     </div>
+    <!-- Kết thúc row dịch vụ -->
+
+</div>
+<!-- Kết thúc khung trắng -->
+
+@section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const slideshows = document.querySelectorAll('.slideshow-hover-card');
@@ -250,19 +240,18 @@
                 const slides = card.querySelectorAll('.jewelry-slide');
                 let currentIndex = 0;
 
-                // đảm bảo chỉ slide đầu hiển thị ban đầu
+                // Đảm bảo chỉ slide đầu hiển thị ban đầu
                 slides.forEach((s, i) => {
                     s.style.display = i === 0 ? "block" : "none";
                 });
 
+                // Tự động chuyển slide
                 setInterval(() => {
                     slides[currentIndex].style.display = "none";
                     currentIndex = (currentIndex + 1) % slides.length;
                     slides[currentIndex].style.display = "block";
-                }, 700); // đổi ảnh mỗi 2 giây
+                }, 2000); // đổi ảnh mỗi 2 giây
             });
         });
     </script>
-    
-
-</div>
+}

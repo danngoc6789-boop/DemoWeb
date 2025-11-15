@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "Câu hỏi thường gặp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        Câu hỏi thường gặp
+    </div>
+}
+<div class="faq-container">
+    <h2>Câu hỏi thường gặp</h2>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Thời gian giao hàng là bao lâu?
+        </button>
+        <div class="faq-answer">
+            Thông thường từ 1-3 ngày tùy khu vực. Xem chi tiết <a href="@Url.Action("GiaoHang","Policy")">chính sách giao hàng</a>.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Có chính sách thu đổi trang sức cũ không?
+        </button>
+        <div class="faq-answer">
+            Có, bạn có thể xem <a href="@Url.Action("ThuDoi","Policy")">chính sách thu đổi</a> chi tiết tại đây.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Có dịch vụ bảo hành trọn đời không?
+        </button>
+        <div class="faq-answer">
+            Có dịch vụ lau sáng trọn đời tại cửa hàng. Xem chi tiết <a href="@Url.Action("BaoHanh","Policy")">chính sách bảo hành</a>.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">
+            Có thể thanh toán bằng những hình thức nào?
+        </button>
+        <div class="faq-answer">
+            Chúng tôi không hỗ trợ thanh toán online, chuyển khoản ngân hàng vì tính an toàn. Quý khách vui lòng thanh toán khi nhận hàng.
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const faqQuestions = document.querySelectorAll(".faq-question");
+        faqQuestions.forEach(q => {
+            q.addEventListener("click", () => {
+                q.classList.toggle("active");
+                const answer = q.nextElementSibling;
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .faq-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+        .faq-container h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+    .faq-item {
+        margin-bottom: 12px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .faq-question {
+        width: 100%;
+        padding: 14px 20px;
+        text-align: left;
+        background: #f8f8f8;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: background 0.3s;
+        border-radius: 8px;
+    }
+
+        .faq-question:hover {
+            background: #fff3cd; /* vàng nhạt */
+        }
+
+        .faq-question.active {
+            background: #d4af37;
+            color: #fff;
+        }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 20px;
+        transition: max-height 0.3s ease;
+        font-size: 15px;
+        line-height: 1.6rem;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+        .faq-answer a {
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+            .faq-answer a:hover {
+                text-decoration: underline;
+            }
+</style>

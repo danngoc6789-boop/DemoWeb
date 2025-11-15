@@ -17,7 +17,10 @@ body {
     font-size: 16px;
     line-height: 1.5rem;
     font-weight: 400;
+    padding-top: 0 !important;
 }
+
+
 
 a {
     color: var(--text-main);
@@ -33,6 +36,8 @@ a {
 .main-wrapper {
     background-color: #fff;
     min-height: calc(100vh - 240px); /* giữ footer dưới đáy */
+    flex:1;
+    
 }
 
 .content-card {
@@ -49,7 +54,15 @@ a {
 .nav-jewelry {
     background-color: #fff;
     border-bottom: 1px solid var(--border-soft);
+   
 }
+
+    .nav-jewelry .container {
+        padding: 10px;
+        margin: auto;
+        min-height: 10px;
+        line-height: 10px;
+    }
 
 .navbar-toggler {
     border-color: rgba(0,0,0,0.2);
@@ -130,6 +143,7 @@ a {
     letter-spacing: 0.07em;
     color: var(--text-soft);
     margin-bottom: 16px;
+    
 }
 
     .breadcrumb-box a {
@@ -198,21 +212,12 @@ a {
     column-gap: 8px;
     row-gap: 8px;
 }
-/* ========= JEWELRY SLIDESHOW - HOVER AUTO PLAY ========= */
+/* ========= JEWELRY SLIDESHOW ========= */
 .jewelry-slideshow {
     position: relative;
     width: 100%;
-    height: auto;
-    max-height: 240px;
+    height: 240px;
     border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 12px;
-    background-color: #f5f5f5;
-}
-.jewelry-slideshow {
-    position: relative;
-    width: 100%;
-    height: auto;
     overflow: hidden;
 }
 
@@ -223,57 +228,19 @@ a {
     width: 100%;
     height: 100%;
     opacity: 0;
-    transform: scale(1);
     transition: opacity 1s ease;
 }
 
     .jewelry-slide.active {
         opacity: 1;
         z-index: 2;
-        transform: scale(1.05);
     }
 
-
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.jewelry-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    max-height: 240px;
-}
-.jewelry-slideshow img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 4s ease;
-}
-
-.slideshow-hover-card:hover .jewelry-slideshow img {
+.slideshow-hover-card:hover .jewelry-slide img {
     transform: scale(1.1);
+    transition: transform 0.5s ease;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .jewelry-slideshow {
-        height: 200px;
-        max-height: 200px;
-    }
-
-    .jewelry-slide img {
-        max-height: 200px;
-    }
-}
 
 /* ========= BUTTONS ========= */
 
@@ -346,25 +313,26 @@ a {
 /* ========= CARD SẢN PHẨM ========= */
 .product-card {
     background-color: #fff;
-    border-radius: var(--radius-card);
-    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
     box-shadow: 0 16px 32px rgba(0,0,0,0.05);
     padding: 16px;
     text-align: center;
     margin-bottom: 24px;
     position: relative;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     height: 100%;
     min-height: 500px;
-    
 }
-
-
+    .product-card:hover img {
+        transform: none; /* đảm bảo ảnh không zoom */
+    }
+    /* Hover toàn bộ card: zoom nhẹ + shadow */
     .product-card:hover {
-        transform: translateY(-8px);
+        transform: scale(1.03);
         box-shadow: 0 24px 48px rgba(0,0,0,0.15);
     }
 
@@ -382,83 +350,32 @@ a {
     flex-shrink: 0;
 }
 
+    /* Ảnh sản phẩm trong card bình thường */
     .product-img img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: center;
+        object-fit: cover; /* cover để ảnh vừa khung */
         border-radius: 10px;
-        transition: transform 0.4s ease;
-        
+        display: block; /* đảm bảo luôn hiển thị */
+        opacity: 1 !important; /* override nếu có hiệu ứng khác */
+        transition: none; /* bỏ mọi hover zoom */
+        position: relative;
     }
-        
-/* Hiển thị hình hover khi di chuột */
-.product-card:hover .product-img img:first-child {
-    opacity: 0;
-}
 
-.product-card:hover .product-img .img-hover {
-    opacity: 1;
-}
-
-.product-card:hover .product-img img {
-    transform: scale(1.1);
-}
-
-/* Tên sản phẩm */
-.product-name {
-    font-size: 0.95rem;
-    line-height: 1.4rem;
-    font-weight: 600;
-    color: #000;
-    margin-bottom: 8px;
-    transition: color 0.3s ease;
-    min-height: 2.8rem;
-    max-height: 2.8rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.product-card:hover .product-name {
-    color: var(--brand-gold);
-}
-
-/* Mô tả */
-.product-desc {
-    font-size: 0.8rem;
-    line-height: 1.3rem;
-    font-weight: 400;
-    color: var(--text-dim);
-    margin-bottom: 8px;
-    min-height: 2.6rem;
-    max-height: 2.6rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Giá */
+/* Các text và nút giữ nguyên */
+.product-name,
+.product-desc,
 .product-price {
-    font-size: 0.95rem;
-    line-height: 1.4rem;
-    font-weight: 600;
-    color: #000;
-    margin-bottom: 12px;
-    min-height: 1.4rem;
+    transition: none;
 }
 
 /* Button thêm vào giỏ */
 .btn-add-cart {
     margin-top: auto;
-    transition: all 0.3s ease;
     width: 100%;
     text-align: center;
     display: block;
+    transition: all 0.3s ease;
 }
 
     .btn-add-cart:hover {
@@ -467,6 +384,7 @@ a {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
+
 /* ========= BỘ LỌC SẢN PHẨM (Filter Sidebar) ========= */
 .filter-card {
     background: #fff;
@@ -694,13 +612,16 @@ a {
 
 
 /* ========= FOOTER ========= */
-footer.jewelry-footer {
-    background-color: #fff;
-    color: #444;
-    border-top: 1px solid var(--border-soft);
-    padding: 40px 0 20px 0;
-    font-size: 0.9rem;
-    line-height: 1.4rem;
+footer.jewerly-footer {
+    position: absolute; /* Cố định ở đáy wrapper */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px; /* Chiều cao footer */
+    background-color: #d4af37;
+    color: #000;
+    text-align: center;
+    line-height: 150px;
 }
 
 .footer-brand {
@@ -1136,4 +1057,7 @@ h2.mb-4 {
         background-color: #c82333;
         border-color: #bd2130;
     }
+
+
+
 

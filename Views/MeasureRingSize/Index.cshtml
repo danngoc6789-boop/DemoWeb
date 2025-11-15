@@ -1,0 +1,90 @@
+﻿
+@model IPagedList<DemoWeb.Models.Product>
+
+@{
+    ViewBag.Title = "Hướng dẫn đo ni tay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Trangchu")">Trang chủ</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Đo ni tay</span>
+    </div>
+}
+
+<div style="max-width:800px; margin:0 auto; padding:2rem; line-height:1.7; color:#333;">
+
+    <h2 style="color:#d4af37; font-weight:700; margin-bottom:1rem;">
+        Hướng dẫn đo size lắc và vòng tay
+    </h2>
+
+    <p>
+        Hiện nay, việc mua sắm trang sức Online rất được ưa chuộng và phổ biến với nhiều tiện ích như: tiết kiệm thời gian,
+        mua sắm bất kỳ lúc nào hay bất kỳ nơi đâu, ngoài ra còn có thể bí mật tạo bất ngờ bằng món quà tặng cho người thân,…
+        Tuy nhiên, bạn lo lắng khi chọn mua trang sức, nhất là vòng tay, lắc tay nhưng lại chưa biết size của người đeo.
+        Hôm nay, DTJ chia sẻ đến bạn 3 cách đo size vòng, lắc tay tại nhà đơn giản nhưng vô cùng chính xác nhé!
+    </p>
+
+    <hr style="margin:2rem 0;" />
+
+    <!-- 1️⃣ Nhẫn -->
+    <h3 style="color:#d4af37; font-size:1.2rem; margin-bottom:0.5rem;">1️⃣ Nhẫn</h3>
+    <p>Đo chu vi ngón tay theo các bước:</p>
+    <ol style="margin-left:1.2rem;">
+        <li>Dùng sợi dây hoặc giấy quấn quanh ngón tay.</li>
+        <li>Đánh dấu điểm giao nhau.</li>
+        <li>Dùng thước đo chiều dài đoạn dây/giấy (mm).</li>
+        <li>Đối chiếu bảng size nhẫn.</li>
+    </ol>
+
+    <img src="~/Content/DoNiTay.jpg" alt="Đo nhẫn" style="max-width:100%; border-radius:8px; margin:1rem 0;">
+
+    <hr style="margin:2rem 0;" />
+
+    <!-- 2️⃣ Vòng tay -->
+    <h3 style="color:#d4af37; font-size:1.2rem; margin-bottom:0.5rem;">2️⃣ Vòng tay</h3>
+    <p>Đo chu vi cổ tay:</p>
+    <ol style="margin-left:1.2rem;">
+        <li>Dùng thước dây quấn quanh cổ tay.</li>
+        <li>Không quấn quá chặt, để tay thoải mái.</li>
+        <li>Đọc số đo và cộng thêm 1–2cm để đeo vừa.</li>
+    </ol>
+
+    <img src="~/Content/bang-do-kich-thuoc-vong-tay.jpg" alt="Đo vòng tay" style="max-width:100%; border-radius:8px; margin:1rem 0;">
+
+    <hr style="margin:2rem 0;" />
+
+    <!-- 3️⃣ Lắc tay -->
+    <h3 style="color:#d4af37; font-size:1.2rem; margin-bottom:0.5rem;">3️⃣ Lắc tay</h3>
+    <p>Đo chu vi cổ tay tương tự vòng tay, nhưng để chọn lắc, bạn nên cộng thêm 1–2cm để lắc dễ trượt qua tay.</p>
+
+    <img src="~/Content/Dolactay.jpg" alt="Đo lắc tay" style="max-width:100%; border-radius:8px; margin:1rem 0;">
+
+    <hr style="margin:2rem 0;" />
+    <!-- 4️⃣ Kiềng & Dây chuyền -->
+    <h3 style="color:#d4af37; font-size:1.2rem; margin-bottom:0.5rem;">4️⃣ Kiềng & Dây chuyền</h3>
+    <p>Đo kích thước kiềng và dây chuyền theo cách sau:</p>
+    <ol style="margin-left:1.2rem;">
+        <li>Dùng dây hoặc thước mềm quấn quanh vị trí cần đeo (cổ tay, cổ chân hoặc cổ).</li>
+        <li>Ghi lại số đo và cộng thêm 0.5–2cm để đeo thoải mái, tùy từng loại trang sức.</li>
+        <li>Với dây chuyền, bạn có thể dùng dây trang sức mẫu quấn quanh cổ để xác định chiều dài mong muốn.</li>
+    </ol>
+
+    <img src="~/Content/mach-ban-cach-do-size-day-chuyen-day-co-02.jpg" alt="Đo Kiềng & Dây chuyền" style="max-width:500%; border-radius:8px; margin:1rem 0;">
+
+    <hr style="margin:2rem 0;" />
+
+
+    <!-- Lời khuyên chung -->
+    <h3 style="color:#d4af37; font-size:1.2rem;">💡 Lời khuyên</h3>
+    <ul style="margin-left:1.2rem;">
+        <li>Đo 2–3 lần vào thời điểm khác nhau trong ngày để chính xác.</li>
+        <li>Không đo khi tay chân lạnh hoặc vừa vận động mạnh.</li>
+        <li>Nếu số đo nằm giữa 2 size, chọn size lớn hơn để thoải mái.</li>
+        <li>Vòng tay, lắc, kiềng có thể hơi khác size chuẩn, kiểm tra kỹ bảng size riêng từng loại.</li>
+    </ul>
+
+</div>
+
