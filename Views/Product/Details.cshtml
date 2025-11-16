@@ -107,42 +107,30 @@
             <!-- Chọn Size -->
             if (Model.Sizes != null && Model.Sizes.Any())
             {
-            <div style="margin-bottom:28px;">
-                <label style="display:block; font-weight:600; font-size:0.95rem; color:#000; margin-bottom:12px;">
-                    Chọn kích thước: <span style="color:red;">*</span>
-                </label>
-                <div class="size-options" style="display:flex; flex-wrap:wrap; gap:6px;">
-                    @foreach (var size in Model.Sizes)
-                    {
-                        var sizeId = "size_" + Guid.NewGuid().ToString("N").Substring(0, 8);
-                        <label class="size-option-label" style="position:relative; cursor:pointer; margin:0;">
-                            <input type="radio"
-                                   id="@sizeId"
-                                   name="size"
-                                   value="@size"
-                                   style="position:absolute; opacity:0; cursor:pointer;" />
-                            <span class="size-display" style="display:inline-block; min-width:38px; padding:6px 10px; text-align:center; border:1.5px solid #ddd; border-radius:4px; font-weight:500; font-size:0.8rem; background:#fff; transition: all 0.3s;">
+                <div style="margin-bottom:28px;">
+                    <label style="display:block; font-weight:600; font-size:0.95rem; color:#000; margin-bottom:12px;">
+                        Chọn kích thước: <span style="color:red;">*</span>
+                    </label>
+                    <div class="size-options" style="display:flex; flex-wrap:wrap; gap:6px;">
+                        @foreach (var size in Model.Sizes)
+                        {
+                            var sizeId = "size_" + Guid.NewGuid().ToString("N").Substring(0, 8);
+                            <input type="radio" id="@sizeId" name="size" value="@size" style="display:none;" />
+                            <label for="@sizeId" class="size-display">
                                 @size
-                            </span>
-                        </label>
-                    }
+                            </label>
+                        }
+                    </div>
+                    <small id="sizeError" style="display:none; margin-top:8px; color:#dc3545; font-size:0.85rem; font-weight:500;">
+                        <i class="fas fa-exclamation-circle"></i> Vui lòng chọn kích thước trước khi thêm vào giỏ hàng
+                    </small>
                 </div>
-                <div class="product-sizes" data-require-size="true">
-                    @foreach (var size in Model.Sizes)
-                    {
-                        <input type="radio" name="size" value="@size" />
-                    }
-                </div>
-                <!-- Thông báo lỗi - chỉ hiện khi submit -->
-                <small id="sizeError" style="display:none; margin-top:8px; color:#dc3545; font-size:0.85rem; font-weight:500;">
-                    <i class="fas fa-exclamation-circle"></i> Vui lòng chọn kích thước trước khi thêm vào giỏ hàng
-                </small>
-            </div>
             }
             else
             {
                 @Html.Hidden("size", "")
             }
+
 
             <!-- Số lượng -->
             <div style="margin-bottom:28px;">
@@ -273,19 +261,37 @@
         -moz-appearance: textfield;
     }
 </style>
-
 <script>
+    // JS tăng giảm số lượng
+    function decreaseQty() {
+        var qty = document.getElementById('quantity');
+        if (qty.value > 1) qty.value = parseInt(qty.value) - 1;
+    }
+    function increaseQty() {
+        var qty = document.getElementById('quantity');
+        qty.value = parseInt(qty.value) + 1;
+    }
+
+    // JS kiểm tra size khi submit
     document.getElementById('addToCartForm').addEventListener('submit', function (e) {
-        // Chỉ lấy radio buttons, không lấy hidden input
-        var sizeRadioInputs = document.querySelectorAll('input[name="size"][type="radio"]');
-        if (sizeRadioInputs.length > 0) {
-            var sizeSelected = Array.from(sizeRadioInputs).some(input => input.checked);
-            if (!sizeSelected) {
+        // chỉ chọn các radio
+        var sizeRadios = document.querySelectorAll('input[name="size"][type="radio"]');
+        if (sizeRadios.length > 0) {
+            var checked = Array.from(sizeRadios).some(i => i.checked);
+            if (!checked) {
                 e.preventDefault();
-                alert('Vui lòng chọn kích thước!');
+                document.getElementById('sizeError').style.display = 'block';
                 return false;
             }
         }
     });
 
+
+    // JS hiển thị size đã chọn trên nút
+    const btn = document.getElementById('btnAddToCart');
+    document.querySelectorAll('input[name="size"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            btn.innerHTML = '<i class="fas fa-shopping-cart"></i> THÊM SIZE ' + this.value + ' VÀO GIỎ HÀNG';
+        });
+    });
 </script>

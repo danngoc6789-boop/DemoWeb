@@ -520,7 +520,7 @@ body .layout-wrapper {
             justify-content: center !important;
         }
 }
-/*size*/
+/*-----SIZE-------*/
 .size-options {
     display: flex;
     gap: 10px;
@@ -549,6 +549,32 @@ body .layout-wrapper {
     .size-options label:hover {
         background-color: #ffe082;
     }
+.size-display {
+    display: inline-block;
+    min-width: 38px;
+    padding: 6px 10px;
+    text-align: center;
+    border: 1.5px solid #ddd;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+input[type="radio"]:checked + .size-display {
+    background-color: var(--brand-gold);
+    color: #fff;
+    border-color: var(--brand-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.size-display:hover {
+    border-color: var(--brand-gold);
+    transform: translateY(-2px);
+}
 
 .btn-submit {
     padding: 8px 16px;
