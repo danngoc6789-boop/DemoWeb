@@ -31,7 +31,7 @@
     @RenderSection("Head", required: false)
 
 </head>
-<body>
+<body class="layout-wrapper">
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top nav-jewelry">
@@ -129,7 +129,7 @@
                                 }
                             }
                             else
-                            { 
+                            {
                                 @Html.ActionLink("Đăng nhập", "Login", "Account", null, new { @class = "dropdown-item" })
                                 <div class="dropdown-divider"></div>
                                 @Html.ActionLink("Đăng ký", "Register", "Account", null, new { @class = "dropdown-item" })
@@ -143,7 +143,7 @@
     </nav>
 
     <!-- MAIN CONTENT -->
-   
+
     <main class="main-wrapper ">
         <div class="container ">
 
@@ -157,7 +157,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="jewerly-footer" >
+    <footer class="jewerly-footer">
         <div class="container">
             <div class="row">
 
@@ -199,42 +199,93 @@
             <div class="copyright-line">
                 © @DateTime.Now.Year D&T JEWELRY. All rights reserved.
             </div>
-            <!-- jQuery -->
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            <!-- Bootstrap JS -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-            <!-- Cart JS -->
-            <script src="~/Scripts/cart.js"></script>
         </div>
     </footer>
 
     <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Cart JS -->
+    <!-- Sửa đường dẫn Cart.js nếu file không tồn tại -->
+    @if (System.IO.File.Exists(Server.MapPath("~/Scripts/cart.js")))
+    {
+        <script src="~/Scripts/cart.js"></script>
+    }
+
     <style>
-        /* Force flexbox cho cols */
+        /* XÓA hoặc comment các CSS cũ gây conflict */
+
+        /* FOOTER FIX CHÍNH */
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main chiếm hết space */
+        main.main-wrapper {
+            flex: 1 0 auto;
+            padding-top: 80px; /* cho navbar fixed */
+        }
+
+        /* Footer luôn ở dưới */
+        footer.jewerly-footer {
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+
+        /* Product card effects giữ nguyên */
         .row > [class*="col-"] {
             display: flex;
             flex-direction: column;
         }
 
-        /* Force hover animation */
         .product-card:hover {
             transform: translateY(-8px) !important;
             box-shadow: 0 24px 48px rgba(0,0,0,0.15) !important;
         }
-
-            .product-card:hover .product-img img {
-                transform: scale(1.1) !important;
-            }
-
-            .product-card:hover .product-name {
-                color: var(--brand-gold) !important;
-            }
     </style>
+
+    <!-- 5. JavaScript fix (nếu CSS vẫn không work) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Đảm bảo footer xuống dưới
+            const body = document.body;
+            const main = document.querySelector('.main-wrapper');
+            const footer = document.querySelector('.jewerly-footer');
+
+            if (body && main && footer) {
+                body.style.cssText = 'min-height: 100vh; display: flex; flex-direction: column;';
+                main.style.cssText = 'flex: 1 0 auto; padding-top: 80px;';
+                footer.style.cssText = 'margin-top: auto;';
+            }
+        });
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+<script>
+    // Force fix footer bằng JS
+    window.onload = function () {
+        const footer = document.querySelector('.jewerly-footer');
+        const main = document.querySelector('.main-wrapper');
+        const body = document.body;
+
+        // Force styles
+        body.style.minHeight = '100vh';
+        body.style.display = 'flex';
+        body.style.flexDirection = 'column';
+        main.style.flex = '1 0 auto';
+        footer.style.marginTop = 'auto';
+    };
+</script>
