@@ -112,7 +112,7 @@ else
                                             @item.Name
                                         </div>
                                         <div style="font-size:.75rem; line-height:1.2rem; color:var(--text-dim);">
-                                            Mã sp: @item.ProductId
+                                            Mã sp: @item.ProductId | Kích cỡ: @(string.IsNullOrEmpty(item.Size) ? "Freesize" : item.Size)
                                         </div>
 
                                         <!-- Hiển thị ảnh thật -->

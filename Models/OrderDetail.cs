@@ -23,7 +23,7 @@ namespace DemoWeb.Models
         public string Size { get; set; }
 
 
-        public decimal UnitPrice { get; set; }
+        public decimal? UnitPrice { get; set; }
 
         // Navigation properties
        

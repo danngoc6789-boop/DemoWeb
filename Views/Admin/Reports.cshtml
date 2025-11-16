@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Dashboard / Báo cáo";
+}
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Bảng Thống Kê</span>
+    </div>
+}
+<h2>Bảng Thống Kê</h2>
+
+<form method="get" class="form-inline mb-3">
+    <label class="mr-2">Từ:</label>
+    <input type="date" name="fromDate" class="form-control mr-2" value="@ViewBag.FromDate" />
+    <label class="mr-2">Đến:</label>
+    <input type="date" name="toDate" class="form-control mr-2" value="@ViewBag.ToDate" />
+    <select name="type" class="form-control mr-2">
+        <option value="day" @(ViewBag.Type == "day" ? "selected" : "")>Theo ngày</option>
+        <option value="month" @(ViewBag.Type == "month" ? "selected" : "")>Theo tháng</option>
+    </select>
+    <button class="btn btn-primary">Lọc</button>
+</form>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Tổng đơn hàng</h5>
+                <p class="card-text">@ViewBag.TotalOrders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Doanh thu</h5>
+                <p class="card-text">@String.Format("{0:N0} VNĐ", ViewBag.TotalRevenue)</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Hoàn thành</h5>
+                <p class="card-text">@ViewBag.DeliveredOrders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Chờ xử lý</h5>
+                <p class="card-text">@ViewBag.PendingOrders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Đơn hủy</h5>
+                <p class="card-text">@ViewBag.CancelledOrders</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>Doanh thu @((ViewBag.Type=="month")?"theo tháng":"theo ngày")</h4>
+<canvas id="revenueChart" height="120"></canvas>
+
+<hr />
+
+<h4>Top 10 sản phẩm bán chạy</h4>
+<canvas id="topProductChart" height="120"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var revenueLabels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartLabels));
+    var revenueData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartData));
+
+    var ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+    new Chart(ctxRevenue, {
+        type: 'line',
+        data: {
+            labels: revenueLabels,
+            datasets: [{
+                label: 'Doanh thu (VNĐ)',
+                data: revenueData,
+                borderColor: 'blue',
+                backgroundColor: 'rgba(0,123,255,0.2)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    var topProducts = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.TopProducts));
+    var productNames = topProducts.map(p => p.ProductName);
+    var productQty = topProducts.map(p => p.TotalQuantity);
+
+    var ctxTop = document.getElementById('topProductChart').getContext('2d');
+    new Chart(ctxTop, {
+        type: 'bar',
+        data: {
+            labels: productNames,
+            datasets: [{
+                label: 'Số lượng bán',
+                data: productQty,
+                backgroundColor: 'rgba(255,99,132,0.6)'
+            }]
+        },
+        options: { responsive: true }
+    });
+</script>

@@ -3,6 +3,13 @@
     ViewBag.Title = "Quản lý giá vàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Quản Lý Giá Vàng</span>
+    </div>
+}
 
 <div class="container mt-4">
     <h2 class="text-center mb-4">QUẢN LÝ GIÁ VÀNG</h2>

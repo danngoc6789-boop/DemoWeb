@@ -9,6 +9,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using System.Globalization;
 
 namespace DemoWeb.Controllers
 {
@@ -369,53 +371,87 @@ namespace DemoWeb.Controllers
             // ==================== BÁO CÁO THỐNG KÊ ====================
 
             // GET: Admin/Reports
-            public async Task<ActionResult> Reports(DateTime? fromDate, DateTime? toDate)
+            public async Task<ActionResult> Reports(DateTime? fromDate, DateTime? toDate, string type = "day")
             {
-                if (!fromDate.HasValue)
-                    fromDate = DateTime.Today.AddMonths(-1);
+            if (!fromDate.HasValue) fromDate = DateTime.Today.AddMonths(-1);
+            if (!toDate.HasValue) toDate = DateTime.Today;
 
-                if (!toDate.HasValue)
-                    toDate = DateTime.Today;
+            ViewBag.FromDate = fromDate.Value.ToString("yyyy-MM-dd");
+            ViewBag.ToDate = toDate.Value.ToString("yyyy-MM-dd");
+            ViewBag.Type = type;
 
-                ViewBag.FromDate = fromDate.Value.ToString("yyyy-MM-dd");
-                ViewBag.ToDate = toDate.Value.ToString("yyyy-MM-dd");
+            // 1. Lấy tất cả đơn hàng trong khoảng ngày
+            var orders = await db.Orders
+                .Where(o => o.OrderDate >= fromDate && o.OrderDate <= toDate)
+                .ToListAsync();
 
-                var orders = await db.Orders
-                    .Where(o => o.OrderDate >= fromDate && o.OrderDate <= toDate)
-                    .ToListAsync();
+            // 2. Thống kê tổng quan
+            ViewBag.TotalOrders = orders.Count;
+            ViewBag.DeliveredOrders = orders.Count(o => o.Status == "Đã giao");
+            ViewBag.PendingOrders = orders.Count(o => o.Status == "Chưa xử lý");
+            ViewBag.CancelledOrders = orders.Count(o => o.Status == "Đã hủy");
+            ViewBag.TotalRevenue = orders.Sum(o => (decimal?)o.TotalAmount) ?? 0;
 
-                ViewBag.TotalOrders = orders.Count;
-                ViewBag.CompletedOrders = 0; // Không có Status
-                ViewBag.PendingOrders = 0; // Không có Status
-                ViewBag.CancelledOrders = 0; // Không có Status
-                ViewBag.TotalRevenue = orders.Sum(o => o.TotalAmount);
-
-                var topProducts = await db.OrderDetails
-                    .Where(od => od.Order.OrderDate >= fromDate && od.Order.OrderDate <= toDate)
-                    .GroupBy(od => od.ProductId)
+            // 3. Doanh thu theo ngày hoặc tháng
+            if (type == "month")
+            {
+                var monthly = orders
+                    .GroupBy(o => new { o.OrderDate.Year, o.OrderDate.Month })
+                    .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
                     .Select(g => new
                     {
-                        ProductId = g.Key,
-                        ProductName = g.FirstOrDefault().Product.Name,
-                        TotalQuantity = g.Sum(od => od.Quantity),
-                        TotalRevenue = g.Sum(od => od.Quantity * od.UnitPrice)
-                    })
-                    .OrderByDescending(p => p.TotalQuantity)
-                    .Take(10)
-                    .ToListAsync();
+                        Label = $"Tháng {g.Key.Month}/{g.Key.Year}",
+                        Total = g.Sum(o => (decimal?)o.TotalAmount) ?? 0
+                    }).ToList();
 
-                ViewBag.TopProducts = topProducts;
-
-                return View();
+                ViewBag.ChartLabels = monthly.Select(m => m.Label).ToList();
+                ViewBag.ChartData = monthly.Select(m => m.Total).ToList();
             }
-
-            protected override void Dispose(bool disposing)
+            else
             {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-                base.Dispose(disposing);
+                var daily = orders
+                    .GroupBy(o => o.OrderDate.Date)
+                    .OrderBy(g => g.Key)
+                    .Select(g => new
+                    {
+                        Label = g.Key.ToString("dd/MM/yyyy"),
+                        Total = g.Sum(o => (decimal?)o.TotalAmount) ?? 0
+                    }).ToList();
+
+                ViewBag.ChartLabels = daily.Select(d => d.Label).ToList();
+                ViewBag.ChartData = daily.Select(d => d.Total).ToList();
             }
+
+            // 4. Top 10 sản phẩm bán chạy
+            var topProducts = await db.OrderDetails
+                .Where(od => od.Order.OrderDate >= fromDate && od.Order.OrderDate <= toDate)
+                .ToListAsync(); // Lấy về bộ nhớ
+
+            var top10 = topProducts
+                .GroupBy(od => od.ProductId)
+                .Select(g => new
+                {
+                    ProductId = g.Key,
+                    ProductName = g.FirstOrDefault().Product.Name,
+                    TotalQuantity = g.Sum(od => (int?)od.Quantity) ?? 0,
+                    TotalRevenue = g.Sum(od => (decimal?)(od.Quantity * od.UnitPrice)) ?? 0
+                })
+                .OrderByDescending(p => p.TotalQuantity)
+                .Take(10)
+                .ToList();
+
+            ViewBag.TopProducts = top10;
+
+            return View();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
 }

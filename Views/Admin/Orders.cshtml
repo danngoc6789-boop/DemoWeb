@@ -4,7 +4,13 @@
     ViewBag.Title = "Quản lý đơn hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Quản Lý Đơn Hàng</span>
+    </div>
+}
 <h2>@ViewBag.Title</h2>
 
 <table class="table table-bordered table-striped">
@@ -55,12 +61,7 @@
                 <td>
                     @Html.ActionLink("Chi tiết", "OrderDetail", "Admin", new { id = order.Id }, new { @class = "btn btn-sm btn-info" })
 
-                    @using (Html.BeginForm("DeleteOrder", "Admin", FormMethod.Post, new { @style = "display:inline;" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.Hidden("id", order.Id)
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
-                    }
+                    
                 </td>
             </tr>
         }

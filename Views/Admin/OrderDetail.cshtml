@@ -3,7 +3,15 @@
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section Breadcrumb {
+    <div class="breadcrumb-box">
+        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
+        <span class="breadcrumb-sep">/</span>
+        <a href="@Url.Action("Orders","Admin")">Quản Lý Đơn Hàng</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Quản Lý Đơn Hàng Chi Tiết</span>
+    </div>
+}
 <h2>Chi tiết đơn hàng @Model.OrderCode</h2>
 
 <p>Khách hàng: @Model.CustomerName</p>
@@ -24,9 +32,9 @@
         {
             <tr>
                 <td>@item.Product.Name</td>
-                <td>@item.UnitPrice.ToString("C")</td>
-                <td>@item.Quantity</td>
-                <td>@(item.UnitPrice * item.Quantity).ToString("C")</td>
+        <td>@(item.UnitPrice.HasValue ? item.UnitPrice.Value.ToString("C") : "-")</td>
+        <td>@item.Quantity</td>
+        <td>@(item.UnitPrice.HasValue ? (item.UnitPrice.Value * item.Quantity).ToString("C") : "-")</td>
             </tr>
         }
     </tbody>
