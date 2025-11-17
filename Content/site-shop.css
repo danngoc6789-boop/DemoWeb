@@ -386,11 +386,31 @@ body .layout-wrapper {
 
 /* Các text và nút giữ nguyên */
 .product-name,
-.product-desc,
+
 .product-price {
     transition: none;
+    min-height: 2.8rem; /* tùy chỉnh phù hợp 2 dòng */
+    max-height: 2.8rem;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* giới hạn 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
+/* Mô tả sản phẩm (nếu muốn) */
+.product-desc {
+    min-height: 2.6rem;
+    max-height: 2.6rem;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+    color: #555;
+}
 /* Button thêm vào giỏ */
 .btn-add-cart {
     margin-top: auto;

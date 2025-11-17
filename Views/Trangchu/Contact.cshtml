@@ -53,75 +53,84 @@
                 </div>
             }
 
-            <form method="post" action="@Url.Action("ContactSend","Trangchu")">
-                @Html.AntiForgeryToken()
+        <form method="post" action="@Url.Action("ContactSend","Trangchu")">
+            @Html.AntiForgeryToken()
 
-                <!-- Các input giữ nguyên như cũ -->
-                <div style="margin-bottom:16px;">
-                    <label style="display:block;
+            <!-- Họ và Tên -->
+            <div style="margin-bottom:16px;">
+                <label style="display:block;
                                    font-size:.8rem;
                                    font-weight:500;
                                    color:#000;
                                    margin-bottom:4px;">
-                        Tên của bạn
-                    </label>
-                    <input type="text" name="name" required
-                           placeholder="Ví dụ: Nguyễn Minh Thống"
-                           style="width:100%;
+                    Tên của bạn
+                </label>
+                <input type="text" name="name" required
+                       placeholder="Ví dụ: Nguyễn Minh Thống"
+                       style="width:100%;
                                   border:1px solid var(--border-soft);
                                   border-radius:8px;
                                   padding:.6rem .75rem;
                                   font-size:.85rem;
                                   line-height:1.2rem;" />
-                </div>
-
-                <div style="margin-bottom:16px;">
-                    <label style="display:block;
+            </div>
+            <!-- Email -->
+            <div style="margin-bottom:16px;">
+                <label style="display:block; font-size:.8rem; font-weight:500; color:#000; margin-bottom:4px;">
+                    Email
+                </label>
+                <input type="email" name="email" required
+                       placeholder="Ví dụ: abc@gmail.com"
+                       style="width:100%; border:1px solid var(--border-soft); border-radius:8px; padding:.6rem .75rem; font-size:.85rem; line-height:1.2rem;" />
+            </div>
+            <!--SĐT-->
+            <div style="margin-bottom:16px;">
+                <label style="display:block;
                                    font-size:.8rem;
                                    font-weight:500;
                                    color:#000;
                                    margin-bottom:4px;">
-                        Số điện thoại / Zalo
-                    </label>
-                    <input type="text" name="phone" required
-                           placeholder="Ví dụ: 0522 945 087"
-                           style="width:100%;
+                    Số điện thoại / Zalo
+                </label>
+                <input type="text" name="phone" required
+                       placeholder="Ví dụ: 0522 945 087"
+                       style="width:100%;
                                   border:1px solid var(--border-soft);
                                   border-radius:8px;
                                   padding:.6rem .75rem;
                                   font-size:.85rem;
                                   line-height:1.2rem;" />
-                </div>
-
-                <div style="margin-bottom:16px;">
-                    <label style="display:block;
+            </div>
+            <!--Nội dung-->
+            <div style="margin-bottom:16px;">
+                <label style="display:block;
                                    font-size:.8rem;
                                    font-weight:500;
                                    color:#000;
                                    margin-bottom:4px;">
-                        Nội dung
-                    </label>
-                    <textarea name="message" rows="4" required
-                              placeholder="Bạn muốn hỏi mẫu nào, giá bao nhiêu, đổi vàng ra sao..."
-                              style="width:100%;
+                    Nội dung
+                </label>
+                <textarea name="message" rows="4" required
+                          placeholder="Bạn muốn hỏi mẫu nào, giá bao nhiêu, đổi vàng ra sao..."
+                          style="width:100%;
                                      border:1px solid var(--border-soft);
                                      border-radius:8px;
                                      padding:.6rem .75rem;
                                      font-size:.85rem;
                                      line-height:1.3rem;
                                      resize:vertical;"></textarea>
-                </div>
+            </div>
 
-                <button type="submit"
-                        class="btn-round-black"
-                        style="width:100%; text-align:center;">
-                    Gửi yêu cầu
-                </button>
+            <button type="submit"
+                    class="btn-round-black"
+                    style="width:100%; text-align:center;">
+                Gửi yêu cầu
+            </button>
 
-                <div style="font-size:.75rem; line-height:1.2rem; color:var(--text-soft); margin-top:12px;">
-                    Chúng tôi sẽ phản hồi sớm nhất có thể qua điện thoại hoặc Zalo.
-                </div>
-            </form>
+            <div style="font-size:.75rem; line-height:1.2rem; color:var(--text-soft); margin-top:12px;">
+                Chúng tôi sẽ phản hồi sớm nhất có thể qua điện thoại hoặc Zalo.
+            </div>
+        </form>
         </div>
     </div>
     <!-- ✅ BÊN PHẢI: THÔNG TIN & BẢN ĐỒ -->

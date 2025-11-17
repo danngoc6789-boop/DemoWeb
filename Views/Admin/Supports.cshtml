@@ -1,123 +1,113 @@
 ﻿@model List<DemoWeb.Models.SupportRequest>
 
 @{
-    ViewBag.Title = "Chăm Sóc Khách Hàng";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Chăm sóc khách hàng";
 }
 
-@section Breadcrumb {
-    <div class="breadcrumb-box">
-        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>CSKH</span>
-    </div>
-}
-@section Head {
-    <link href="~/Content/AdminClient.css" rel="stylesheet" />
-}
-<h2 class="mb-4">Danh sách yêu cầu hỗ trợ</h2>
-
-<!-- Nút thêm mới hoặc thống kê -->
-<div class="mb-3">
-    <span class="badge badge-info">Tổng: @Model.Count yêu cầu</span>
-    <span class="badge badge-warning ml-2">Chờ xử lý: @Model.Count(x => x.Status == "Chờ xử lý")</span>
-    <span class="badge badge-success ml-2">Đã xử lý: @Model.Count(x => x.Status == "Đã xử lý")</span>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="@Url.Action("Index","Admin")" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left"></i> Quay lại
+    </a>
 </div>
 
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th width="60">ID</th>
-            <th>Khách hàng</th>
-            <th>Số điện thoại</th>
-            <th>Email</th>
-            <th>Nội dung</th>
-            <th width="150">Ngày gửi</th>
-            <th width="120">Trạng thái</th>
-            <th width="100">Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Count > 0)
-        {
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td class="text-center">#@item.Id</td>
-                    <td>
-                        <strong>@item.CustomerName</strong>
-                    </td>
-                    <td>
-                        <a href="tel:@item.Phone">@item.Phone</a>
-                    </td>
-                    <td>
-                        @if (!string.IsNullOrEmpty(item.Email))
-                        {
-                            <a href="mailto:@item.Email">@item.Email</a>
-                        }
-                        else
-                        {
-                            <span class="text-muted">--</span>
-                        }
-                    </td>
-                    <td>
-                        @if (item.Message.Length > 50)
-                        {
-                            @(item.Message.Substring(0, 50) + "...")
-                        }
-                        else
-                        {
-                            @item.Message
-                        }
-                    </td>
-                    <td>
-                        @item.CreatedAt.ToString("dd/MM/yyyy HH:mm")
-                    </td>
-                    <td class="text-center">
-                        @if (item.Status == "Chờ xử lý")
-                        {
-                            <span class="badge badge-warning">Chờ xử lý</span>
-                        }
-                        else if (item.Status == "Đang xử lý")
-                        {
-                            <span class="badge badge-info">Đang xử lý</span>
-                        }
-                        else if (item.Status == "Đã xử lý")
-                        {
-                            <span class="badge badge-success">Đã xử lý</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-secondary">@item.Status</span>
-                        }
-                    </td>
-                    <td class="text-center">
-                        <!-- SỬA LẠI LINK Ở ĐÂY -->
-                        <a href="@Url.Action("SupportDetail", "Admin", new { id = item.Id })"
-                           class="btn btn-primary btn-sm">
-                            <i class="fa fa-eye"></i> Xem
-                        </a>
-                    </td>
-                </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td colspan="8" class="text-center py-4">
-                    <i class="fa fa-inbox fa-3x text-muted"></i>
-                    <p class="mt-2">Không có yêu cầu hỗ trợ nào.</p>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<h2><i class="fas fa-headset"></i> Chăm sóc khách hàng</h2>
 
-<!-- Phân trang nếu cần -->
+<!-- Card tổng quan -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Tổng yêu cầu</h5>
+                <p class="card-text">@ViewBag.TotalRequests</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Chờ xử lý</h5>
+                <p class="card-text">@ViewBag.Pending</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Đã xử lý</h5>
+                <p class="card-text">@ViewBag.Processed</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bảng chi tiết yêu cầu -->
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        Danh sách yêu cầu
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Khách hàng</th>
+                    <th>SĐT</th>
+                    <th>Email</th>
+                    <th>Nội dung</th>
+                    <th>Ngày gửi</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        // Chọn background và màu chữ
+                        var badgeClass = item.Status switch
+                        {
+                            "Chờ xử lý" => "badge bg-warning text-dark",   // nền vàng chữ đen
+                            "Đang xử lý" => "badge bg-info text-white",     // nền xanh dương chữ trắng
+                            "Đã xử lý" => "badge bg-success text-white",    // nền xanh lá chữ trắng
+                            _ => "badge bg-secondary text-white"
+                        };
+
+                        <tr>
+                            <td>#@item.Id</td>
+                            <td>@item.CustomerName</td>
+                            <td><a href="tel:@item.Phone">@item.Phone</a></td>
+                            <td>@(string.IsNullOrEmpty(item.Email)?"--":item.Email)</td>
+                            <td>@(item.Message.Length > 50 ? item.Message.Substring(0,50) + "..." : item.Message)</td>
+                            <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <span class="@badgeClass">@item.Status</span>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("SupportDetail","Admin", new { id=item.Id })" class="btn btn-primary btn-sm">
+                                    Xem
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center py-4">Không có yêu cầu nào.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Phân trang -->
 @if (ViewBag.TotalPages > 1)
 {
     <nav>
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center mt-3">
             @for (int i = 1; i <= ViewBag.TotalPages; i++)
             {
                 <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">

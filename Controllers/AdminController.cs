@@ -368,21 +368,25 @@ namespace DemoWeb.Controllers
                 return RedirectToAction("GoldPrices");
             }
 
-            // ==================== BÁO CÁO THỐNG KÊ ====================
+        // ==================== BÁO CÁO THỐNG KÊ ====================
 
-            // GET: Admin/Reports
-            public async Task<ActionResult> Reports(DateTime? fromDate, DateTime? toDate, string type = "day")
-            {
+        // GET: Admin/Reports
+        public async Task<ActionResult> Reports(DateTime? fromDate, DateTime? toDate, string type = "day")
+        {
+            // Nếu chưa có từ ngày, đến ngày → mặc định 1 tháng gần đây
             if (!fromDate.HasValue) fromDate = DateTime.Today.AddMonths(-1);
             if (!toDate.HasValue) toDate = DateTime.Today;
 
             ViewBag.FromDate = fromDate.Value.ToString("yyyy-MM-dd");
             ViewBag.ToDate = toDate.Value.ToString("yyyy-MM-dd");
-            ViewBag.Type = type;
+            ViewBag.Type = type ?? "day";
 
-            // 1. Lấy tất cả đơn hàng trong khoảng ngày
+            // Dùng o.OrderDate < toDate.AddDays(1) (đến 23:59:59)
+            var endDate = toDate.Value.AddDays(1);
+
             var orders = await db.Orders
-                .Where(o => o.OrderDate >= fromDate && o.OrderDate <= toDate)
+                .Include(o => o.OrderDetails.Select(od => od.Product))
+                .Where(o => o.OrderDate >= fromDate && o.OrderDate < endDate)
                 .ToListAsync();
 
             // 2. Thống kê tổng quan
@@ -414,7 +418,7 @@ namespace DemoWeb.Controllers
                     .OrderBy(g => g.Key)
                     .Select(g => new
                     {
-                        Label = g.Key.ToString("dd/MM/yyyy"),
+                        Label = g.Key.ToString("yyyy-MM-dd"),
                         Total = g.Sum(o => (decimal?)o.TotalAmount) ?? 0
                     }).ToList();
 
@@ -423,28 +427,55 @@ namespace DemoWeb.Controllers
             }
 
             // 4. Top 10 sản phẩm bán chạy
-            var topProducts = await db.OrderDetails
-                .Where(od => od.Order.OrderDate >= fromDate && od.Order.OrderDate <= toDate)
-                .ToListAsync(); // Lấy về bộ nhớ
-
-            var top10 = topProducts
+            var topProducts = orders
+                .SelectMany(o => o.OrderDetails)
                 .GroupBy(od => od.ProductId)
                 .Select(g => new
                 {
                     ProductId = g.Key,
-                    ProductName = g.FirstOrDefault().Product.Name,
-                    TotalQuantity = g.Sum(od => (int?)od.Quantity) ?? 0,
-                    TotalRevenue = g.Sum(od => (decimal?)(od.Quantity * od.UnitPrice)) ?? 0
+                    ProductName = g.First().Product.Name,
+                    TotalQuantity = g.Sum(od => od.Quantity)
                 })
                 .OrderByDescending(p => p.TotalQuantity)
                 .Take(10)
                 .ToList();
 
-            ViewBag.TopProducts = top10;
+            ViewBag.TopProducts = topProducts;
+       
 
-            return View();
+            return View(orders);
         }
 
+        // ==================== API trả Top 10 sản phẩm theo khoảng ngày ====================
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<JsonResult> GetTopProducts(DateTime fromDate, DateTime toDate)
+        {
+            // ✅ SỬA: Cũng áp dụng cách sửa ngày ở đây
+            var endDate = toDate.AddDays(1);
+
+            var orders = await db.Orders
+                .Include(o => o.OrderDetails.Select(od => od.Product))
+                .Where(o => o.OrderDate >= fromDate && o.OrderDate < endDate)
+                .ToListAsync();
+
+            var topProducts = orders
+                .SelectMany(o => o.OrderDetails)
+                .GroupBy(od => od.ProductId)
+                .Select(g => new
+                {
+                    ProductId = g.Key,
+                    ProductName = g.First().Product.Name,
+                    TotalQuantity = g.Sum(od => od.Quantity)
+                })
+                .OrderByDescending(p => p.TotalQuantity)
+                .Take(10)
+                .ToList();
+
+            System.Diagnostics.Debug.WriteLine($"🎯 GetTopProducts - Orders: {orders.Count}, TopProducts: {topProducts.Count}");
+
+            return Json(topProducts, JsonRequestBehavior.AllowGet);
+        }
         // ==================== QUẢN LÝ CSKH ====================
 
         public async Task<ActionResult> Supports(int page = 1)

@@ -1,72 +1,79 @@
 ﻿@model IEnumerable<DemoWeb.Models.Order>
 
 @{
-    ViewBag.Title = "Quản lý đơn hàng";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    ViewBag.ActiveMenu = "Orders";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@section Breadcrumb {
-    <div class="breadcrumb-box">
-        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>Quản Lý Đơn Hàng</span>
+
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    
+    <div>
+        <a href="@Url.Action("Index","Admin")" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+       
     </div>
-}
-@section Head {
-    <link href="~/Content/AdminClient.css" rel="stylesheet" />
-}
-<h2>@ViewBag.Title</h2>
+</div>
+<div>
+    <h2>
+        <i class="fas fa-shopping-cart"></i> Quản lý đơn hàng
+    </h2>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Số thứ tự </th>
-            <th>Mã đơn hàng</th>
-            <th>Khách hàng</th>
-            <th>Ngày đặt</th>
-            <th>Tổng tiền</th>
-            <th>Trạng thái</th>
-            <th>Hành động</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model)
-        {
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
             <tr>
-                <td>@order.Id</td>
-                <td>@order.OrderCode</td>
-                <td>@order.CustomerName</td>
-                <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
-                <td>@order.TotalAmount.ToString("C")</td>
-                <td>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        using (Html.BeginForm("UpdateStatus", "Admin", FormMethod.Post))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="orderId" value="@order.Id" />
-                            <select name="status" class="form-control form-control-sm">
-                                <option value="Chưa xử lý" @(order.Status == "Chưa xử lý" ? "selected" : "")>Chưa xử lý</option>
-
-                                <option value="Đang xử lý" @(order.Status == "Đang xử lý" ? "selected" : "")>Đang xử lý</option>
-                                <option value="Đang giao" @(order.Status == "Đang giao" ? "selected" : "")>Đang giao</option>
-                                <option value="Đã giao" @(order.Status == "Đã giao" ? "selected" : "")>Đã giao</option>
-                                <option value="Hủy" @(order.Status == "Hủy" ? "selected" : "")>Hủy</option>
-                            </select>
-                            <button type="submit" class="btn btn-sm btn-primary mt-1">Cập nhật</button>
-                        }
-                    }
-                    else
-                    {
-                        @order.Status
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink("Chi tiết", "OrderDetail", "Admin", new { id = order.Id }, new { @class = "btn btn-sm btn-info" })
-
-
-                </td>
+                <th>#</th>
+                <th>Mã đơn hàng</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.OrderCode</td>
+                    <td>@order.CustomerName</td>
+                    <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@order.TotalAmount.ToString("N0")đ</td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            using (Html.BeginForm("UpdateStatus", "Admin", FormMethod.Post, new { @class = "d-flex flex-column" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="orderId" value="@order.Id" />
+                                <select name="status" class="form-select form-select-sm mb-1">
+                                    <option value="Chưa xử lý" @(order.Status == "Chưa xử lý" ? "selected" : "")>Chưa xử lý</option>
+                                    <option value="Đang xử lý" @(order.Status == "Đang xử lý" ? "selected" : "")>Đang xử lý</option>
+                                    <option value="Đang giao" @(order.Status == "Đang giao" ? "selected" : "")>Đang giao</option>
+                                    <option value="Đã giao" @(order.Status == "Đã giao" ? "selected" : "")>Đã giao</option>
+                                    <option value="Hủy" @(order.Status == "Hủy" ? "selected" : "")>Hủy</option>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-primary">Cập nhật</button>
+                            }
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">@order.Status</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("OrderDetail", "Admin", new { id = order.Id })" class="btn btn-sm btn-info">
+                            <i class="fas fa-eye"></i> Chi tiết
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

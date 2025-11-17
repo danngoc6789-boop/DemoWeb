@@ -1,184 +1,105 @@
 ﻿@model DemoWeb.Models.SupportRequest
-
 @{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewBag.Title = "Chi tiết yêu cầu hỗ trợ";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 
-    // Xử lý số điện thoại cho Zalo
     var phoneClean = Model.Phone?.Replace(" ", "").Replace("-", "").Replace(".", "");
-    var phoneForZalo = phoneClean;
-    if (phoneForZalo?.StartsWith("0") == true)
-    {
-        phoneForZalo = "84" + phoneForZalo.Substring(1);
-    }
+    var phoneForZalo = phoneClean?.StartsWith("0") == true ? "84" + phoneClean.Substring(1) : phoneClean;
 }
 
-@section Head {
-    <link href="~/Content/AdminClient.css" rel="stylesheet" />
-}
-
-<div class="detail-container">
-
-    <!-- Breadcrumb -->
-    <div class="breadcrumb-box">
-        <a href="@Url.Action("Index","Admin")">Dashboard</a>
-        <span class="breadcrumb-sep">/</span>
-        <a href="@Url.Action("Supports","Admin")">Danh sách hỗ trợ</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>Chi tiết #@Model.Id</span>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="@Url.Action("Supports","Admin")" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
     </div>
 
-    <!-- Thông báo -->
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert-success">
-            <i class="fa fa-check-circle"></i> @TempData["SuccessMessage"]
-        </div>
-    }
 
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert-error">
-            <i class="fa fa-exclamation-circle"></i> @TempData["ErrorMessage"]
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"> #@Model.Id</h4>
+            <span class="badge @GetStatusClass(Model.Status) p-2">@Model.Status</span>
         </div>
-    }
+        <div class="card-body">
 
-    <!-- Card chi tiết -->
-    <div class="detail-card">
-        <div class="detail-header">
-            <div class="detail-title">
-                Yêu cầu hỗ trợ #@Model.Id
+            <div class="row mb-2">
+                <div class="col-md-3 font-weight-bold">Khách hàng:</div>
+                <div class="col-md-9">@Model.CustomerName</div>
             </div>
-            <div>
-                <span class="status-badge @GetStatusClass(Model.Status)">
-                    <i class="fa fa-circle" style="font-size:8px;"></i> @Model.Status
-                </span>
-            </div>
-        </div>
 
-        <!-- Thông tin khách hàng -->
-        <div class="detail-row">
-            <div class="detail-label">
-                <i class="fa fa-user"></i> Khách hàng:
-            </div>
-            <div class="detail-value">
-                <strong>@Model.CustomerName</strong>
-            </div>
-        </div>
+            <div class="row mb-2">
+                <div class="col-md-3 font-weight-bold">Điện thoại:</div>
+                <div class="col-md-9">
+                    <a href="tel:@phoneClean">@Model.Phone</a>
 
-        <div class="detail-row">
-            <div class="detail-label">
-                <i class="fa fa-phone"></i> Số điện thoại:
-            </div>
-            <div class="detail-value">
-                <a href="tel:@phoneClean" style="color: #DAA520; font-weight:500;">
-                    @Model.Phone
-                </a>
-                <a href="https://zalo.me/@phoneForZalo" target="_blank"
-                   style="margin-left: 16px; color: #0068ff;">
-                    <i class="fa fa-comments"></i> Chat Zalo
-                </a>
-            </div>
-        </div>
-
-        @if (!string.IsNullOrEmpty(Model.Email))
-        {
-            <div class="detail-row">
-                <div class="detail-label">
-                    <i class="fa fa-envelope"></i> Email:
-                </div>
-                <div class="detail-value">
-                    <a href="mailto:@Model.Email" style="color: #DAA520;">
-                        @Model.Email
-                    </a>
                 </div>
             </div>
-        }
 
-        <div class="detail-row">
-            <div class="detail-label">
-                <i class="fa fa-clock-o"></i> Thời gian gửi:
-            </div>
-            <div class="detail-value">
-                <strong>@Model.CreatedAt.ToString("HH:mm:ss dd/MM/yyyy")</strong>
-                <span style="color: #999; margin-left: 12px; font-size:0.9rem;">
-                    (@GetTimeAgo(Model.CreatedAt))
-                </span>
-            </div>
-        </div>
-
-        <div class="detail-row">
-            <div class="detail-label">
-                <i class="fa fa-comment"></i> Nội dung:
-            </div>
-            <div class="detail-value">
-                <div class="message-box">@Model.Message</div>
-            </div>
-        </div>
-
-        <!-- Nút hành động -->
-        <div class="action-buttons">
-
-            <!-- Cập nhật trạng thái -->
-            @if (Model.Status != "Đã xử lý")
+            @if (!string.IsNullOrEmpty(Model.Email))
             {
-                <!-- Đang xử lý -->
-                if (Model.Status == "Chờ xử lý")
+                <div class="row mb-2">
+                    <div class="col-md-3 font-weight-bold">Email:</div>
+                    <div class="col-md-9">
+                        <a href="mailto:@Model.Email">@Model.Email</a>
+                    </div>
+                </div>
+            }
+
+            <div class="row mb-2">
+                <div class="col-md-3 font-weight-bold">Ngày gửi:</div>
+                <div class="col-md-9">
+                    @Model.CreatedAt.ToString("HH:mm dd/MM/yyyy")
+                    <small class="text-muted">(@GetTimeAgo(Model.CreatedAt))</small>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 font-weight-bold">Nội dung:</div>
+                <div class="col-md-9">
+                    <div class="border rounded p-2 bg-light">@Model.Message</div>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="d-flex flex-wrap gap-2">
+                @if (Model.Status != "Đã xử lý")
                 {
-                    using (Html.BeginForm("UpdateSupportStatus", "Admin", new { id = Model.Id }, FormMethod.Post, new { @class = "status-update-form" }))
+                    using (Html.BeginForm("UpdateSupportStatus", "Admin", new { id = Model.Id }, FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="status" value="Đang xử lý" />
-                        <button type="submit" class="btn-action btn-info">
-                            <i class="fa fa-spinner"></i> Đánh dấu đang xử lý
-                        </button>
+                        <button class="btn btn-info btn-sm"><i class="fa fa-spinner"></i> Đang xử lý</button>
+                    }
+
+                    using (Html.BeginForm("UpdateSupportStatus", "Admin", new { id = Model.Id }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="status" value="Đã xử lý" />
+                        <button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Hoàn thành</button>
                     }
                 }
 
-                <!-- Hoàn thành -->
-                using (Html.BeginForm("UpdateSupportStatus", "Admin", new { id = Model.Id }, FormMethod.Post, new { @class = "status-update-form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="status" value="Đã xử lý" />
-                    <button type="submit" class="btn-action btn-success">
-                        <i class="fa fa-check"></i> Đánh dấu đã xử lý
-                    </button>
-                }
+                <a href="tel:@phoneClean" class="btn btn-primary btn-sm"><i class="fa fa-phone"></i> Gọi điện</a>
+                <a href="https://zalo.me/@phoneForZalo" target="_blank" class="btn btn-info btn-sm"><i class="fa fa-comments"></i> Chat Zalo</a>
+
+
+                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete()"><i class="fa fa-trash"></i> Xóa</button>
+            </div>
+
+            @using (Html.BeginForm("DeleteSupport", "Admin", new { id = Model.Id }, FormMethod.Post, new { id = "deleteForm", style = "display:none;" }))
+            {
+                @Html.AntiForgeryToken()
             }
 
-            <!-- Gọi điện -->
-            <a href="tel:@phoneClean" class="btn-action btn-primary">
-                <i class="fa fa-phone"></i> Gọi điện
-            </a>
-
-            <!-- Chat Zalo -->
-            <a href="https://zalo.me/@phoneForZalo" target="_blank" class="btn-action btn-info">
-                <i class="fa fa-comments"></i> Chat Zalo
-            </a>
-
-            <!-- Quay lại -->
-            <a href="@Url.Action("Supports","Admin")" class="btn-action btn-secondary">
-                <i class="fa fa-arrow-left"></i> Quay lại danh sách
-            </a>
-
-            <!-- Xóa -->
-            <button type="button" class="btn-action btn-danger" onclick="confirmDelete()">
-                <i class="fa fa-trash"></i> Xóa yêu cầu
-            </button>
         </div>
     </div>
 
-    <!-- Form xóa ẩn -->
-    @using (Html.BeginForm("DeleteSupport", "Admin", new { id = Model.Id }, FormMethod.Post, new { id = "deleteForm", style = "display:none;" }))
-    {
-        @Html.AntiForgeryToken()
-    }
 </div>
 
 @section Scripts {
     <script>
         function confirmDelete() {
-            if (confirm('Bạn có chắc chắn muốn xóa yêu cầu hỗ trợ này?\nHành động này không thể hoàn tác!')) {
+            if (confirm('Bạn có chắc chắn muốn xóa yêu cầu này? Hành động không thể hoàn tác.')) {
                 document.getElementById('deleteForm').submit();
             }
         }
@@ -186,39 +107,23 @@
 }
 
 @functions {
-    string GetStatusClass(string status)
+    string GetStatusClass(string status) => status switch
     {
-        switch (status?.ToLower())
-        {
-            case "chờ xử lý":
-                return "status-pending";
-            case "đang xử lý":
-                return "status-processing";
-            case "đã xử lý":
-            case "hoàn thành":
-                return "status-completed";
-            default:
-                return "status-viewed";
-        }
-    }
+        "Chờ xử lý" => "badge bg-warning text-dark",
+        "Đang xử lý" => "badge bg-info text-white",
+        "Đã xử lý" => "badge bg-success text-white",
+        _ => "badge bg-secondary text-white"
+    };
 
-    string GetTimeAgo(DateTime dateTime)
+    string GetTimeAgo(DateTime dt)
     {
-        var timeSpan = DateTime.Now - dateTime;
-
-        if (timeSpan.TotalMinutes < 1)
-            return "vừa xong";
-        if (timeSpan.TotalMinutes < 60)
-            return $"{(int)timeSpan.TotalMinutes} phút trước";
-        if (timeSpan.TotalHours < 24)
-            return $"{(int)timeSpan.TotalHours} giờ trước";
-        if (timeSpan.TotalDays < 7)
-            return $"{(int)timeSpan.TotalDays} ngày trước";
-        if (timeSpan.TotalDays < 30)
-            return $"{(int)(timeSpan.TotalDays / 7)} tuần trước";
-        if (timeSpan.TotalDays < 365)
-            return $"{(int)(timeSpan.TotalDays / 30)} tháng trước";
-
-        return dateTime.ToString("dd/MM/yyyy");
+        var ts = DateTime.Now - dt;
+        if (ts.TotalMinutes < 1) return "vừa xong";
+        if (ts.TotalMinutes < 60) return $"{(int)ts.TotalMinutes} phút trước";
+        if (ts.TotalHours < 24) return $"{(int)ts.TotalHours} giờ trước";
+        if (ts.TotalDays < 7) return $"{(int)ts.TotalDays} ngày trước";
+        if (ts.TotalDays < 30) return $"{(int)(ts.TotalDays / 7)} tuần trước";
+        if (ts.TotalDays < 365) return $"{(int)(ts.TotalDays / 30)} tháng trước";
+        return dt.ToString("dd/MM/yyyy");
     }
 }

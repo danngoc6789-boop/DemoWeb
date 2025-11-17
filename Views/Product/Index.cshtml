@@ -306,4 +306,14 @@
         .product-card:hover .product-name {
             color: var(--brand-gold) !important;
         }
+    .product-name {
+        display: -webkit-box; /* Tạo khung để cắt text theo dòng */
+        -webkit-line-clamp: 2; /* Số dòng tối đa hiển thị */
+        -webkit-box-orient: vertical;
+        overflow: hidden; /* Ẩn phần text dư thừa */
+        text-overflow: ellipsis; /* Hiển thị ... */
+        min-height: 2.8rem; /* Chiều cao tối thiểu, tùy chỉnh */
+        max-height: 2.8rem; /* Chiều cao tối đa, phù hợp 2 dòng */
+    }
+
 </style>

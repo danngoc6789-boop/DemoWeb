@@ -1,226 +1,106 @@
 ﻿@{
-    ViewBag.Title = "Admin Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Tổng quan" ;
+    ViewBag.ActiveMenu = "Tổng quan";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container-fluid mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2><i class="fas fa-tachometer-alt"></i> TRANG QUẢN TRỊ</h2>
-        <div>
-            <span class="text-muted">@DateTime.Now.ToString("dddd, dd/MM/yyyy HH:mm")</span>
-        </div>
+<div class="container-fluid">
+
+    <!-- MENU QUẢN LÝ NHANH -->
+    <div class="row mb-4">
+        @{
+            var menuItems = new[]
+            {
+                
+                new { Title="Sản phẩm", Icon="fa-box", Color="primary", Link="Products" },
+                new { Title="Đơn hàng", Icon="fa-shopping-cart", Color="success", Link="Orders" },
+                new { Title="Cập nhật giá vàng", Icon="fa-coins", Color="warning", Link="GoldPrices" },
+                new { Title="Thống kê", Icon="fa-chart-bar", Color="info", Link="Reports" },
+                new { Title="CSKH", Icon="fa-headset", Color="secondary", Link="Supports" }
+            };
+        }
+        @foreach (var item in menuItems)
+        {
+            <div class="col-md-2 mb-3">
+                <a href="@Url.Action(item.Link, "Admin")" class="btn btn-@item.Color btn-lg w-100 py-4 d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas @item.Icon fa-2x mb-2"></i>
+                    <span>@item.Title</span>
+                </a>
+            </div>
+        }
     </div>
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success alert-dismissible fade show">
-            <strong>@TempData["SuccessMessage"]</strong>
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-    }
+    <!-- THỐNG KÊ NGẮN GỌN -->
+    <div class="row mb-4">
+        @{
+            var stats = new[]
+            {
+                new { Title="Tổng sản phẩm", Value=ViewBag.TotalProducts ?? 0, Icon="fa-box", Color="primary", Link="Products"},
+                new { Title="Tổng đơn hàng", Value=ViewBag.TotalOrders ?? 0, Icon="fa-shopping-cart", Color="success", Link="Orders"},
+                new { Title="Đơn hôm nay", Value=ViewBag.TodayOrders ?? 0, Icon="fa-clock", Color="warning", Link="Orders"},
+                new { Title="Doanh thu tháng", Value=(ViewBag.MonthRevenue ?? 0).ToString("N0")+"đ", Icon="fa-dollar-sign", Color="info", Link="Reports"}
+            };
+        }
+        @foreach (var s in stats)
+        {
+            <div class="col-xl-3 col-md-6 mb-3">
+                <div class="card border-start border-5 border-@s.Color shadow h-100 py-2">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-uppercase fw-bold text-@s.Color mb-1">@s.Title</div>
+                            <div class="h5 fw-bold text-gray-800">@s.Value</div>
+                        </div>
+                        <i class="fas @s.Icon fa-2x text-gray-300"></i>
+                    </div>
+                    <a href="@Url.Action(s.Link, "Admin")" class="btn btn-@s.Color btn-sm w-100 mt-2">Xem chi tiết</a>
+                </div>
+            </div>
+        }
+    </div>
 
-    <!-- Menu quản lý nhanh -->
+    <!-- BẢNG ĐƠN HÀNG GẦN ĐÂY -->
     <div class="row">
         <div class="col-12">
-            <div class="card shadow">
-                <div class="card-header py-3 bg-secondary text-white">
-                    <h6 class="m-0 font-weight-bold"><i class="fas fa-cog"></i> QUẢN LÝ HỆ THỐNG</h6>
+            <div class="card shadow mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h6 class="mb-0"><i class="fas fa-list"></i> Đơn hàng gần đây</h6>
                 </div>
                 <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("Products")" class="btn btn-primary btn-lg btn-block" style="height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                                <i class="fas fa-box fa-3x mb-2"></i>
-                                <span>Quản lý sản phẩm</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("Orders")" class="btn btn-success btn-lg btn-block" style="height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                                <i class="fas fa-shopping-cart fa-3x mb-2"></i>
-                                <span>Quản lý đơn hàng</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("GoldPrices")" class="btn btn-warning btn-lg btn-block" style="height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                                <i class="fas fa-coins fa-3x mb-2"></i>
-                                <span>Quản lý giá vàng</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("Reports")" class="btn btn-info btn-lg btn-block" style="height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                                <i class="fas fa-chart-bar fa-3x mb-2"></i>
-                                <span>Báo cáo thống kê</span>
-                            </a>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <a href="@Url.Action("Supports")" class="btn btn-info btn-lg btn-block" style="height: 100px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                                <i class="fas fa-chart-bar fa-3x mb-2"></i>
-                                <span>CSKH</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <!-- Đơn hàng gần đây -->
-    <div class="col-lg-12 mb-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 bg-primary text-white">
-                <h6 class="m-0 font-weight-bold"><i class="fas fa-list"></i> Đơn hàng gần đây</h6>
-            </div>
-            <div class="card-body">
-                @if (ViewBag.RecentOrders != null && ViewBag.RecentOrders.Count > 0)
-                {
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Mã ĐH</th>
-                                    <th>Khách hàng</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Ngày đặt</th>
-                                    <th>Tổng tiền</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var order in ViewBag.RecentOrders)
-                                {
+                    @if (ViewBag.RecentOrders != null && ViewBag.RecentOrders.Count > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            <a href="@Url.Action("OrderDetail", new { id = order.Id })" class="font-weight-bold">
-                                                @order.OrderCode
-                                            </a>
-                                        </td>
-                                        <td>@order.CustomerName</td>
-                                        <td>@order.Phone</td>
-                                        <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
-                                        <td class="font-weight-bold">@order.TotalAmount.ToString("N0")đ</td>
+                                        <th>Mã ĐH</th>
+                                        <th>Khách hàng</th>
+                                        <th>SĐT</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Tổng tiền</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <a href="@Url.Action("Orders")" class="btn btn-primary btn-block">
-                        <i class="fas fa-arrow-right"></i> Xem tất cả đơn hàng
-                    </a>
-                }
-                else
-                {
-                    <p class="text-center text-muted py-4">Chưa có đơn hàng nào</p>
-                }
+                                </thead>
+                                <tbody>
+                                    @foreach (var order in ViewBag.RecentOrders)
+                                    {
+                                        <tr>
+                                            <td><a href="@Url.Action("OrderDetail","Admin", new {id=order.Id})" class="fw-bold">@order.OrderCode</a></td>
+                                            <td>@order.CustomerName</td>
+                                            <td>@order.Phone</td>
+                                            <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td class="fw-bold">@order.TotalAmount.ToString("N0")đ</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="@Url.Action("Orders","Admin")" class="btn btn-primary w-100 mt-3"><i class="fas fa-arrow-right"></i> Xem tất cả đơn hàng</a>
+                    }
+                    else
+                    {
+                        <p class="text-center text-muted py-4">Chưa có đơn hàng nào</p>
+                    }
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Thống kê tổng quan -->
-<div class="row mb-4">
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Tổng sản phẩm
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalProducts ?? 0)</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-box fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-                <a href="@Url.Action("Products")" class="btn btn-primary btn-sm mt-2 btn-block">Xem chi tiết</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Tổng đơn hàng
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TotalOrders ?? 0)</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-                <a href="@Url.Action("Orders")" class="btn btn-success btn-sm mt-2 btn-block">Xem chi tiết</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Đơn hôm nay
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@(ViewBag.TodayOrders ?? 0)</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clock fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-                <a href="@Url.Action("Orders")" class="btn btn-warning btn-sm mt-2 btn-block">Xem chi tiết</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Doanh thu tháng
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            @((ViewBag.MonthRevenue ?? 0).ToString("N0"))đ
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-                <a href="@Url.Action("Reports")" class="btn btn-info btn-sm mt-2 btn-block">Xem báo cáo</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<style>
-    .border-left-primary {
-        border-left: .25rem solid #4e73df !important;
-    }
-
-    .border-left-success {
-        border-left: .25rem solid #1cc88a !important;
-    }
-
-    .border-left-warning {
-        border-left: .25rem solid #f6c23e !important;
-    }
-
-    .border-left-info {
-        border-left: .25rem solid #36b9cc !important;
-    }
-
-    .text-gray-800 {
-        color: #5a5c69 !important;
-    }
-
-    .text-gray-300 {
-        color: #dddfeb !important;
-    }
-</style>

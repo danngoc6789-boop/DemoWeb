@@ -1,46 +1,63 @@
 ﻿@model DemoWeb.Models.Order
+
 @{
 
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ActiveMenu = "Orders";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@section Breadcrumb {
-    <div class="breadcrumb-box">
-        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
-        <span class="breadcrumb-sep">/</span>
-        <a href="@Url.Action("Orders","Admin")">Quản Lý Đơn Hàng</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>Quản Lý Đơn Hàng Chi Tiết</span>
-    </div>
-}
-@section Head {
-    <link href="~/Content/AdminClient.css" rel="stylesheet" />
-}
-<h2>Chi tiết đơn hàng @Model.OrderCode</h2>
 
-<p>Khách hàng: @Model.CustomerName</p>
-<p>Ngày đặt: @Model.OrderDate.ToString("dd/MM/yyyy")</p>
-<p>Trạng thái: @Model.Status</p>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Sản phẩm</th>
-            <th>Đơn giá</th>
-            <th>Số lượng</th>
-            <th>Thành tiền</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.OrderDetails)
-        {
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Chi tiết đơn hàng <span class="text-primary">@Model.OrderCode</span></h2>
+
+</div>
+
+<div class="mb-3">
+    <p><strong>Khách hàng:</strong> @Model.CustomerName</p>
+    <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+    <p>
+        <strong>Trạng thái:</strong>
+        <span class="badge @(Model.Status=="Đã giao"?"bg-success": Model.Status=="Đang giao"?"bg-info": Model.Status=="Đang xử lý"?"bg-warning":"bg-secondary")">
+            @Model.Status
+        </span>
+    </p>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
             <tr>
-                <td>@item.Product.Name</td>
-                <td>@(item.UnitPrice.HasValue ? item.UnitPrice.Value.ToString("C") : "-")</td>
-                <td>@item.Quantity</td>
-                <td>@(item.UnitPrice.HasValue ? (item.UnitPrice.Value * item.Quantity).ToString("C") : "-")</td>
+                <th>Mã sản phẩm</th>
+                <th>Sản phẩm</th>
+                <th>Size</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderDetails)
+            {
+                <tr>
+                    <td>@item.Product.Id</td>
+                    <td>@item.Product.Name</td>
+                    <td>@(string.IsNullOrEmpty(item.Size) ? "-" : item.Size)</td>
+                    <td>@(item.UnitPrice.HasValue ? item.UnitPrice.Value.ToString("N0") + "đ" : "-")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.UnitPrice.HasValue ? (item.UnitPrice.Value * item.Quantity).ToString("N0") + "đ" : "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-<p><strong>Tổng: @Model.TotalAmount.ToString("C")</strong></p>
+<div class="text-end mt-3">
+    <h5><strong>Tổng: @Model.TotalAmount.ToString("N0")đ</strong></h5>
+</div>
+<div>
+
+    <a href="@Url.Action("Orders","Admin")" class="btn btn-outline-secondary me-2">
+        <i class="fas fa-arrow-left"></i> Quay lại
+    </a>
+</div>

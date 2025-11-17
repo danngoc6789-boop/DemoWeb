@@ -1,31 +1,25 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Dashboard / Báo cáo";
+﻿@model List<DemoWeb.Models.Order>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@section Breadcrumb {
-    <div class="breadcrumb-box">
-        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>Bảng Thống Kê</span>
-    </div>
-}
-@section Head {
-    <link href="~/Content/AdminClient.css" rel="stylesheet" />
-}
-<h2>Bảng Thống Kê</h2>
 
-<form method="get" class="form-inline mb-3">
+<h2><i class="fas fa-chart-bar"></i> Bảng Thống Kê</h2>
+
+<!-- FORM LỌC -->
+<form method="get" class="form-inline mb-4">
     <label class="mr-2">Từ:</label>
     <input type="date" name="fromDate" class="form-control mr-2" value="@ViewBag.FromDate" />
     <label class="mr-2">Đến:</label>
     <input type="date" name="toDate" class="form-control mr-2" value="@ViewBag.ToDate" />
+    <label class="mr-2">Loại:</label>
     <select name="type" class="form-control mr-2">
         <option value="day" @(ViewBag.Type == "day" ? "selected" : "")>Theo ngày</option>
         <option value="month" @(ViewBag.Type == "month" ? "selected" : "")>Theo tháng</option>
     </select>
-    <button class="btn btn-primary">Lọc</button>
+    <button type="submit" class="btn btn-primary">Lọc</button>
 </form>
 
+<!-- THỐNG KÊ TỔNG QUAN -->
 <div class="row mb-4">
     <div class="col-md-3">
         <div class="card text-white bg-info mb-3">
@@ -69,19 +63,22 @@
     </div>
 </div>
 
-
+<!-- BIỂU ĐỒ DOANH THU -->
 <h4>Doanh thu @((ViewBag.Type=="month")?"theo tháng":"theo ngày")</h4>
 <canvas id="revenueChart" height="120"></canvas>
 
 <hr />
 
+<!-- BIỂU ĐỒ TOP 10 SẢN PHẨM -->
 <h4>Top 10 sản phẩm bán chạy</h4>
 <canvas id="topProductChart" height="120"></canvas>
 
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    var revenueLabels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartLabels));
-    var revenueData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartData));
+    // ==================== BIỂU ĐỒ DOANH THU ====================
+    var revenueLabels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartLabels ?? new List<string>()));
+    var revenueData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartData ?? new List<decimal>()));
 
     var ctxRevenue = document.getElementById('revenueChart').getContext('2d');
     new Chart(ctxRevenue, {
@@ -91,16 +88,39 @@
             datasets: [{
                 label: 'Doanh thu (VNĐ)',
                 data: revenueData,
-                borderColor: 'blue',
+                borderColor: 'rgba(0,123,255,1)',
                 backgroundColor: 'rgba(0,123,255,0.2)',
                 fill: true,
-                tension: 0.3
+                tension: 0.3,
+                pointRadius: 4
             }]
         },
-        options: { responsive: true }
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.raw.toLocaleString('vi-VN') + '₫';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toLocaleString('vi-VN') + '₫';
+                        }
+                    }
+                }
+            }
+        }
     });
 
-    var topProducts = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.TopProducts));
+    // ==================== BIỂU ĐỒ TOP 10 SẢN PHẨM ====================
+    var topProducts = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.TopProducts ?? new List<object>()));
     var productNames = topProducts.map(p => p.ProductName);
     var productQty = topProducts.map(p => p.TotalQuantity);
 
@@ -115,6 +135,14 @@
                 backgroundColor: 'rgba(255,99,132,0.6)'
             }]
         },
-        options: { responsive: true }
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
     });
 </script>

@@ -1,49 +1,68 @@
 ﻿@model IEnumerable<DemoWeb.Models.GoldPrice>
 @{
     ViewBag.Title = "Quản lý giá vàng";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@section Breadcrumb {
-    <div class="breadcrumb-box">
-        <a href="@Url.Action("Index","Admin")">Trang Quản Trị</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>Quản Lý Giá Vàng</span>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+
+    <div>
+        <a href="@Url.Action("Index","Admin")" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+
     </div>
-}
+</div>
 
-<div class="container mt-4">
-    <h2 class="text-center mb-4">QUẢN LÝ GIÁ VÀNG</h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-coins"></i> Quản lý giá vàng</h2>
+    <a href="@Url.Action("UpdatePrices","Gold","Admin")" class="btn btn-warning">
+        <i class="fas fa-sync-alt"></i> Cập nhật giá vàng mới
+    </a>
+</div>
 
-    <a href="@Url.Action("UpdatePrices","Gold","Admin")" class="btn btn-warning">Cập nhật giá vàng mới</a>
-
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Tên sản phẩm</th>
-                <th>Tuổi vàng</th>
-                <th>Độ tinh khiết</th>
-                <th>Mua vào</th>
-                <th>Bán ra</th>
-                <th>Ngày tạo</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.ProductName</td>
-                    <td>@item.Karat</td>
-                    <td>@item.Purity</td>
-                    <td>@item.BuyPrice.ToString("N0")</td>
-                    <td>@item.SellPrice.ToString("N0")</td>
-                    <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>
-                        <a href="@Url.Action("EditGoldPrice", "Admin", new { id = item.Id })" class="btn btn-sm btn-warning">Sửa</a>
-                        <a href="@Url.Action("DeleteGoldPrice", "Admin", new { id = item.Id })" class="btn btn-sm btn-danger" onclick="return confirm('Xóa giá vàng này?');">Xóa</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="card shadow">
+    <div class="card-body table-responsive">
+        @if (Model != null && Model.Any())
+        {
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Tuổi vàng</th>
+                        <th>Độ tinh khiết</th>
+                        <th>Mua vào (VNĐ)</th>
+                        <th>Bán ra (VNĐ)</th>
+                        <th>Ngày tạo</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.Karat</td>
+                            <td>@item.Purity</td>
+                            <td class="text-end">@item.BuyPrice.ToString("N0")đ</td>
+                            <td class="text-end">@item.SellPrice.ToString("N0")đ</td>
+                            <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning text-center mt-3">
+                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                <h5>Chưa có dữ liệu giá vàng</h5>
+                <p>Hãy cập nhật giá vàng mới để quản lý</p>
+                <a href="@Url.Action("UpdatePrices","Gold","Admin")" class="btn btn-warning">
+                    <i class="fas fa-sync-alt"></i> Cập nhật giá vàng
+                </a>
+            </div>
+        }
+    </div>
 </div>

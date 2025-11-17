@@ -23,13 +23,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" /> 
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
 
     <!-- CSS riêng cho shop -->
     <link rel="stylesheet" href="~/Content/site-shop.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    @RenderSection("Head", required: false)
 
+    @RenderSection("Head", required: false)
 </head>
 <body class="layout-wrapper">
 
@@ -41,50 +40,30 @@
                 <span class="since">SINCE 2025</span>
             </a>
 
-            <button class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#mainNav"
-                    aria-controls="mainNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#mainNav" aria-controls="mainNav"
+                    aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav ml-auto">
-
-                    <li class="nav-item">
-                        @Html.ActionLink("Trang chủ", "Index", "Trangchu", null,
-                            new { @class = "nav-link" })
-                    </li>
-
-                    <li class="nav-item">
-                        @Html.ActionLink("Sản phẩm", "Index", "Product", null,
-                            new { @class = "nav-link" })
-                    </li>
-
-                    <li class="nav-item">
-                        @Html.ActionLink("Bảng giá vàng", "BangGia", "GoldPrice", null,
-                            new { @class = "nav-link" })
-                    </li>
-
+                    <li class="nav-item">@Html.ActionLink("Trang chủ", "Index", "Trangchu", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Sản phẩm", "Index", "Product", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Bảng giá vàng", "BangGia", "GoldPrice", null, new { @class = "nav-link" })</li>
                     <li class="nav-item d-flex align-items-center">
-                        @Html.ActionLink("Giỏ hàng", "Index", "Cart", null,
-                            new { @class = "nav-link" })
+                        @Html.ActionLink("Giỏ hàng", "Index", "Cart", null, new { @class = "nav-link" })
                         @if (cartCount > 0)
                         {
                             <span class="cart-badge">@cartCount</span>
                         }
                     </li>
+                    <li class="nav-item">@Html.ActionLink("Liên hệ", "Contact", "Trangchu", null, new { @class = "nav-link" })</li>
 
-                    <li class="nav-item">
-                        @Html.ActionLink("Liên hệ", "Contact", "Trangchu", null,
-                            new { @class = "nav-link" })
-                    </li>
-                    <!--Tài khoản-->
+                    <!-- Tài khoản -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Tài Khoản
                         </a>
                         <div class="dropdown-menu" aria-labelledby="accountDropdown">
@@ -92,16 +71,10 @@
                             {
                                 if (User.IsInRole("Admin"))
                                 {
-                                    <span class="dropdown-item-text">
-                                        <strong>Xin chào Admin</strong>
-                                    </span>
                                     <div class="dropdown-divider"></div>
-                                    <div> <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Quản lý Admin</a></div>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Quản lý Admin</a>
                                     <div class="dropdown-divider"></div>
-                                    <div><a class="dropdown-item text-warning" href="@Url.Action("Register", "Account")">Tạo tài khoản Admin</a></div>
-
-                                    <div class="dropdown-divider"></div>
-                                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "d-inline" }))
+                                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { @class = "d-inline" }))
                                     {
                                         @Html.AntiForgeryToken()
                                         <button type="submit" class="dropdown-item text-danger">
@@ -117,14 +90,11 @@
                                             string name = full.Split(' ').Last();
                                         }
                                         <strong>Chào @name</strong>
-
                                     </span>
                                     <div class="dropdown-divider"></div>
-
                                     @Html.ActionLink("Đơn hàng của tôi", "Index", "CustomerOrder", null, new { @class = "dropdown-item" })
-
                                     <div class="dropdown-divider"></div>
-                                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "d-inline" }))
+                                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { @class = "d-inline" }))
                                     {
                                         @Html.AntiForgeryToken()
                                         <button type="submit" class="dropdown-item text-danger">
@@ -139,7 +109,6 @@
                                 <div class="dropdown-divider"></div>
                                 @Html.ActionLink("Đăng ký", "Register", "Account", null, new { @class = "dropdown-item" })
                             }
-
                         </div>
                     </li>
                 </ul>
@@ -148,32 +117,23 @@
     </nav>
 
     <!-- MAIN CONTENT -->
-
-    <main class="main-wrapper ">
-        <div class="container ">
-
+    <main class="main-wrapper flex-fill">
+        <div class="container">
             @RenderSection("Breadcrumb", required: false)
-
             <div class="content-card">
                 @RenderBody()
             </div>
-
         </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="jewerly-footer">
+    <footer class="jewerly-footer bg-light mt-auto py-4">
         <div class="container">
             <div class="row">
-
                 <div class="col-sm-6 col-md-3 mb-4">
                     <div class="footer-brand">D&T JEWELRY</div>
-                    <div class="footer-desc">
-                        Vàng 24K - Trang sức cao cấp - Cam kết chuẩn tuổi vàng.
-                        Thu mua / thu đổi minh bạch, giá tốt.
-                    </div>
+                    <div class="footer-desc">Vàng 24K - Trang sức cao cấp - Cam kết chuẩn tuổi vàng. Thu mua / thu đổi minh bạch, giá tốt.</div>
                 </div>
-
                 <div class="col-sm-6 col-md-3 mb-4">
                     <div class="footer-title">Liên hệ</div>
                     <div>Hotline: 1900 1011</div>
@@ -181,7 +141,6 @@
                     <div>Email: DTjewerly2025@gmail.com</div>
                     <div>161 ĐHT 02 Phường Đông Hưng Thuận Quận 12 TP Hồ Chí Minh</div>
                 </div>
-
                 <div class="col-sm-6 col-md-3 mb-4">
                     <div class="footer-title">Cam kết</div>
                     <div>✔ Vàng đủ tuổi, chuẩn tuổi</div>
@@ -189,7 +148,6 @@
                     <div>✔ Thu đổi linh hoạt</div>
                     <div>✔ Bảo hành làm sáng trọn đời</div>
                 </div>
-
                 <div class="col-sm-6 col-md-3 mb-4">
                     <div class="footer-title">Hỗ trợ</div>
                     <div><a href="@Url.Action("ThuDoi","Policy")">Chính sách thu đổi</a></div>
@@ -198,99 +156,54 @@
                     <div><a href="@Url.Action("Index","MeasureRingSize")">Cách đo ni tay</a></div>
                     <div><a href="@Url.Action("QA","Policy")">Câu hỏi thường gặp</a></div>
                 </div>
-
             </div>
-
-            <div class="copyright-line">
+            <div class="copyright-line text-center mt-3">
                 © @DateTime.Now.Year D&T JEWELRY. All rights reserved.
             </div>
-
         </div>
     </footer>
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Cart JS -->
-    <!-- Sửa đường dẫn Cart.js nếu file không tồn tại -->
     @if (System.IO.File.Exists(Server.MapPath("~/Scripts/cart.js")))
     {
         <script src="~/Scripts/cart.js"></script>
     }
 
     <style>
-        /* XÓA hoặc comment các CSS cũ gây conflict */
-
-        /* FOOTER FIX CHÍNH */
-        html {
+        html, body {
             height: 100%;
+            margin: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* Main chiếm hết space */
         main.main-wrapper {
-            flex: 1 0 auto;
-            padding-top: 80px; /* cho navbar fixed */
+            flex: 1;
+            padding-top: 80px;
         }
 
-        /* Footer luôn ở dưới */
         footer.jewerly-footer {
             margin-top: auto;
-            flex-shrink: 0;
         }
 
-        /* Product card effects giữ nguyên */
         .row > [class*="col-"] {
             display: flex;
             flex-direction: column;
         }
 
         .product-card:hover {
-            transform: translateY(-8px) !important;
-            box-shadow: 0 24px 48px rgba(0,0,0,0.15) !important;
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
         }
     </style>
-
-    <!-- 5. JavaScript fix (nếu CSS vẫn không work) -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Đảm bảo footer xuống dưới
-            const body = document.body;
-            const main = document.querySelector('.main-wrapper');
-            const footer = document.querySelector('.jewerly-footer');
-
-            if (body && main && footer) {
-                body.style.cssText = 'min-height: 100vh; display: flex; flex-direction: column;';
-                main.style.cssText = 'flex: 1 0 auto; padding-top: 80px;';
-                footer.style.cssText = 'margin-top: auto;';
-            }
-        });
-    </script>
 
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-<script>
-    // Force fix footer bằng JS
-    window.onload = function () {
-        const footer = document.querySelector('.jewerly-footer');
-        const main = document.querySelector('.main-wrapper');
-        const body = document.body;
-
-        // Force styles
-        body.style.minHeight = '100vh';
-        body.style.display = 'flex';
-        body.style.flexDirection = 'column';
-        main.style.flex = '1 0 auto';
-        footer.style.marginTop = 'auto';
-    };
-</script>

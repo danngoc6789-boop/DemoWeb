@@ -1,21 +1,70 @@
 ﻿@{
-    ViewBag.Title = "Success";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Đặt hàng thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // dùng layout shop
 }
 
-<link href="~/Content/Checkout.css" rel="stylesheet" />
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card shadow-sm border-0 p-5 text-center" style="max-width:500px; border-top:4px solid #d4af37;">
+        <div class="mb-4">
+            <!-- Icon success -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#28a745" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.08 0l3.992-3.992a.75.75 0 1 0-1.08-1.08L7.5 9.439 5.53 7.47a.75.75 0 1 0-1.08 1.08l2.52 2.48z" />
+            </svg>
+        </div>
 
-<div class="success-container">
-    <div class="success-icon"></div>
+        <h2 style="color:#d4af37; font-weight:700; font-size:1.8rem;">Đặt hàng thành công!</h2>
 
-    <h2>Đặt hàng thành công!</h2>
+        <p style="font-size:1rem; color:#555;">Cảm ơn bạn đã đặt hàng tại D&T Jewelry</p>
 
-    <p>Cảm ơn bạn đã đặt hàng tại D&T Jewelry</p>
+        <p style="font-size:1rem; font-weight:500;">Mã đơn hàng của bạn:</p>
+        <div class="order-code mb-3" style="font-size:1.2rem; font-weight:600; color:#bfa14a;">@ViewBag.OrderCode</div>
 
-    <p>Mã đơn hàng của bạn:</p>
-    <div class="order-code">@ViewBag.OrderCode</div>
+        <p style="font-size:0.95rem; color:#555;">Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất</p>
 
-    <p>Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất</p>
-
-    <a href="@Url.Action("Index", "Home")" class="btn-back-home">Về trang chủ</a>
+        <a href="@Url.Action("Index", "TrangChu")" class="btn btn-lg" style="background-color:#d4af37; color:#fff; font-weight:600; width:100%; padding:0.75rem; margin-top:1rem;">Về trang chủ</a>
+    </div>
 </div>
+
+<style>
+    /* Card hover subtle effect */
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 32px rgba(212,175,55,0.2);
+        transition: all 0.3s ease;
+    }
+
+    /* Mã đơn hàng */
+    .order-code {
+        background-color: #fff7e6;
+        border: 1px dashed #d4af37;
+        padding: 0.75rem;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    /* Input focus vàng (nếu dùng trong form) */
+    .form-control:focus {
+        border-color: #d4af37;
+        box-shadow: 0 0 0 0.2rem rgba(212,175,55,0.25);
+    }
+
+    /* Placeholder chữ nhẹ */
+    ::placeholder {
+        color: #a1863b;
+        opacity: 0.7;
+        font-size: 0.95rem;
+    }
+
+    /* Button hover vàng */
+    .btn:hover {
+        background-color: #bfa14a;
+        color: #fff;
+    }
+
+    /* Icon success animation */
+   
+
+    .success-icon svg {
+        animation: pop 0.5s ease-out;
+    }
+</style>
