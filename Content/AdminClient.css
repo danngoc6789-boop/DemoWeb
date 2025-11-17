@@ -1,0 +1,388 @@
+﻿/* ==============================
+   CUSTOMER + ADMIN CSS
+   All Pages: Customer + Admin Login + Admin Dashboard
+============================== */
+
+/* ========= CUSTOMER PAGES ========= */
+
+/* Checkout */
+.checkout-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+    .checkout-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    .checkout-container .form-group label {
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #555;
+    }
+
+    .checkout-container .form-group input {
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+        .checkout-container .form-group input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+            outline: none;
+        }
+
+    .checkout-container .btn-order {
+        width: 100%;
+        padding: 15px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+        .checkout-container .btn-order:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+/* Success */
+.success-container {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 50px 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+}
+
+    .success-container h2 {
+        font-size: 32px;
+        color: #28a745;
+        margin: 20px 0 15px;
+        font-weight: 700;
+    }
+
+    .success-container p {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .success-container .order-code {
+        display: inline-block;
+        background-color: #f1f1f1;
+        padding: 12px 20px;
+        margin: 10px 0 20px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 8px;
+        color: #333;
+    }
+
+    .success-container .btn-back-home {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 14px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        background-color: #007bff;
+        border-radius: 8px;
+        text-decoration: none;
+    }
+
+        .success-container .btn-back-home:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+    .success-container .success-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background-color: #28a745;
+        position: relative;
+    }
+
+        .success-container .success-icon::after {
+            content: '';
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            width: 25px;
+            height: 50px;
+            border-right: 5px solid #fff;
+            border-bottom: 5px solid #fff;
+            transform: rotate(45deg) translateY(-50%);
+            transform-origin: center;
+        }
+
+/* Customer Orders Table */
+.table {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+    .table thead th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        border-bottom: none;
+        color: #495057;
+        padding: 14px;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .table td {
+        vertical-align: middle;
+        padding: 14px;
+        border-top: 1px solid #e9ecef;
+    }
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 12px;
+    line-height: 1;
+    text-align: center;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-info {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.badge-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-sm {
+    padding: 6px 14px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+
+    .btn-sm:hover {
+        transform: translateY(-2px);
+    }
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+    .action-buttons .cancel-btn:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+/* Responsive Tables */
+@media (max-width: 576px) {
+    .table thead {
+        display: none;
+    }
+
+    .table tbody tr {
+        display: block;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border-radius: 12px;
+        padding: 12px;
+    }
+
+    .table tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 12px;
+        border: none;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .table tbody td:last-child {
+            border-bottom: none;
+        }
+}
+
+/* ========= ADMIN LOGIN ========= */
+.admin-login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f9fa;
+}
+
+.admin-login-container {
+    width: 400px;
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+    .admin-login-container h2 {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    .admin-login-container .form-group {
+        margin-bottom: 20px;
+    }
+
+        .admin-login-container .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .admin-login-container .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: all 0.3s;
+        }
+
+            .admin-login-container .form-group input:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0,123,255,0.3);
+                outline: none;
+            }
+
+    .admin-login-container .btn-login {
+        width: 100%;
+        padding: 14px;
+        background-color: #007bff;
+        color: #fff;
+        font-weight: 600;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .admin-login-container .btn-login:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+/* ========= ADMIN DASHBOARD & TABLES ========= */
+.admin-dashboard {
+    padding: 30px;
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+    .admin-dashboard h2 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .admin-dashboard .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+    }
+
+        .admin-dashboard .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+    .admin-dashboard .table {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    }
+
+        .admin-dashboard .table th,
+        .admin-dashboard .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            text-align: left;
+        }
+
+    .admin-dashboard .btn {
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+        .admin-dashboard .btn:hover {
+            transform: translateY(-2px);
+        }
+
+    .admin-dashboard .badge {
+        padding: 4px 10px;
+        font-size: 12px;
+    }
+
+    /* Form inputs in Reports / GoldPrices / Products */
+    .admin-dashboard .form-group input,
+    .admin-dashboard .form-group select {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 12px;
+    }
+
+        .admin-dashboard .form-group input:focus,
+        .admin-dashboard .form-group select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 4px rgba(0,123,255,0.3);
+            outline: none;
+        }

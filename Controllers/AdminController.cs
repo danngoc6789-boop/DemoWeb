@@ -445,6 +445,62 @@ namespace DemoWeb.Controllers
             return View();
         }
 
+        // ==================== QUẢN LÝ CSKH ====================
+
+        public async Task<ActionResult> Supports(int page = 1)
+        {
+            int pageSize = 20;
+
+            var query = db.SupportRequests.OrderByDescending(s => s.CreatedAt);
+
+            var totalItems = await query.CountAsync();
+            var items = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            return View(items);
+        }
+        public async Task<ActionResult> SupportDetail(int id)
+        {
+            var item = await db.SupportRequests.FindAsync(id);
+            if (item == null) return HttpNotFound();
+
+            return View(item);
+        }
+        [HttpPost]
+        public async Task<ActionResult> UpdateSupportStatus(int id, string status)
+        {
+            var item = await db.SupportRequests.FindAsync(id);
+            if (item != null)
+            {
+                item.Status = status;
+                await db.SaveChangesAsync();
+                TempData["SuccessMessage"] = "✓ Đã cập nhật trạng thái thành công!";
+            }
+
+            // Sửa từ "Support" thành "SupportDetail" 
+            return RedirectToAction("SupportDetail", new { id = id });
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> DeleteSupport(int id)
+        {
+            var item = await db.SupportRequests.FindAsync(id);
+            if (item != null)
+            {
+                db.SupportRequests.Remove(item);
+                await db.SaveChangesAsync();
+                TempData["SuccessMessage"] = "✓ Đã xóa yêu cầu hỗ trợ!";
+            }
+
+            // Sửa từ "Support" thành "Supports"
+            return RedirectToAction("Supports");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -27,7 +27,7 @@
 
     <!-- CSS riêng cho shop -->
     <link rel="stylesheet" href="~/Content/site-shop.css" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     @RenderSection("Head", required: false)
 
 </head>
@@ -112,7 +112,12 @@
                                 else
                                 {
                                     <span class="dropdown-item-text">
-                                        <strong>Chào @Session["FullName"]</strong>
+                                        @{
+                                            string full = Session["FullName"]?.ToString() ?? "";
+                                            string name = full.Split(' ').Last();
+                                        }
+                                        <strong>Chào @name</strong>
+
                                     </span>
                                     <div class="dropdown-divider"></div>
 

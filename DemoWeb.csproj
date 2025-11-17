@@ -227,6 +227,10 @@
     <Compile Include="Migrations\202511131343164_AddAvailableSizesToProduct.Designer.cs">
       <DependentUpon>202511131343164_AddAvailableSizesToProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202511170151402_AddSupportRequests.cs" />
+    <Compile Include="Migrations\202511170151402_AddSupportRequests.Designer.cs">
+      <DependentUpon>202511170151402_AddSupportRequests.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -237,12 +241,14 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\SupportRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GoldBtmcService.cs" />
     <Compile Include="Services\GoldPriceDbService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminClient.css" />
     <Content Include="Content\bang-do-kich-thuoc-vong-tay.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -653,7 +659,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Trangchu\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\GoldPrice\BangGia.cshtml" />
@@ -684,6 +689,8 @@
     <Content Include="Views\Policy\QA.cshtml" />
     <Content Include="Views\Policy\BaoHanh.cshtml" />
     <Content Include="Views\Admin\Reports.cshtml" />
+    <Content Include="Views\Admin\Supports.cshtml" />
+    <Content Include="Views\Admin\SupportDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -749,6 +756,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202511131343164_AddAvailableSizesToProduct.resx">
       <DependentUpon>202511131343164_AddAvailableSizesToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202511170151402_AddSupportRequests.resx">
+      <DependentUpon>202511170151402_AddSupportRequests.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

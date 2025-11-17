@@ -9,6 +9,9 @@
         <span>Bảng Thống Kê</span>
     </div>
 }
+@section Head {
+    <link href="~/Content/AdminClient.css" rel="stylesheet" />
+}
 <h2>Bảng Thống Kê</h2>
 
 <form method="get" class="form-inline mb-3">
@@ -65,6 +68,7 @@
         </div>
     </div>
 </div>
+
 
 <h4>Doanh thu @((ViewBag.Type=="month")?"theo tháng":"theo ngày")</h4>
 <canvas id="revenueChart" height="120"></canvas>

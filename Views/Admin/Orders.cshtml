@@ -11,6 +11,9 @@
         <span>Quản Lý Đơn Hàng</span>
     </div>
 }
+@section Head {
+    <link href="~/Content/AdminClient.css" rel="stylesheet" />
+}
 <h2>@ViewBag.Title</h2>
 
 <table class="table table-bordered table-striped">
@@ -61,7 +64,7 @@
                 <td>
                     @Html.ActionLink("Chi tiết", "OrderDetail", "Admin", new { id = order.Id }, new { @class = "btn btn-sm btn-info" })
 
-                    
+
                 </td>
             </tr>
         }

@@ -26,6 +26,9 @@ namespace DemoWeb.Models
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<GoldPrice> GoldPrices { get; set; }
 
+        public DbSet<SupportRequest> SupportRequests { get; set; }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

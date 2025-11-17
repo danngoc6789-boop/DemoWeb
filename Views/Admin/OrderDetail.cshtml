@@ -12,6 +12,9 @@
         <span>Quản Lý Đơn Hàng Chi Tiết</span>
     </div>
 }
+@section Head {
+    <link href="~/Content/AdminClient.css" rel="stylesheet" />
+}
 <h2>Chi tiết đơn hàng @Model.OrderCode</h2>
 
 <p>Khách hàng: @Model.CustomerName</p>
@@ -32,9 +35,9 @@
         {
             <tr>
                 <td>@item.Product.Name</td>
-        <td>@(item.UnitPrice.HasValue ? item.UnitPrice.Value.ToString("C") : "-")</td>
-        <td>@item.Quantity</td>
-        <td>@(item.UnitPrice.HasValue ? (item.UnitPrice.Value * item.Quantity).ToString("C") : "-")</td>
+                <td>@(item.UnitPrice.HasValue ? item.UnitPrice.Value.ToString("C") : "-")</td>
+                <td>@item.Quantity</td>
+                <td>@(item.UnitPrice.HasValue ? (item.UnitPrice.Value * item.Quantity).ToString("C") : "-")</td>
             </tr>
         }
     </tbody>

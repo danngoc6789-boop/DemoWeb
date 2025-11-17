@@ -15,7 +15,7 @@
 <!-- KHU LIÊN HỆ -->
 <div class="row contact-row" style="margin-bottom:24px;">
 
-    <!--  BÊN TRÁI: FORM GỬI LIÊN HỆ -->
+    <!-- BÊN TRÁI: FORM GỬI LIÊN HỆ -->
     <div class="col-md-6" style="margin-top:24px;">
 
         <div class="product-card" style="margin-bottom:0; text-align:left;">
@@ -28,8 +28,35 @@
                 Gửi tin nhắn cho chúng tôi
             </div>
 
-            <form method="post" action="@Url.Action("ContactSend","Trangchu")">
+            <!-- Hiển thị thông báo -->
+            @if (TempData["Success"] != null)
+            {
+                <div style="margin-bottom:16px;
+                           padding:12px;
+                           background:#d4edda;
+                           border:1px solid #c3e6cb;
+                           border-radius:8px;
+                           color:#155724;">
+                    <i class="fa fa-check-circle"></i> @TempData["Success"]
+                </div>
+            }
 
+            @if (TempData["Error"] != null)
+            {
+                <div style="margin-bottom:16px;
+                           padding:12px;
+                           background:#f8d7da;
+                           border:1px solid #f5c6cb;
+                           border-radius:8px;
+                           color:#721c24;">
+                    <i class="fa fa-exclamation-circle"></i> @TempData["Error"]
+                </div>
+            }
+
+            <form method="post" action="@Url.Action("ContactSend","Trangchu")">
+                @Html.AntiForgeryToken()
+
+                <!-- Các input giữ nguyên như cũ -->
                 <div style="margin-bottom:16px;">
                     <label style="display:block;
                                    font-size:.8rem;
@@ -94,11 +121,9 @@
                 <div style="font-size:.75rem; line-height:1.2rem; color:var(--text-soft); margin-top:12px;">
                     Chúng tôi sẽ phản hồi sớm nhất có thể qua điện thoại hoặc Zalo.
                 </div>
-
             </form>
         </div>
     </div>
-
     <!-- ✅ BÊN PHẢI: THÔNG TIN & BẢN ĐỒ -->
     <div class="col-md-6" style="display:flex; flex-direction:column;">
 
@@ -189,3 +214,36 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                var name = $('input[name="name"]').val().trim();
+                var phone = $('input[name="phone"]').val().replace(/\s/g, '');
+                var message = $('textarea[name="message"]').val().trim();
+
+                // Kiểm tra tên
+                if (name.length < 2) {
+                    alert('Vui lòng nhập tên ít nhất 2 ký tự!');
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Kiểm tra định dạng số điện thoại VN
+                var phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
+                if (!phoneRegex.test(phone)) {
+                    alert('Số điện thoại không hợp lệ! Vui lòng nhập đúng định dạng (VD: 0901234567)');
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Kiểm tra nội dung
+                if (message.length < 10) {
+                    alert('Nội dung phải có ít nhất 10 ký tự!');
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+}
