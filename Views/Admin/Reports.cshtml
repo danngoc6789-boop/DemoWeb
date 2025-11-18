@@ -2,80 +2,88 @@
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<div class="d-flex justify-content-between align-items-center mb-3">
 
-<h2><i class="fas fa-chart-bar"></i> Bảng Thống Kê</h2>
+    <div>
+        <a href="@Url.Action("Index","Admin")" class="btn btn-outline-secondary me-2">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
 
-<!-- FORM LỌC -->
-<form method="get" class="form-inline mb-4">
-    <label class="mr-2">Từ:</label>
-    <input type="date" name="fromDate" class="form-control mr-2" value="@ViewBag.FromDate" />
-    <label class="mr-2">Đến:</label>
-    <input type="date" name="toDate" class="form-control mr-2" value="@ViewBag.ToDate" />
-    <label class="mr-2">Loại:</label>
-    <select name="type" class="form-control mr-2">
-        <option value="day" @(ViewBag.Type == "day" ? "selected" : "")>Theo ngày</option>
-        <option value="month" @(ViewBag.Type == "month" ? "selected" : "")>Theo tháng</option>
-    </select>
-    <button type="submit" class="btn btn-primary">Lọc</button>
-</form>
-
-<!-- THỐNG KÊ TỔNG QUAN -->
-<div class="row mb-4">
-    <div class="col-md-3">
-        <div class="card text-white bg-info mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Tổng đơn hàng</h5>
-                <p class="card-text">@ViewBag.TotalOrders</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-success mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Doanh thu</h5>
-                <p class="card-text">@String.Format("{0:N0} VNĐ", ViewBag.TotalRevenue)</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="card text-white bg-primary mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Hoàn thành</h5>
-                <p class="card-text">@ViewBag.DeliveredOrders</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="card text-white bg-warning mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Chờ xử lý</h5>
-                <p class="card-text">@ViewBag.PendingOrders</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="card text-white bg-danger mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Đơn hủy</h5>
-                <p class="card-text">@ViewBag.CancelledOrders</p>
-            </div>
-        </div>
     </div>
 </div>
+    <h2><i class="fas fa-chart-bar"></i> Bảng Thống Kê</h2>
 
-<!-- BIỂU ĐỒ DOANH THU -->
-<h4>Doanh thu @((ViewBag.Type=="month")?"theo tháng":"theo ngày")</h4>
-<canvas id="revenueChart" height="120"></canvas>
+    <!-- FORM LỌC -->
+    <form method="get" class="form-inline mb-4">
+        <label class="mr-2">Từ:</label>
+        <input type="date" name="fromDate" class="form-control mr-2" value="@ViewBag.FromDate" />
+        <label class="mr-2">Đến:</label>
+        <input type="date" name="toDate" class="form-control mr-2" value="@ViewBag.ToDate" />
+        <label class="mr-2">Loại:</label>
+        <select name="type" class="form-control mr-2">
+            <option value="day" @(ViewBag.Type == "day" ? "selected" : "")>Theo ngày</option>
+            <option value="month" @(ViewBag.Type == "month" ? "selected" : "")>Theo tháng</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Lọc</button>
+    </form>
 
-<hr />
+    <!-- THỐNG KÊ TỔNG QUAN -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng đơn hàng</h5>
+                    <p class="card-text">@ViewBag.TotalOrders</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Doanh thu</h5>
+                    <p class="card-text">@String.Format("{0:N0} VNĐ", ViewBag.TotalRevenue)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Hoàn thành</h5>
+                    <p class="card-text">@ViewBag.DeliveredOrders</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Chờ xử lý</h5>
+                    <p class="card-text">@ViewBag.PendingOrders</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Đơn hủy</h5>
+                    <p class="card-text">@ViewBag.CancelledOrders</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- BIỂU ĐỒ TOP 10 SẢN PHẨM -->
-<h4>Top 10 sản phẩm bán chạy</h4>
-<canvas id="topProductChart" height="120"></canvas>
+    <!-- BIỂU ĐỒ DOANH THU -->
+    <h4>Doanh thu @((ViewBag.Type=="month")?"theo tháng":"theo ngày")</h4>
+    <canvas id="revenueChart" height="120"></canvas>
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
+    <hr />
+
+    <!-- BIỂU ĐỒ TOP 10 SẢN PHẨM -->
+    <h4>Top 10 sản phẩm bán chạy</h4>
+    <canvas id="topProductChart" height="120"></canvas>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
     // ==================== BIỂU ĐỒ DOANH THU ====================
     var revenueLabels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartLabels ?? new List<string>()));
     var revenueData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartData ?? new List<decimal>()));
@@ -145,4 +153,4 @@
             }
         }
     });
-</script>
+    </script>
