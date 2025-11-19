@@ -225,7 +225,7 @@
 
 <style>
     /* Style cho size options */
-    .size-option-label input[type="radio"]:checked + .size-display {
+    input[type="radio"]:checked + .size-display {
         background-color: var(--brand-gold);
         color: #fff;
         border-color: var(--brand-gold);
@@ -233,7 +233,7 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     }
 
-    .size-option-label:hover .size-display {
+    .size-display:hover {
         border-color: var(--brand-gold);
         transform: translateY(-2px);
     }
@@ -262,11 +262,27 @@
     }
 </style>
 <script>
+    // JS chuyển ảnh chính từ thumbnail
+    function changeMainImage(imgSrc, element) {
+        var mainImg = document.getElementById('mainImage');
+        if (mainImg) {
+            mainImg.src = imgSrc;
+        }
+
+        // Cập nhật border cho thumbnail đã chọn
+        var allThumbnails = document.querySelectorAll('.thumbnail-image');
+        allThumbnails.forEach(function (thumb) {
+            thumb.style.borderColor = '#ddd';
+        });
+        element.style.borderColor = 'var(--brand-gold)';
+    }
+
     // JS tăng giảm số lượng
     function decreaseQty() {
         var qty = document.getElementById('quantity');
         if (qty.value > 1) qty.value = parseInt(qty.value) - 1;
     }
+
     function increaseQty() {
         var qty = document.getElementById('quantity');
         qty.value = parseInt(qty.value) + 1;
@@ -286,12 +302,13 @@
         }
     });
 
-
     // JS hiển thị size đã chọn trên nút
-    const btn = document.getElementById('btnAddToCart');
     document.querySelectorAll('input[name="size"]').forEach(radio => {
         radio.addEventListener('change', function () {
-            btn.innerHTML = '<i class="fas fa-shopping-cart"></i> THÊM SIZE ' + this.value + ' VÀO GIỎ HÀNG';
+            var btn = document.querySelector('.btn-round-black');
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-shopping-cart"></i> THÊM SIZE ' + this.value + ' VÀO GIỎ HÀNG';
+            }
         });
     });
 </script>
