@@ -22,7 +22,7 @@ namespace DemoWeb.Controllers
         // POST: /Trangchu/ContactSend
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ContactSend(string name, string phone, string message)
+        public ActionResult ContactSend(string name, string phone, string message, string email)
         {
             try
             {
@@ -40,8 +40,8 @@ namespace DemoWeb.Controllers
                 {
                     CustomerName = name.Trim(),
                     Phone = phone.Trim(),
+                    Email = (email ?? "").Trim(),
                     Message = message.Trim(),
-                    Email = "", // Có thể để trống vì không required
                     Status = "Chờ xử lý",
                     CreatedAt = DateTime.Now
                 };
@@ -58,7 +58,7 @@ namespace DemoWeb.Controllers
             catch (Exception ex)
             {
                 // Log lỗi nếu cần
-                TempData["Error"] = "Có lỗi xảy ra. Vui lòng thử lại sau!";
+                TempData["Error"] = "Lỗi: " + ex.Message;
                 return RedirectToAction("Contact");
             }
         }
