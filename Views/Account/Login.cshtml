@@ -1,37 +1,32 @@
 ﻿@model DemoWeb.Models.LoginViewModel
 @{
-
     ViewBag.Title = "Đăng nhập";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-5">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white" >
+                <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Đăng nhập</h4>
                 </div>
                 <div class="card-body p-4">
-
                     @if (ViewBag.Error != null)
                     {
                         <div class="alert alert-danger">
                             <strong>Lỗi:</strong> @ViewBag.Error
                         </div>
                     }
-
-                    @if (TempData["SuccessMessage"] != null)
+                    
+                    @if (TempData["AccountMessage"] != null)
                     {
                         <div class="alert alert-success">
-                            @TempData["SuccessMessage"]
+                            @TempData["AccountMessage"]
                         </div>
                     }
-
                     @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
-
                         <div class="mb-3">
                             <label for="Email" class="form-label">Email</label>
                             <input type="email"
@@ -42,7 +37,6 @@
                                    required />
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
                         </div>
-
                         <div class="mb-3">
                             <label for="Password" class="form-label">Mật khẩu</label>
                             <input type="password"
@@ -53,14 +47,11 @@
                                    required />
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger small" })
                         </div>
-
                         <button type="submit" class="btn btn-primary w-100 mb-3">
                             Đăng nhập
                         </button>
                     }
-
                     <hr />
-
                     <div class="text-center">
                         <p class="mb-0">
                             Bạn chưa có tài khoản?
@@ -69,14 +60,11 @@
                             </a>
                         </p>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

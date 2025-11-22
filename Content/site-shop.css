@@ -43,7 +43,7 @@ body .layout-wrapper,
     flex-direction: column;
 }
 
-/* main: CHỈ chừa chỗ cho navbar fixed, không margin-top bậy bạ */
+/* main: CHỈ chừa chỗ cho navbar fixed, không margin-top  */
 main.main-wrapper {
     flex: 1 0 auto;
     padding-top: 76px; /* cao ≈ navbar */
@@ -51,7 +51,9 @@ main.main-wrapper {
 
 /* container dùng chung – chỉ padding dưới nhẹ, KHÔNG margin-top */
 .container {
-    padding-bottom: 24px;
+    
+    padding-bottom: 0 !important; /* Thêm dòng này nếu cần */
+    padding-top: 0 !important;
 }
 
 /* card nội dung chung – bỏ min-height để không kéo khoảng trắng */
@@ -60,9 +62,17 @@ main.main-wrapper {
     border-radius: var(--radius-card);
     box-shadow: var(--card-shadow);
     border: 1px solid var(--border-soft);
-    padding: 24px;
-    margin-bottom: 24px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    margin-top:0;
 }
+    .content-card .row {
+        margin-bottom: 8px; /* Giảm khoảng cách giữa các hàng */
+    }
+
+    .content-card .form-control {
+        padding: 6px 12px; /* Giảm padding của các dropdown */
+    }
 
 /* ========= NAVBAR ========= */
 .nav-jewelry {
@@ -148,6 +158,7 @@ main.main-wrapper {
     margin-left: 4px;
 }
 
+
 /* ========= BREADCRUMB ========= */
 .breadcrumb-box {
     font-size: 0.75rem;
@@ -156,7 +167,8 @@ main.main-wrapper {
     text-transform: uppercase;
     letter-spacing: 0.07em;
     color: var(--text-soft);
-    margin-bottom: 16px;
+    margin-bottom: 6px; /* Giảm từ 8px xuống 2px */
+    margin-top: 0;
 }
 
     .breadcrumb-box a {
@@ -304,7 +316,6 @@ main.main-wrapper {
         opacity: 0.9;
         color: #000;
     }
-
 /* ========= PRODUCT CARD ========= */
 .product-card {
     background-color: #fff;
@@ -728,7 +739,6 @@ footer a {
             font-size: 15px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-
             .checkout-container .form-group input:focus {
                 border-color: #007bff;
                 box-shadow: 0 0 5px rgba(0,123,255,0.3);

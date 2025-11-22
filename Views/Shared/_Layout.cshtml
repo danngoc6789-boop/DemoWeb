@@ -21,36 +21,36 @@
     <title>@ViewBag.Title - D&T JEWELRY</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
 
-    <!-- CSS riêng cho shop -->
     <link rel="stylesheet" href="~/Content/site-shop.css" />
 
     @RenderSection("Head", required: false)
 </head>
+
 <body class="layout-wrapper">
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top nav-jewelry">
         <div class="container">
             <a class="navbar-brand" href="@Url.Action("Index","Trangchu")">
-                <span class="brand-main">D&amp;T <span class="brand-accent">JEWELRY</span></span>
+                <span class="brand-main">D&T <span class="brand-accent">JEWELRY</span></span>
                 <span class="since">SINCE 2025</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#mainNav" aria-controls="mainNav"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                    data-target="#mainNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav ml-auto">
+
                     <li class="nav-item">@Html.ActionLink("Trang chủ", "Index", "Trangchu", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Sản phẩm", "Index", "Product", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Bảng giá vàng", "BangGia", "GoldPrice", null, new { @class = "nav-link" })</li>
+
                     <li class="nav-item d-flex align-items-center">
                         @Html.ActionLink("Giỏ hàng", "Index", "Cart", null, new { @class = "nav-link" })
                         @if (cartCount > 0)
@@ -58,6 +58,7 @@
                             <span class="cart-badge">@cartCount</span>
                         }
                     </li>
+
                     <li class="nav-item">@Html.ActionLink("Liên hệ", "Contact", "Trangchu", null, new { @class = "nav-link" })</li>
 
                     <!-- Tài khoản -->
@@ -116,7 +117,7 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN -->
     <main class="main-wrapper flex-fill">
         <div class="container">
             @RenderSection("Breadcrumb", required: false)
@@ -127,13 +128,15 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="jewerly-footer bg-light mt-auto py-4">
+    <footer class="jewerly-footer bg-light">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 col-md-3 mb-4">
+
+                <div class="col-sm-6 col-md-3 mb-3">
                     <div class="footer-brand">D&T JEWELRY</div>
-                    <div class="footer-desc">Vàng 24K - Trang sức cao cấp - Cam kết chuẩn tuổi vàng. Thu mua / thu đổi minh bạch, giá tốt.</div>
+                    <div class="footer-desc">Vàng 24K - Trang sức cao cấp - Cam kết chuẩn tuổi vàng.</div>
                 </div>
+
                 <div class="col-sm-6 col-md-3 mb-4">
                     <div class="footer-title">Liên hệ</div>
                     <div>Hotline: 1900 1011</div>
@@ -141,6 +144,7 @@
                     <div>Email: DTjewerly2025@gmail.com</div>
                     <div>161 ĐHT 02 Phường Đông Hưng Thuận Quận 12 TP Hồ Chí Minh</div>
                 </div>
+
                 <div class="col-sm-6 col-md-3 mb-4">
                     <div class="footer-title">Cam kết</div>
                     <div>✔ Vàng đủ tuổi, chuẩn tuổi</div>
@@ -163,47 +167,38 @@
         </div>
     </footer>
 
+
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    @if (System.IO.File.Exists(Server.MapPath("~/Scripts/cart.js")))
-    {
-        <script src="~/Scripts/cart.js"></script>
-    }
-
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        main.main-wrapper {
-            flex: 1;
-            padding-top: 80px;
-        }
-
-        footer.jewerly-footer {
-            margin-top: auto;
-        }
-
-        .row > [class*="col-"] {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 48px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-        }
-    </style>
 
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+<style>
+    /* Đảm bảo toàn bộ body cao 100% */
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    /* Body dùng flex column để đẩy footer xuống */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Main content flex-grow để đẩy footer xuống */
+    .main-wrapper {
+        flex: 1 0 auto; /* chiếm phần còn lại, đẩy footer xuống */
+    }
+
+    /* Footer luôn ở dưới */
+    .jewerly-footer {
+        flex-shrink: 0;
+        background: #f8f9fa; /* nếu muốn màu nền */
+        padding: 20px 0;
+    }
+
+</style>

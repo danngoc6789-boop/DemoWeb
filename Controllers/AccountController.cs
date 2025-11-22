@@ -52,11 +52,7 @@ namespace DemoWeb.Controllers
         [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        {// Debug
-            System.Diagnostics.Debug.WriteLine("========== LOGIN POST ==========");
-            System.Diagnostics.Debug.WriteLine($"Email nhận được: {model?.Email}");
-            System.Diagnostics.Debug.WriteLine($"Password nhận được: {model?.Password}");
-            System.Diagnostics.Debug.WriteLine($"ModelState.IsValid: {ModelState.IsValid}");
+        {
 
             // Kiểm tra ModelState
             if (!ModelState.IsValid)
@@ -96,10 +92,9 @@ namespace DemoWeb.Controllers
 				Session["Email"] = user.Email;
 				Session["UserRole"] = userRole;
 
-				TempData["SuccessMessage"] = "Đăng nhập thành công! Xin chào " + (user.FullName ?? user.UserName);
-
-				// Chuyển hướng theo role
-				if (roles.Contains("Admin"))
+                TempData["LoginMessage"] = "Đăng nhập thành công! Xin chào " + (user.FullName ?? user.UserName);
+                // Chuyển hướng theo role
+                if (roles.Contains("Admin"))
 				{
 					return RedirectToAction("Index", "Admin");
 				}
@@ -181,8 +176,7 @@ namespace DemoWeb.Controllers
                 }
 
                 await UserManager.AddToRoleAsync(user.Id, Role);
-
-                TempData["SuccessMessage"] = "Đăng ký thành công! Vui lòng đăng nhập.";
+                TempData["AccountMessage"] = "Đăng ký thành công! Vui lòng đăng nhập.";
                 return RedirectToAction("Login");
             }
 
@@ -203,9 +197,8 @@ namespace DemoWeb.Controllers
 			AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
 			Session.Clear();
 			Session.Abandon();
-			TempData["SuccessMessage"] = "Đăng xuất thành công!";
-			return RedirectToAction("Login", "Account");
-            
+            TempData["AccountMessage"] = "Đăng xuất thành công!";
+            return RedirectToAction("Login", "Account");
         }
 		private IAuthenticationManager AuthenticationManager
 		{

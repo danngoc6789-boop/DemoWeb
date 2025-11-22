@@ -109,7 +109,7 @@ namespace DemoWeb.Controllers
                     Name = product.Name,
                     ImagePath = product.MainImage, // đường dẫn hình trong CSDL
                     Price = product.Price,
-                    Quantity = 1,
+                    Quantity = quantity,
                     Size = size 
                 });
             }

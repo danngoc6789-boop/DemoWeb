@@ -8,7 +8,23 @@
         TRANG CHỦ
     </div>
 }
+@if (TempData["LoginMessage"] != null)
+{
+    <div id="loginAlert" class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 20px;">
+        <strong>✓</strong> @TempData["LoginMessage"]
+        
+    </div>
 
+    <script>
+        setTimeout(function () {
+            var alert = document.getElementById('loginAlert');
+            if (alert) {
+                var bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }
+        }, 5000); // Tự động tắt sau 5 giây
+    </script>
+}
 <!-- HERO / GIỚI THIỆU -->
 <div class="row align-items-start" style="margin-bottom:24px;">
 
@@ -97,7 +113,7 @@
 
                 <div class="card-body d-flex flex-column">
                     <h6 class="product-name card-title">
-                         Nhẫn Kim Cương Vàng Trắng Nữ 14K
+                        Nhẫn Kim Cương Vàng Trắng Nữ 14K
                     </h6>
                     <p class="product-desc card-text flex-grow-1">
                         <em>Thanh Lịch, Tinh Tế</em>
@@ -135,7 +151,7 @@
                         Xem chi tiết
                     </a>
                 </div>
-             </div>
+            </div>
         </div>
 
         <!-- Sản phẩm 3 -->
@@ -150,11 +166,11 @@
                         Dây chuyền vàng mắt xích 24K nam
                     </h6>
                     <p class="product-desc card-text flex-grow-1">
-                        <em>Thiết kế tối giản, thanh lịch</em>
+                        <em>Tối giản, thanh lịch</em>
                     </p>
 
                     <h6 class="product-price mb-2">
-                        18,989,000₫
+                        2,990,000₫
                     </h6>
 
                     <a href="@Url.Action("Details","Product", new { id = 1042 })"
@@ -163,7 +179,7 @@
                     </a>
                 </div>
             </div>
-         </div>
+        </div>
 
         <!-- Sản phẩm 4 -->
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -177,11 +193,11 @@
                         Kiềng vàng 24K nữ
                     </h6>
                     <p class="product-desc card-text flex-grow-1">
-                        <em>Sang trọng, quý phái</em>  
+                        <em>Sang trọng, quý phái</em>
                     </p>
 
                     <h6 class="product-price mb-2">
-                        187,000,000₫
+                        13,499,000₫
                     </h6>
 
                     <a href="@Url.Action("Details","Product", new { id = 1055 })"
@@ -190,7 +206,7 @@
                     </a>
                 </div>
             </div>
-         </div>
+        </div>
 
     </div>
     <!-- Kết thúc row sản phẩm -->
